@@ -1,0 +1,31 @@
+<div>
+    {% if form.errors %}
+        <h4>
+            {{form.errors}}
+        </h4>
+    {% endif %}
+    <h3>Upload video to system:</h3>
+    {% if message %}
+        <h4>
+            {{message}}
+        </h4>
+    {% endif %}
+    <br>
+    <form enctype="multipart/form-data" method="post" action="{% url 'upload' %}">
+        {% for field in form.visible_fields %}
+        <div>
+            <label>{{field.label_tag}}</label>
+            <div>
+                {{field}}
+            </div>
+        </div>
+        {% for error in field.errors %}
+            <h4>{{error}}</h4>
+        {% endfor %}
+        {% endfor %}
+        <div>
+        	<button/>Submit</button>
+        </div>
+        {% csrf_token %}
+    </form>
+</div>
