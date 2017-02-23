@@ -3,6 +3,10 @@ from __future__ import unicode_literals
 from django.db import models
 
 # Create your models here.
+
+# Video model: Include basic information about upload video information
+# retention need to be modified in V2
+# content_type need to be fixed
 class Video(models.Model):
 	video_id = models.AutoField(primary_key=True)
 	location = models.CharField(max_length=128)

@@ -15,10 +15,12 @@ from datetime import datetime
 def upload(request):
     context = {}
 
+    # For get method, lead to upload pages
     if request.method == 'GET':
         context['form'] = VideoForm()
         return render(request, 'videomanagement/upload.html', context)
 
+    # For post method, upload file
     new_video = Video(upload_date=datetime.now())
     form = VideoForm(request.POST, request.FILES, instance=new_video)
     if not form.is_valid():
@@ -33,4 +35,5 @@ def upload(request):
         context['message'] = 'Item saved.'
         context['form'] = VideoForm()
 
+    # For test purpose, render might need to changed
     return render(request, 'videomanagement/upload.html', context)

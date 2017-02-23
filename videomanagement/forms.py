@@ -2,7 +2,10 @@ from django import forms
 
 from models import *
 
+# MAX_UPLOAD_SIZE need to be set
 
+# VideoForm: Form used in video upload
+# Validation need to be fixed
 class VideoForm(forms.ModelForm):
     class Meta:
         model = Video
