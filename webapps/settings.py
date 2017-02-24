@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social.apps.django_app.default',
     'videomanagement'
 ]
 
@@ -48,6 +49,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = [
+   'social.backends.google.GoogleOAuth2',
+   'django.contrib.auth.backends.ModelBackend',
 ]
 
 ROOT_URLCONF = 'webapps.urls'
@@ -113,6 +119,10 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('OAUTH2_KEY')
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('OAUTH2_SECRET')
 
 
 # Static files (CSS, JavaScript, Images)
