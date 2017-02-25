@@ -12,6 +12,7 @@ from videomanagement.models import Video
 from datetime import datetime
 
 # Create your views here.
+@login_required
 def upload(request):
     context = {}
 

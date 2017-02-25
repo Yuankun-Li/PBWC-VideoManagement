@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'social.apps.django_app.default',
     'videomanagement'
 ]
@@ -105,15 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-SOCIAL_AUTH_PIPELINE = [
-    'social.pipeline.user.create_user',
-    'social.pipeline.social_auth.social_user',
-    'social.pipeline.social_auth.associate_user',
-    'social.pipeline.social_auth.load_extra_data',
-    'social.pipeline.user.user_details',
-]
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -138,3 +130,5 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('OAUTH2_SECRET')
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/login'
+
+SOCIAL_AUTH_USER_MODEL = 'auth.User'

@@ -17,6 +17,10 @@ body {
 	margin-right: 10px;
 }
 
+.login-form-back {
+	background-color: #ffffff;
+}
+
 .block {
 	 background-color: #ffffff;
 	 /*bw: after add the pager;*/
@@ -45,3 +49,7 @@ body {
 	/*box-shadow: 0.2;*/
 }
 
+.btn-default {
+	width: 200px;
+	text-align: left;
+}

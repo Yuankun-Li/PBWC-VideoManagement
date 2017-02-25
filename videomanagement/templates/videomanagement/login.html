@@ -16,38 +16,26 @@
 {% block container %}
 <div class="container">
   <div class="login-form-back col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">   
-
-    <form role="form" action="{% url 'login' %}" method="POST" class="form-signin">
-      <h2 class="form-signin-heading">Log in</h2>
-      <div class="form-group">
-        <label for="username" class="sr-only">Username</label>
-        <input type="text" id="username" name="username" class="form-control" placeholder="User name" required autofocus>
-      </div>
-      <div class="form-group">
-        <label for="password" class="sr-only">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-      </div>
-
-      <div class="checkbox">
-        <label for="remember-me">
-        <input type="checkbox" value="remember-me">Remember me
-        </label>
-        <a href="" class="reset-password pull-right">Forgot password?</a>
-      </div>
-
-      {% if form.errors %}
-      <p class="error">Incorrect user name and password.</p>
-      {% endif %}
-
-      <button class="login-btn btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-      {% csrf_token %}
-    </form>
-
-    <form role="form" action="" class="form-signin">
-      <button class="login-btn btn btn-lg btn-info btn-block">Sign up</button>
-      {% csrf_token %}
-    </form> 
-
+    <h2>Log in</h2>
+    <div class="btn-group-vertical" role="group">
+      <form role="form" action="{% url 'social:begin' 'google-oauth2' %}" class="form-signin">
+        <button class="btn btn-default">I'm a student</button>
+        {% csrf_token %}
+      </form> 
+      <form role="form" action="" class="form-signin">
+        <button class="btn btn-default">I'm a police officer</button>
+        {% csrf_token %}
+      </form>
+      <form role="form" action="" class="form-signin">
+        <button class="btn btn-default">I'm a video manager</button>
+        {% csrf_token %}
+      </form>
+      <form role="form" action="" class="form-signin">
+        <button class="btn btn-default">I'm a committee member</button>
+        {% csrf_token %}
+      </form>
+    </div>
+    
   </div>
 </div> 
 {% endblock %}
