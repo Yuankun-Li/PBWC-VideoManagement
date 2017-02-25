@@ -20,3 +20,13 @@ class VideoForm(forms.ModelForm):
         # if picture.size > MAX_UPLOAD_SIZE:
         #     raise forms.ValidationError('File too big (max size is {0} bytes)'.format(MAX_UPLOAD_SIZE))
         return video
+    
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length = 200, 
+                               widget = forms.TextInput(attrs={'placeholder': 'Username',
+                                                               'class': 'form-control login-register-field',
+                                                               'autofocus': 'autofocus'}))
+    
+    password = forms.CharField(max_length = 200, 
+                                widget = forms.PasswordInput(attrs={'placeholder': 'Password',
+                                                                    'class': 'form-control login-register-field'}))

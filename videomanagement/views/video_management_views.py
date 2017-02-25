@@ -15,6 +15,7 @@ from datetime import datetime
 @login_required
 def upload(request):
     context = {}
+    context['user'] = request.user
 
     # For get method, lead to upload pages
     if request.method == 'GET':

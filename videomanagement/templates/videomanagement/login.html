@@ -26,7 +26,7 @@
         <button class="btn btn-default">I'm a police officer</button>
         {% csrf_token %}
       </form>
-      <form role="form" action="" class="form-signin">
+      <form role="form" action="{% url 'login_manager' %}" class="form-signin">
         <button class="btn btn-default">I'm a video manager</button>
         {% csrf_token %}
       </form>
