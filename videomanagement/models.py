@@ -21,4 +21,5 @@ class Video(models.Model):
 	content_type = models.CharField(max_length=50, default="xxx")
 
 	def __unicode__(self):
-		return "%s %s" % (self.first_name, self.last_name)
+#		return "%s %s" % (self.first_name, self.last_name)
+		return "%s %s" % (self.video_id, self.content_type)
