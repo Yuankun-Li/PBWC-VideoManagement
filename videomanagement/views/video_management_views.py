@@ -12,6 +12,27 @@ from videomanagement.models import Video
 from datetime import datetime
 
 # Create your views here.
+
+
+########### VIEWS AND ACTIONS FOR NON-LOGGED IN USERS #######################
+
+
+########### VIEWS AND ACTIONS FOR LOGGED IN USERS #######################
+
+## Views and Actions for Play_Video Page
+
+## Views and Actions for Community Page
+
+#@login_required
+def community_retrieve(request):
+	all_videos = Video.objects.all().order_by('-video_date')
+    	context = {'videos':all_videos}
+	return render(request,'videomanagement/community_main.html',context)
+
+
+########### VIEWS AND ACTIONS FOR VIDEO UPLOADERS #######################
+
+
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='video_manager').count() == 1, login_url='/')
 def upload(request):
@@ -40,3 +61,10 @@ def upload(request):
 
     # For test purpose, render might need to changed
     return render(request, 'videomanagement/upload.html', context)
+
+
+########### VIEWS AND ACTIONS FOR COMMITTEE MEMBERS #######################
+
+
+
+
