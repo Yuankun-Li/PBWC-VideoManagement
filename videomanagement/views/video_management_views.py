@@ -15,6 +15,18 @@ from datetime import datetime
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='video_manager').count() == 1, login_url='/')
 def upload(request):
+    """
+    Create an individual :model:`videomanagement.Video`.
+
+    **Context**
+
+    ``Video``
+        An instance of :model:`videomanagement.Video`.
+
+    **Template:**
+
+    :template:`videomanagement/upload.html`
+    """
     context = {}
     context['user'] = request.user
 

@@ -7,7 +7,11 @@ from django.db import models
 # Video model: Include basic information about upload video information
 # retention need to be modified in V2
 # content_type need to be fixed
+
 class Video(models.Model):
+	"""
+	Stores a single video entry, related to :model:`auth.User` when User is Officer that took video.
+	"""
 	video_id = models.AutoField(primary_key=True)
 	location = models.CharField(max_length=128)
 	video_date = models.DateTimeField(blank=True, null=True)
