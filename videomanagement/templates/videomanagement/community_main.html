@@ -60,15 +60,6 @@
 	{% endblock %}
 	
 	{% block notlog_navbar %}
-  	<nav class="navbar navbar-default navbar-fixed-top">
-  	  <div class="container">
-        <a class="navbar-brand" href="{% url 'login' %}">
-          <img alt="Logo" class="brand_img" src="">
-          PBWC-VideoManagement
-        </a>
-
-  	  </div>
-	</nav>
 	{% endblock %}
 	
 	{% block container %}
@@ -93,7 +84,7 @@
     	    			  					<img class= "img-responsive" alt="PoliceVideo" src="{% static '/videomanagement/images/dog.jpg' %}">
     								</div>
 							</div>
-					  	<p>{{video.video_id}}</p>
+					  	<a href="{% url 'view_video' video.video_id %}">{{video.video_id}}</p>
 					</div>
 				    	<div class = "col-md-8">
 					     <p class="text-left" name="Video_{{video.videoid}}_{{video.video_date}}">{{video.video_date}}</p>
