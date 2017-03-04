@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.db import transaction
+from mimetypes import guess_type, MimeTypes
 
 from videomanagement.forms import VideoForm
 from videomanagement.models import Video
@@ -20,6 +21,19 @@ from datetime import datetime
 ########### VIEWS AND ACTIONS FOR LOGGED IN USERS #######################
 
 ## Views and Actions for Play_Video Page
+@login_required
+def get_video(request, video_id):
+	video = get_object_or_404(Video, video_id=video_id)
+	if not video.video:
+		raise Http404
+	content_type = guess_type(video.video.name)
+	print(video.video.name)
+	return HttpResponse(video.video, content_type = content_type)
+
+@login_required
+def view_video(request, video_id):
+	context = {'video_id': video_id}
+	return render(request,'videomanagement/view_video.html',context)
 
 ## Views and Actions for Community Page
 
