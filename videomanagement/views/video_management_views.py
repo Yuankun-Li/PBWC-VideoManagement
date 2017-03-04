@@ -27,6 +27,7 @@ def get_video(request, video_id):
 	if not video.video:
 		raise Http404
 	content_type = guess_type(video.video.name)
+	print(video.video.name)
 	return HttpResponse(video.video, content_type = content_type)
 
 @login_required

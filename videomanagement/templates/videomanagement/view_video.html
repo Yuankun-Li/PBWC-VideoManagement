@@ -5,18 +5,39 @@
 {% block content %}PBWC-VideoManagement Upload{% endblock %}
 {% block title %}PBWC-VideoManagement Upload{% endblock %}
 {% block css %}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link href="{% static "videomanagement/css/mediaelementplayer.css" %}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="//rawgit.com/johndyer/mediaelement/master/build/mediaelementplayer.min.css">
+{% endblock %}
+
+{% block script %}
+	<script src="{% static "videomanagement/js/jquery-3.1.1.js" %}"></script>
+	<script src="{% static "videomanagement/js/bootstrap.min.js" %}"></script>
+	<script src="{% static "videomanagement/js/view_video.js" %}"></script>
+	<script src="{% static "videomanagement/js/mediaelement-and-player.min.js" %}"></script>
+        <script>
+
+            $(document).ready(function() {
+                $('video, audio').mediaelementplayer({
+                    pluginPath: 'dist/',
+                    success: function () {
+                        $('.player').css('visibility', 'visible');
+                    }
+                });
+            });
+
+        </script>
 {% endblock %}
 
 {% block container %}
 	<div class="container col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
 	  <div class="block">
 	    <div class="block_content">
-	      <video width="320" height="240" controls>
-  			<source src="{% url 'get_video' video_id %}" type="video/mp4">
-			Your browser does not support the video tag.
+	      <video class="mejs-player" controls preload="true" width="600" height="400">
+  			<source src="{% url 'get_video' video_id %}" type="video/mp4" />
 		  </video>
 	    </div>
 	  </div>
