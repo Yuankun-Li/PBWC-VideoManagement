@@ -19,6 +19,7 @@ urlpatterns = [
 	url(r'^login_manager$', video_views.login_manager, name='login_manager'),
 	url(r'^logout$', video_views.logout_, name='logout'),
 	url(r'^upload$', video_views.upload, name='upload'),
+	url(r'^delete_video/(?P<video_id>\d+)/$', video_views.delete_video, name='delete_video'),
 	url(r'^view_video/(?P<video_id>\d+)/$', video_views.view_video, name='view_video'),
 	url(r'^get_video/(?P<video_id>\d+)/$', video_views.get_video, name='get_video'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

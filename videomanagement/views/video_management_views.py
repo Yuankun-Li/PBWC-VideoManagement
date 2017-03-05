@@ -44,6 +44,24 @@ def community_retrieve(request):
 	return render(request,'videomanagement/community_main.html',context)
 
 
+def delete_video(request, id):
+    video = get_object_or_404(Video, id=id)
+
+    context = {}
+
+    if request.method != 'POST':
+        context['message'] = 'Deletes must be done using the POST method'
+    else:
+        video = Video.objects.get(id=id)
+        video.video.delete()
+        video.delete()
+        context['message'] = 'video deleted.'
+
+    all_videos = Video.objects.all().order_by('-video_date')
+    context['video'] = all_video
+    return render(request,'videomanagement/community_main.html',context)
+
+
 ########### VIEWS AND ACTIONS FOR VIDEO UPLOADERS #######################
 
 
