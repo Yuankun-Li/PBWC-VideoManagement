@@ -17,8 +17,8 @@ class Video(models.Model):
 	video_date = models.DateTimeField(blank=True, null=True)
 	retention = models.CharField(max_length=10)
 	upload_date = models.DateTimeField(blank=True, null=True)
-	video = models.FileField(upload_to="videos", null=True, blank=True)
-	content_type = models.CharField(max_length=50, default="xxx")
+	video = models.FileField(upload_to="videos", blank=True)
+	content_type = models.CharField(max_length=50)
 
 	def __unicode__(self):
 #		return "%s %s" % (self.first_name, self.last_name)

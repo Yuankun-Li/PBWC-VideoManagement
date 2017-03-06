@@ -92,6 +92,7 @@ def upload(request):
     new_video = Video(upload_date=datetime.now())
     form = VideoForm(request.POST, request.FILES, instance=new_video)
     if not form.is_valid():
+        context['message'] = 'Upload failed'
         context['form'] = form
         return render(request, 'videomanagement/upload.html', context)
     else:
