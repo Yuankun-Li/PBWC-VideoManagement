@@ -43,7 +43,8 @@ def community_retrieve(request):
     	context = {'videos':all_videos}
 	return render(request,'videomanagement/community_main.html',context)
 
-
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
 def delete_video(request, id):
     video = get_object_or_404(Video, id=id)
 
