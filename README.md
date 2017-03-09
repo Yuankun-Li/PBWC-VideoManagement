@@ -1,6 +1,8 @@
 # PBWC-VideoManagement
 This is a police body worn camera video management system.
 
+Because Django framework is used in our system, all of the front-end content areincluded in templates and static. And most of back-end contents are included in views.
+
 PBWC-VideoManagement/<br>
 ├── README.md<br>
 ├── db.sqlite3<br>
