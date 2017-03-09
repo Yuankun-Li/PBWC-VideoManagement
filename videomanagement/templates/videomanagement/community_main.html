@@ -1,84 +1,38 @@
+{% extends "videomanagement/base.html" %}
+
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content={% block content %}{% endblock %}>
-    <meta name="author" content="DanCalderon">
-    <!-- Derived from base.html by TongLiu-->
-    
-    <title>{% block title %}{% endblock %}</title>
 
-	{% load static %}
-    <!-- Bootstrap core CSS -->
-    <link href="{% static "videomanagement/css/bootstrap.min.css" %}" rel="stylesheet">
-    <link href="{% static "videomanagement/css/base.css" %}" rel="stylesheet">
-    
-    <!-- Custom js for this template -->
-    {% block script %}
-    
-	<script src="{% static "videomanagement/js/jquery-3.1.1.js" %}"></script>
-	<script src="{% static "videomanagement/js/bootstrap.min.js" %}"></script>
-    {% endblock %}
-    
-    <!-- Custom styles for this template -->
-    {% block css %}
-    {% endblock %}    
+{% block content %}PBWC-VideoManagement Community Page{% endblock %}
+{% block title %}PBWC-VideoManagement Community Page{% endblock %}
 
-  </head>
-  <body>
-	{% block navbar %}
-  	<nav class="navbar navbar-default navbar-fixed-top">
-  	  <div class="container">
-        <a class="navbar-brand" href="">
-          <img alt="Logo" class="brand_img" src="">
-          PBWC-VideoManagement
-        </a>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="">Home <span class="badge"></span></a></li>
-            <li><a href="">More <span class="badge"></span></a></li>
-          </ul>
-		  <ul class="nav navbar-nav navbar-right">
-    	    <li class="dropdown">
- 	         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.username}} <span class="caret"></span></a>
-    	      <ul class="dropdown-menu">
-        	    <li><a href="">My profile</a></li>
- 	            <li><a href="">Reset password</a></li>
-        	    <li role="separator" class="divider"></li>
- 	           <li><a href="{% url 'logout' %}">Log out</a></li>
-    	      </ul>
-     	  	 </li>
-   		   </ul>	
+<!-- Custom styles for this template -->
+{% block css %}
+{% endblock %} 
 
-      </div>
-  	  </div>
-	</nav>
-	{% endblock %}
-	
-	{% block notlog_navbar %}
-	{% endblock %}
+<!--{% block notlog_navbar %}{% endblock %}-->
 
-				{% for video in videos %}
+{% block container %}
 
-				<div class = "row">
-					<div class = "col-md-3 text-center">
+<h1 class = "text-center"> Community Main Page</h1>
 
-							<div class="container">
-								<div class="col-md-1 center-block">
-    	    			  					<img class= "img-responsive" alt="PoliceVideo" src="{% static '/videomanagement/images/Cc.logo.circle.svg.png' %}">
-    								</div>
-							</div>
-					  	<a href="{% url 'view_video' video.video_id %}">{{video.video_id}}</p>
-					</div>
-				    	<div class = "col-md-8">
-					     <p class="text-left" name="Video_{{video.videoid}}_{{video.video_date}}">{{video.video_date}}</p>
-					</div>
-				</div>
+<div class = "row">
+<div class="container">
+	{% for video in videos %}
+	<div class="col-md-2 text-center">
+		<div class="row">
+    	    		<img class= "img-thumbnail" width="100" height="100" alt="PoliceVideo" src="{% static '/videomanagement/images/Cc.logo.circle.svg.png' %}">
+		</div>
+		<div class = "row">
+			<a href="{% url 'view_video' video.video_id %}">{{video.video_date}}</a>
+		</div>
+	</div>
 
-				{% endfor %}	
-  </body>
-</html>
+	{% endfor %}
+</div>
+</div>
+	</div> <!-- panel body -->
+</div> <!--panel-->
+
+
+
+{% endblock %}
