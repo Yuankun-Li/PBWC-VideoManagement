@@ -61,6 +61,18 @@
 	
 	{% block notlog_navbar %}
 	{% endblock %}
+	
+	{% block container %}
+	<div class="container col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+	  <div class="block">
+	    <div class="block_content">
+	      <p>Testblock</p>
+	    </div>
+	  </div>
+	</div>
+	{% endblock %}
+
+
 
 				{% for video in videos %}
 
