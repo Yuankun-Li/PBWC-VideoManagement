@@ -1,72 +1,72 @@
 # PBWC-VideoManagement
 This is a police body worn camera video management system.
 
-PBWC-VideoManagement/
-├── README.md
-├── db.sqlite3
-├── manage.py
-├── videomanagement
-│   ├── __init__.py
-│   ├── __init__.pyc
-│   ├── admin.py
-│   ├── admin.pyc
-│   ├── apps.py
-│   ├── forms.py
-│   ├── forms.pyc
-│   ├── migrations
-│   │   ├── 0001_initial.py
-│   │   ├── 0001_initial.pyc
-│   │   ├── 0002_auto_20170306_0452.py
-│   │   ├── 0002_auto_20170306_0452.pyc
-│   │   ├── 0003_auto_20170306_0453.py
-│   │   ├── 0003_auto_20170306_0453.pyc
-│   │   ├── __init__.py
-│   │   └── __init__.pyc
-│   ├── models.py
-│   ├── models.pyc
-│   ├── static
-│   │   └── videomanagement
-│   │       ├── css
-│   │       │   ├── base.css
-│   │       │   ├── bootstrap.min.css
-│   │       │   └── mediaelementplayer.css
-│   │       ├── images
-│   │       │   └── dog.jpg
-│   │       └── js
-│   │           ├── bootstrap.min.js
-│   │           ├── jquery-3.1.1.js
-│   │           ├── mediaelement-and-player.min.js
-│   │           └── view_video.js
-│   ├── templates
-│   │   └── videomanagement
-│   │       ├── base.html
-│   │       ├── committee_main.html
-│   │       ├── community_main.html
-│   │       ├── login.html
-│   │       ├── login_.html
-│   │       ├── upload.html
-│   │       └── view_video.html
-│   ├── tests.py
-│   ├── urls.py
-│   ├── urls.pyc
-│   ├── views
-│   │   ├── __init__.py
-│   │   ├── __init__.pyc
-│   │   ├── account_management_views.py
-│   │   ├── account_management_views.pyc
-│   │   ├── video_management_views.py
-│   │   └── video_management_views.pyc
-│   ├── views.py
-│   └── views.pyc
-├── videos
-│   └── small.mp4
-└── webapps
+PBWC-VideoManagement/<br>
+├── README.md<br>
+├── db.sqlite3<br>
+├── manage.py<br>
+├── videomanagement<br>
+│   ├── __init__.py<br>
+│   ├── __init__.pyc<br>
+│   ├── admin.py<br>
+│   ├── admin.pyc<br>
+│   ├── apps.py<br>
+│   ├── forms.py<br>
+│   ├── forms.pyc<br>
+│   ├── migrations<br>
+│   │   ├── 0001_initial.py<br>
+│   │   ├── 0001_initial.pyc<br>
+│   │   ├── 0002_auto_20170306_0452.py<br>
+│   │   ├── 0002_auto_20170306_0452.pyc<br>
+│   │   ├── 0003_auto_20170306_0453.py<br>
+│   │   ├── 0003_auto_20170306_0453.pyc<br>
+│   │   ├── __init__.py<br>
+│   │   └── __init__.pyc<br>
+│   ├── models.py<br>
+│   ├── models.pyc<br>
+│   ├── static<br>
+│   │   └── videomanagement<br>
+│   │       ├── css<br>
+│   │       │   ├── base.css<br>
+│   │       │   ├── bootstrap.min.css<br>
+│   │       │   └── mediaelementplayer.css<br>
+│   │       ├── images<br>
+│   │       │   └── dog.jpg<br>
+│   │       └── js<br>
+│   │           ├── bootstrap.min.js<br>
+│   │           ├── jquery-3.1.1.js<br>
+│   │           ├── mediaelement-and-player.min.js<br>
+│   │           └── view_video.js<br>
+│   ├── templates<br>
+│   │   └── videomanagement<br>
+│   │       ├── base.html<br>
+│   │       ├── committee_main.html<br>
+│   │       ├── community_main.html<br>
+│   │       ├── login.html<br>
+│   │       ├── login_.html<br>
+│   │       ├── upload.html<br>
+│   │       └── view_video.html<br>
+│   ├── tests.py<br>
+│   ├── urls.py<br>
+│   ├── urls.pyc<br>
+│   ├── views<br>
+│   │   ├── __init__.py<br>
+│   │   ├── __init__.pyc<br>
+│   │   ├── account_management_views.py<br>
+│   │   ├── account_management_views.pyc<br>
+│   │   ├── video_management_views.py<br>
+│   │   └── video_management_views.pyc<br>
+│   ├── views.py<br>
+│   └── views.pyc<br>
+├── videos<br>
+│   └── small.mp4<br>
+└── webapps<br>
     ├── README.md
-    ├── __init__.py
-    ├── __init__.pyc
-    ├── settings.py
-    ├── settings.pyc
-    ├── urls.py
-    ├── urls.pyc
-    ├── wsgi.py
-    └── wsgi.pyc
+<br>    ├── __init__.py<br>
+    ├── __init__.pyc<br>
+    ├── settings.py<br>
+    ├── settings.pyc<br>
+    ├── urls.py<br>
+    ├── urls.pyc<br>
+    ├── wsgi.py<br>
+    └── wsgi.pyc<br>
