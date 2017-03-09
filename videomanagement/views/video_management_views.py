@@ -129,6 +129,7 @@ def upload(request):
 
 
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
 def committee_retrieve(request):
     """
     Display all :model:`videomanagement.Video` visible by committee members.
@@ -142,7 +143,6 @@ def committee_retrieve(request):
 
     :template:`videomanagement/committee_main.html`
     """
-    @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
     all_videos = Video.objects.all().order_by('-video_date')
     context = {'videos':all_videos}
     return render(request,'videomanagement/committee_main.html',context)
