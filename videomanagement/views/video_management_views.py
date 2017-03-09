@@ -21,6 +21,7 @@ from datetime import datetime
 ########### VIEWS AND ACTIONS FOR LOGGED IN USERS #######################
 
 ## Views and Actions for Play_Video Page
+# retrieve the content of a video
 @login_required
 def get_video(request, video_id):
 	video = get_object_or_404(Video, video_id=video_id)
@@ -30,9 +31,12 @@ def get_video(request, video_id):
 	print(video.video.name)
 	return HttpResponse(video.video, content_type = content_type)
 
+# retrive the page to view a video
 @login_required
 def view_video(request, video_id):
 	context = {'video_id': video_id}
+	for g in request.user.groups.all():
+		context['group'] = g.name
 	return render(request,'videomanagement/view_video.html',context)
 
 ## Views and Actions for Community Page
@@ -47,21 +51,21 @@ def community_retrieve(request):
 
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
-def delete_video(request, id):
-    video = get_object_or_404(Video, id=id)
+def delete_video(request, video_id):
+    video = get_object_or_404(Video, video_id=video_id)
 
     context = {}
 
     if request.method != 'POST':
         context['message'] = 'Deletes must be done using the POST method'
     else:
-        video = Video.objects.get(id=id)
+        video = Video.objects.get(video_id=video_id)
         video.video.delete()
         video.delete()
         context['message'] = 'video deleted.'
 
     all_videos = Video.objects.all().order_by('-video_date')
-    context['video'] = all_video
+    context['video'] = all_videos
     return render(request,'videomanagement/community_main.html',context)
 
 
