@@ -41,7 +41,7 @@
 		  </video>
 		  
 		  {% if group == 'committee_member' %}
-		  <a href="">delete</a>
+		  <a href="{% url 'delete_video' video_id %}">delete</a>
 		  {% endif %}
 	    </div>
 	  </div>
