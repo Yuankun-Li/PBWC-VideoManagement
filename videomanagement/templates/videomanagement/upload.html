@@ -11,37 +11,34 @@
 {% endblock %}
 
 {% block container %}
-
-<div>
-    {% if form.errors %}
-        <h4>
-            {{form.errors}}
-        </h4>
-    {% endif %}
-    <h3>Upload video to system:</h3>
-    {% if message %}
-        <h4>
-            {{message}}
-        </h4>
-    {% endif %}
-    <br>
-    <form enctype="multipart/form-data" method="post" action="{% url 'upload' %}">
-        {% for field in form.visible_fields %}
-        <div>
-            <label>{{field.label_tag}}</label>
-            <div>
-                {{field}}
+<div class="container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <div class="block">
+        <div class="block_content">
+            <h3>Upload video to system:</h3>
+            {% if message %}
+            <h4>
+                {{message}}
+            </h4>
+            {% endif %}
+            <form enctype="multipart/form-data" method="post" action="{% url 'upload' %}">
+            {% for field in form.visible_fields %}
+            <div class="form-group">
+                <label>{{field.label_tag}}</label>
+                <div>
+                    {{field}}
+                </div>
             </div>
+            {% for error in field.errors %}
+                <h4>{{error}}</h4>
+            {% endfor %}
+            {% endfor %}
+            <div>
+                <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
+            </div>
+            {% csrf_token %}
+            </form>
         </div>
-        {% for error in field.errors %}
-            <h4>{{error}}</h4>
-        {% endfor %}
-        {% endfor %}
-        <div>
-        	<button/>Submit</button>
-        </div>
-        {% csrf_token %}
-    </form>
+    </div>
 </div>
 {% endblock %}
 

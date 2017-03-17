@@ -39,6 +39,10 @@
 	      <video class="mejs-player" controls preload="true" width="600" height="400">
   			<source src="{% url 'get_video' video_id %}" type="video/mp4" />
 		  </video>
+		  
+		  {% if group == 'committee_member' %}
+		  <a href="{% url 'delete_video' video_id %}">delete</a>
+		  {% endif %}
 	    </div>
 	  </div>
 	</div>

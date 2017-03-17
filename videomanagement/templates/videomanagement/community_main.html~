@@ -2,18 +2,16 @@
 
 {% load staticfiles %}
 
-{% block content %}PBWC-VideoManagement Committee RequestsPage{% endblock %}
-{% block title %}PBWC-VideoManagement Committee Requests Page{% endblock %}
+{% block content %}PBWC-VideoManagement Community Page{% endblock %}
+{% block title %}PBWC-VideoManagement Community Page{% endblock %}
 
 <!-- Custom styles for this template -->
 {% block css %}
 {% endblock %} 
 
-{% block notlog_navbar %}{% endblock %}
-
 {% block container %}
 
-<h1 class = "text-center"> Committee Video Requests Page</h1>
+<h1 class = "text-center"> Community Main Page</h1>
 
 <div class = "row">
 <div class="container">
