@@ -21,4 +21,5 @@ urlpatterns = [
 	url(r'^upload$', video_views.upload, name='upload'),
 	url(r'^view_video/(?P<video_id>\d+)/$', video_views.view_video, name='view_video'),
 	url(r'^get_video/(?P<video_id>\d+)/$', video_views.get_video, name='get_video'),
+	url(r'^create_request/(?P<video_id>\d+)/$', video_views.create_request, name='create_request'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
