@@ -29,5 +29,24 @@ def create_request(request, video_id):
         context['message'] = 'Request created.'
         context['form'] = CreateRequestForm()
         
-     # For test purpose, render might need to changed
+    # For test purpose, render might need to changed
     return render(request, 'videomanagement/create_request.html', context)
+
+## retrieve all requests
+@login_required
+def retrieve_requests(request):
+    context = {}
+    context['user'] = request.user
+    requests_by_id = {}
+    
+    # get all videos
+    videos = Video.objects.all()
+    # get request for each video
+    for video in videos:
+        requests = Request.objects.filter(video=video)
+        requests_by_id[video] = requests
+    
+    context['requests'] = requests_by_id
+    
+    # For test purpose, render might need to changed
+    return render(request, 'videomanagement/retrieve_requests.html', context)
