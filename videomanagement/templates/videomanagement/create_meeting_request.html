@@ -1,0 +1,51 @@
+{% extends "videomanagement/base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}PBWC-VideoManagement Create Request{% endblock %}
+{% block title %}PBWC-VideoManagement Create Request{% endblock %}
+{% block css %}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+{% endblock %}
+
+{% block script %}
+	<script src="{% static "videomanagement/js/jquery-3.1.1.js" %}"></script>
+	<script src="{% static "videomanagement/js/bootstrap.min.js" %}"></script>
+{% endblock %}
+
+{% block container %}
+	<div class="container col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+	  <div class="block">
+	    <div class="block_content">
+	      <h3>Create request for {{video_id}}:</h3>
+            {% if message %}
+            <h4>
+                {{message}}
+            </h4>
+            {% endif %}
+            <form method="post" action="{% url 'create_meeting_request' %}">
+            {% for field in form.visible_fields %}
+            <div class="form-group">
+                <label>{{field.label_tag}}</label>
+                <div>
+                    {{field}}
+                </div>
+            </div>
+            {% for error in field.errors %}
+                <h4>{{error}}</h4>
+            {% endfor %}
+            {% endfor %}
+            <div>
+                <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
+            </div>
+            {% csrf_token %}
+            </form>
+	    </div>
+	  </div>
+	</div>
+{% endblock %}
+
+{% block notlog_navbar %}{% endblock %}

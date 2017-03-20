@@ -61,3 +61,28 @@ def delete_request(request, request_id):
     
     req.delete()
     return redirect(reverse('retrieve_requests'))
+
+## create a meeting request
+@login_required
+def create_meeting_request(request):
+    context = {}
+    context['user'] = request.user
+    
+    # For get method, lead to create request pages
+    if request.method == 'GET':
+        context['form'] = CreateMeetingRequestForm()
+        return render(request, 'videomanagement/create_meeting_request.html', context)
+
+    # For post method, create request
+    new_request = MeetingRequest(user=request.user)
+    form = CreateMeetingRequestForm(request.POST, instance=new_request)
+    if not form.is_valid():
+        context['form'] = form
+        return render(request, 'videomanagement/create_meeting_request.html', context)
+    else:
+        form.save()
+        context['message'] = 'Request created.'
+        context['form'] = CreateMeetingRequestForm()
+        
+    # For test purpose, render might need to changed
+    return render(request, 'videomanagement/create_meeting_request.html', context)
