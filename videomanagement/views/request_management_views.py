@@ -86,3 +86,26 @@ def create_meeting_request(request):
         
     # For test purpose, render might need to changed
     return render(request, 'videomanagement/create_meeting_request.html', context)
+
+## retrieve all meeting requests
+@login_required
+def retrieve_meeting_requests(request):
+    context = {}
+    context['user'] = request.user
+    
+    requests = MeetingRequest.objects.all()
+    
+    context['requests'] = requests
+    
+    # For test purpose, render might need to changed
+    return render(request, 'videomanagement/retrieve_meeting_requests.html', context)
+
+# delete a meeting Request
+@login_required
+def delete_meeting_request(request, id):
+    # get the request to delete
+    req = get_object_or_404(MeetingRequest, id=id)
+    context = {}
+    
+    req.delete()
+    return redirect(reverse('retrieve_meeting_requests'))
