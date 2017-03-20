@@ -30,3 +30,10 @@ class LoginForm(forms.Form):
     password = forms.CharField(max_length = 200, 
                                 widget = forms.PasswordInput(attrs={'placeholder': 'Password',
                                                                     'class': 'form-control login-register-field'}))
+    
+class CreateRequestForm(forms.ModelForm):
+    class Meta:
+        model = Request
+        fields = { 'type', 'reasoning' }
+        widgets = {'type': forms.Select(),
+                   'reasoning': forms.Textarea(attrs={'placeholder': 'Reasons', 'rows': 3, 'cols': '80%'})}
