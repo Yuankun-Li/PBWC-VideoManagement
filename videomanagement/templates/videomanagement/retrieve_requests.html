@@ -23,22 +23,22 @@
 	      {% for key, values in requests.items %}
 	      	<div>
 	      	  <h3>For video {{key.video_id}}</h3>
-	      	  <tabel style="width:100%">
-	      		<tr>
-	      	  	  <th>Type</th>
-	      	  	  <th>Request Date</th>
-	      	  	  <th>Requested By</th>
-	      	  	  <th>Reason</th>
-	      	  	</tr>
-	      	  	{% for request in values %}
-	      	  	<tr>
-	      	  	  <td>{{request.type}}</td>
-	      	  	  <td>{{request.request_date}}</td>
-	      	  	  <td>{{request.user.username}}</td>
-	      	  	  <td>{{request.reasoning}}</td>
-	      	  	</tr>
-	      	  	{% endfor %}
-	      	  </tabel>
+	      	  <table style="width:100%">
+				  <tr>
+	      	  	 	 <th>Type</th>
+	      	  	 	 <th>Request Date</th>
+	      	  	 	 <th>Requested By</th>
+	      	  	 	 <th>Reason</th>
+	      	  	  </tr>
+	      	  	  {% for request in values %}
+				  <tr>
+	      	  	  	<td>{{request.type}}</td>
+	      	  	  	<td>{{request.request_date}}</td>
+	      	  	  	<td>{{request.user.username}}</td>
+	      	  	  	<td>{{request.reasoning}}</td>
+	      	  	  </tr>
+				  {% endfor %}
+			  </table>
 	      	</div>
 	      {% endfor %}
 	    </div>
