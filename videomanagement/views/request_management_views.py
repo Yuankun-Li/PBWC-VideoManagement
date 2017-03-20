@@ -1,6 +1,7 @@
 from videomanagement.models import Request
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.urlresolvers import reverse
 
 from videomanagement.forms import *
 from videomanagement.models import *
@@ -50,3 +51,13 @@ def retrieve_requests(request):
     
     # For test purpose, render might need to changed
     return render(request, 'videomanagement/retrieve_requests.html', context)
+
+# delete a Request
+@login_required
+def delete_request(request, request_id):
+    # get the request to delete
+    req = get_object_or_404(Request, request_id=request_id)
+    context = {}
+    
+    req.delete()
+    return redirect(reverse('retrieve_requests'))

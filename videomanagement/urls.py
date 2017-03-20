@@ -23,5 +23,6 @@ urlpatterns = [
 	url(r'^get_video/(?P<video_id>\d+)/$', video_views.get_video, name='get_video'),
 	url(r'^create_request/(?P<video_id>\d+)/$', video_views.create_request, name='create_request'),
 	url(r'^retrieve_requests$', video_views.retrieve_requests, name='retrieve_requests'),
+	url(r'^delete_request/(?P<request_id>\d+)/$', video_views.delete_request, name='delete_request'),
 	url(r'^committee_videos$', video_views.committee_retrieve, name='committee_retrieve'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
