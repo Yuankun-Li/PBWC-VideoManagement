@@ -33,14 +33,14 @@ class Request(models.Model):
 	request_id = models.AutoField(primary_key=True)
 	request_date = models.DateTimeField(default=timezone.now)
 	type = models.CharField(max_length=50, choices=TYPE_CHOICES)
-	video_id = models.ForeignKey(Video)
-	user_id = models.ForeignKey(User)
+	video = models.ForeignKey(Video)
+	user = models.ForeignKey(User)
 	reasoning = models.CharField(max_length=1000)
 
 # MeetingRequest model: handle the review meeting request
 class MeetingRequest(models.Model):
 	request_date = models.DateTimeField(default=timezone.now)
 	video_date = models.DateTimeField()
-	user_id = models.ForeignKey(User)
+	user = models.ForeignKey(User)
 	location = models.CharField(max_length=128)
 	reasoning = models.CharField(max_length=1000)

@@ -20,7 +20,29 @@
 	<div class="container col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
 	  <div class="block">
 	    <div class="block_content">
-	      
+	      <h3>Create request for {{video_id}}:</h3>
+            {% if message %}
+            <h4>
+                {{message}}
+            </h4>
+            {% endif %}
+            <form method="post" action="{% url 'create_request' video_id %}">
+            {% for field in form.visible_fields %}
+            <div class="form-group">
+                <label>{{field.label_tag}}</label>
+                <div>
+                    {{field}}
+                </div>
+            </div>
+            {% for error in field.errors %}
+                <h4>{{error}}</h4>
+            {% endfor %}
+            {% endfor %}
+            <div>
+                <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
+            </div>
+            {% csrf_token %}
+            </form>
 	    </div>
 	  </div>
 	</div>
