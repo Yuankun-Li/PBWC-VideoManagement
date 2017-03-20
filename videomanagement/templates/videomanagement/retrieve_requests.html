@@ -1,0 +1,49 @@
+{% extends "videomanagement/base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}PBWC-VideoManagement Retrieve Requests{% endblock %}
+{% block title %}PBWC-VideoManagement Retrieve Requests{% endblock %}
+{% block css %}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+{% endblock %}
+
+{% block script %}
+	<script src="{% static "videomanagement/js/jquery-3.1.1.js" %}"></script>
+	<script src="{% static "videomanagement/js/bootstrap.min.js" %}"></script>
+{% endblock %}
+
+{% block container %}
+	<div class="container col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+	  <div class="block">
+	    <div class="block_content">
+	      {% for key, values in requests.items %}
+	      	<div>
+	      	  <h3>For video {{key.video_id}}</h3>
+	      	  <tabel style="width:100%">
+	      		<tr>
+	      	  	  <th>Type</th>
+	      	  	  <th>Request Date</th>
+	      	  	  <th>Requested By</th>
+	      	  	  <th>Reason</th>
+	      	  	</tr>
+	      	  	{% for request in values %}
+	      	  	<tr>
+	      	  	  <td>{{request.type}}</td>
+	      	  	  <td>{{request.request_date}}</td>
+	      	  	  <td>{{request.user.username}}</td>
+	      	  	  <td>{{request.reasoning}}</td>
+	      	  	</tr>
+	      	  	{% endfor %}
+	      	  </tabel>
+	      	</div>
+	      {% endfor %}
+	    </div>
+	  </div>
+	</div>
+{% endblock %}
+
+{% block notlog_navbar %}{% endblock %}
