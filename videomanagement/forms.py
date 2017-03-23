@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.extras.widgets import SelectDateWidget
 
 from models import *
 
@@ -36,4 +37,12 @@ class CreateRequestForm(forms.ModelForm):
         model = Request
         fields = { 'type', 'reasoning' }
         widgets = {'type': forms.Select(),
+                   'reasoning': forms.Textarea(attrs={'placeholder': 'Reasons', 'rows': 3, 'cols': '80%'})}
+        
+class CreateMeetingRequestForm(forms.ModelForm):
+    class Meta:
+        model = MeetingRequest
+        fields = { 'video_date', 'location', 'reasoning' }
+        widgets = {'video_date': SelectDateWidget(),
+                   'location': forms.Textarea(attrs={'placeholder': 'Location', 'rows': 1, 'cols': '80%'}),
                    'reasoning': forms.Textarea(attrs={'placeholder': 'Reasons', 'rows': 3, 'cols': '80%'})}
