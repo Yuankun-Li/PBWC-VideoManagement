@@ -62,6 +62,13 @@ def delete_request(request, request_id):
     req.delete()
     return redirect(reverse('retrieve_requests'))
 
+# accept a Request
+def accept_request(request, request_id):
+    # get the request to accept
+    req = get_object_or_404(Request, request_id=request_id)
+    req.accept()
+    return redirect(reverse('retrieve_requests'))
+
 ## create a meeting request
 @login_required
 def create_meeting_request(request):
@@ -108,4 +115,11 @@ def delete_meeting_request(request, id):
     context = {}
     
     req.delete()
+    return redirect(reverse('retrieve_meeting_requests'))
+
+# accept a meeting Request
+def accept_meeting_request(request, id):
+    # get the request to accept
+    req = get_object_or_404(MeetingRequest, id=id)
+    req.accept()
     return redirect(reverse('retrieve_meeting_requests'))
