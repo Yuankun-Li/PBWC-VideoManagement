@@ -42,7 +42,8 @@ class CreateRequestForm(forms.ModelForm):
 class CreateMeetingRequestForm(forms.ModelForm):
     class Meta:
         model = MeetingRequest
-        fields = { 'video_date', 'location', 'reasoning' }
+        fields = { 'video_date', 'type', 'location', 'reasoning' }
         widgets = {'video_date': SelectDateWidget(),
+                   'type': forms.Select(),
                    'location': forms.Textarea(attrs={'placeholder': 'Location', 'rows': 1, 'cols': '80%'}),
                    'reasoning': forms.Textarea(attrs={'placeholder': 'Reasons', 'rows': 3, 'cols': '80%'})}

@@ -27,6 +27,7 @@
 	      	  <th>Requested By</th>
 	      	  <th>Location</th>
 	      	  <th>Reason</th>
+	      	  <th>Type</th>
 	      	</tr>
 	      {% for request in requests %}
 				  <tr>
@@ -35,7 +36,9 @@
 	      	  	  	<td>{{request.user.username}}</td>
 	      	  	  	<td>{{request.location}}</td>
 	      	  	  	<td>{{request.reasoning}}</td>
+	      	  	  	<td>{{request.type}}</td>
 	      	  	  	<td><a href="{% url 'delete_meeting_request' request.id %}">delete</a></td>
+	      	  	  	<td><a href="{% url 'accept_meeting_request' request.id %}">accept</a></td>
 	      	  	  </tr>
 	      {% endfor %}
 	      </table>

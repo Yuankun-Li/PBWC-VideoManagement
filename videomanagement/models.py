@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 
 # Create your models here.
 
@@ -21,6 +22,7 @@ class Video(models.Model):
 	upload_date = models.DateTimeField(blank=True, null=True)
 	video = models.FileField(upload_to="videos", blank=True)
 	content_type = models.CharField(max_length=50)
+	is_public = models.BooleanField(default=False)
 
 	def __unicode__(self):
 #		return "%s %s" % (self.first_name, self.last_name)
@@ -28,19 +30,35 @@ class Video(models.Model):
 
 # Request model: handle the extended retention, delete video and make public request
 class Request(models.Model):
-	TYPE_CHOICES = (('extend_retention', 'extend_retention',), ('delete_video', 'delete_video',), ('make_public', 'make_public',))
+	TYPE_CHOICES = (('extend_retention', 'extend_retention',), ('delete_video', 'delete_video',))
 	
 	request_id = models.AutoField(primary_key=True)
 	request_date = models.DateTimeField(default=timezone.now)
-	type = models.CharField(max_length=50, choices=TYPE_CHOICES)
+	type = models.CharField(max_length=50, choices=TYPE_CHOICES, default='extend_retention')
 	video = models.ForeignKey(Video)
 	user = models.ForeignKey(User)
 	reasoning = models.CharField(max_length=1000)
+	
+	# accept a request
+	def accept(self):
+		if self.type == 'delete_video':
+			self.video.video.delete()
+    		self.video.delete()
 
 # MeetingRequest model: handle the review meeting request
 class MeetingRequest(models.Model):
+	TYPE_CHOICES = (('meeting', 'meeting',), ('make_public', 'make_public',))
+	
 	request_date = models.DateTimeField(default=timezone.now)
+	type = models.CharField(max_length=50, choices=TYPE_CHOICES, default='meeting')
 	video_date = models.DateTimeField()
 	user = models.ForeignKey(User)
 	location = models.CharField(max_length=128)
 	reasoning = models.CharField(max_length=1000)
+	
+	# accept a request
+	def accept(self):
+		if self.type == 'make_public':
+			video = get_object_or_404(Video, video_date=self.video_date, location=self.location)
+			video.is_public = True
+			video.save()
