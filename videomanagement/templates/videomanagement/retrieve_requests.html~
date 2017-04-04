@@ -46,7 +46,7 @@
 	      	  	  	<td>{{request.video.is_public}}</td>
 	      	  	  	<td>{{request.reasoning}}</td>
 	      	  	  	<td><a href="{% url 'delete_request' request.request_id %}">delete</a></td>
-	      	  	  	<td><a href="{% url 'extend_retention' request.request_id %}">extend retention</a></td>
+	      	  	  	<td><a href="{% url 'extend_retention' request.request_id %}">accept</a></td>
 	      	  	  	<td><a href="{% url 'accept_request' request.request_id %}">accept</a></td>
 	      	  	  </tr>
 				  {% endfor %}
