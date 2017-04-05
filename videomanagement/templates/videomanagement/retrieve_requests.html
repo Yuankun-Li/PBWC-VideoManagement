@@ -37,6 +37,7 @@
 	      	  	  	<td>{{request.user.username}}</td>
 	      	  	  	<td>{{request.reasoning}}</td>
 	      	  	  	<td><a href="{% url 'delete_request' request.request_id %}">delete</a></td>
+	      	  	  	<td><a href="{% url 'accept_request' request.request_id %}">accept</a></td>
 	      	  	  </tr>
 				  {% endfor %}
 			  </table>
