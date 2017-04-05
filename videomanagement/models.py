@@ -23,7 +23,7 @@ class Video(models.Model):
 	video = models.FileField(upload_to="videos", blank=True)
 	content_type = models.CharField(max_length=50)
 	is_public = models.BooleanField(default=False)
-	gif = models.FileField(upload_to="gif", null=True)
+	gif = models.ImageField(upload_to="gif", null=True)
 
 	def __unicode__(self):
 #		return "%s %s" % (self.first_name, self.last_name)
