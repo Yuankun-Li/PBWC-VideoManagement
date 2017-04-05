@@ -30,4 +30,5 @@ urlpatterns = [
 	url(r'^delete_meeting_request/(?P<id>\d+)/', video_views.delete_meeting_request, name='delete_meeting_request'),
 	url(r'^accept_meeting_request/(?P<id>\d+)/', video_views.accept_meeting_request, name='accept_meeting_request'),
 	url(r'^committee_videos$', video_views.committee_retrieve, name='committee_retrieve'),
+	url(r'^gif/(?P<video_id>\d+)/$', video_views.get_gif, name='gif'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
