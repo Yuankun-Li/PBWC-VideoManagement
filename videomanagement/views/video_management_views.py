@@ -11,6 +11,13 @@ from videomanagement.forms import VideoForm
 from videomanagement.models import Video
 
 from datetime import datetime
+import imageio
+from django.core.files import File
+import os
+
+imageio.plugins.ffmpeg.download()
+
+from moviepy.editor import *
 
 # Create your views here.
 
@@ -118,7 +125,20 @@ def upload(request):
         # is actually a different object than what's return from a DB read.)
         new_video.content_type = form.cleaned_data['video'].content_type
         form.save()
+        
+        # generate gif for community page from the uploaded video
+        #print(new_video.video.path)
+        clip = (VideoFileClip(new_video.video.path).subclip((0,0.00),(0,0.01)).resize(0.5))
+        clip.write_gif("gif/tmp.gif")
+        
+        gif = File(open("gif/tmp.gif", "rb"))
+        name = new_video.video.name
+        new_name = name[name.rfind('/') + 1:name.rfind('.')] + ".gif"
+        new_video.gif.save(new_name, gif, save=True)
+        os.remove("gif/tmp.gif")
+        
         context['message'] = 'Item saved.'
+        
         context['form'] = VideoForm()
 
     # For test purpose, render might need to changed
@@ -147,6 +167,12 @@ def committee_retrieve(request):
     context = {'videos':all_videos}
     return render(request,'videomanagement/committee_main.html',context)
 
-
-
-
+# retrieve the gif of a video
+@login_required
+def get_gif(request, video_id):
+	video = get_object_or_404(Video, video_id=video_id)
+	if not video.video:
+		raise Http404
+	gif = video.gif
+	content_type = guess_type(gif.name)
+	return HttpResponse(gif, content_type = content_type)
