@@ -31,6 +31,14 @@ from moviepy.editor import *
 # retrieve the content of a video
 @login_required
 def get_video(request, video_id):
+    	"""
+    	Retrieve an instance of :model:`videomanagement.Video` from the dB.
+
+    	**Context**
+
+    	``Video``
+        An instance of :model:`videomanagement.Video`.
+    	"""
 	video = get_object_or_404(Video, video_id=video_id)
 	if not video.video:
 		raise Http404
@@ -41,6 +49,18 @@ def get_video(request, video_id):
 # retrive the page to view a video
 @login_required
 def view_video(request, video_id):
+    	"""
+    	View an instance of :model:`videomanagement.Video`.
+
+    	**Context**
+
+    	``Video``
+        	An instance of :model:`videomanagement.Video`.
+
+    	**Template:**
+
+    	:template:`videomanagement/view_video.html`
+    	"""
 	context = {'video_id': video_id}
 	for g in request.user.groups.all():
 		context['group'] = g.name
@@ -71,6 +91,15 @@ def community_retrieve(request):
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
 def delete_video(request, video_id):
+    """
+    Delete an individual :model:`videomanagement.Video`.
+
+    **Context**
+
+    ``Video``
+        An instance of :model:`videomanagement.Video`.
+
+    """
     video = get_object_or_404(Video, video_id=video_id)
 
     context = {}
@@ -93,7 +122,7 @@ def delete_video(request, video_id):
 @user_passes_test(lambda u: u.groups.filter(name='video_manager').count() == 1, login_url='/')
 def upload(request):
     """
-    Create an individual :model:`videomanagement.Video`.
+    Create an individual :model:`videomanagement.Video` from a given videoFile, and generate a gif of that video to display on the community page using the :view:`videomanagement.get_gif` action.
 
     **Context**
 
@@ -170,6 +199,14 @@ def committee_retrieve(request):
 # retrieve the gif of a video
 @login_required
 def get_gif(request, video_id):
+    	"""
+    	Retrieves the gif field from the given :model:`videomanagement.Video`.
+
+    	**Context**
+
+    	``Video``
+        	An instance of :model:`videomanagement.Video`.
+    	"""
 	video = get_object_or_404(Video, video_id=video_id)
 	if not video.video:
 		raise Http404
