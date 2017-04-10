@@ -42,7 +42,7 @@
 	      	  	  	<td>{{request.type}}</td>
 	      	  	  	<td><a href="{% url 'delete_meeting_request' request.id %}">delete</a></td>
 	      	  	  	<td><a href="{% url 'accept_meeting_request' request.id %}">accept</a></td>
-	      	  	  	<td><a href="{% url 'make_public'    request.id %}">Make Public</a></td>
+	      	  	  	<td><a href="{% url 'make_public'    request.id request.video_date %}">Make Public</a></td>
 	      	  	  </tr>
 	      {% endfor %}
 	      </table>

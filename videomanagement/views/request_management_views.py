@@ -74,6 +74,17 @@ def extend_retention(request, request_id):
     req = get_object_or_404(Request, request_id=request_id)
     return render(request, 'videomanagement/extend_retention.html', context)
 
+# retrieve make public request webpage
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
+def make_public(request, request_id):
+    context = {}
+    context['meeting_request_id'] = request_id
+    # either retrieve the request object, or return 404 error
+    req = get_object_or_404(MeetingRequest, id=request_id)
+    context['video_date'] = req.video_date
+    return render(request, 'videomanagement/make_public.html', context)
+
 # accept a Request
 def accept_request(request, request_id):
     # get the request to accept
