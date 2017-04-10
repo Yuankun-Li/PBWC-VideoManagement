@@ -43,10 +43,10 @@ class Request(models.Model):
 	def accept(self):
 		if self.type == 'delete_video':
 			self.video.video.delete()
-    			self.video.delete()
+    		self.video.delete()
 		elif self.type == 'extend_retention':
 			self.video.retention = 10
-
+    		self.video.delete()
 
 # MeetingRequest model: handle the review meeting request
 class MeetingRequest(models.Model):
