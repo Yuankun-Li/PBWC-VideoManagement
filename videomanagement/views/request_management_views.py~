@@ -66,8 +66,9 @@ def delete_request(request, request_id):
 @login_required
 def extend_retention(request, request_id):
     context = {}
+    context['request_id'] = request_id
     # either retrieve the request object, or return 404 error
-    request = get_object_or_404(Request, request_id=request_id)
+    req = get_object_or_404(Request, request_id=request_id)
     return render(request, 'videomanagement/extend_retention.html', context)
 
 # accept a Request

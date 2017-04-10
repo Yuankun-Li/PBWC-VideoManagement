@@ -49,13 +49,3 @@ class CreateMeetingRequestForm(forms.ModelForm):
                    'reasoning': forms.Textarea(attrs={'placeholder': 'Reasons', 'rows': 3, 'cols': '80%'})}
 
 
-class ExtendRetentionForm(forms.ModelForm):
-    class Meta:
-        model = Request
-        fields = { 'type', 'reasoning' }
-        widgets = {'type': forms.Select(),
-                   'reasoning': forms.Textarea(attrs={'placeholder': 'Reasons', 'rows': 3, 'cols': '80%'})}
-
-
-#class MakePublicForm(forms.ModelForm):
-
