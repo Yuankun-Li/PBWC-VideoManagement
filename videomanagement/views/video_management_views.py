@@ -11,6 +11,13 @@ from videomanagement.forms import VideoForm
 from videomanagement.models import Video
 
 from datetime import datetime
+import imageio
+from django.core.files import File
+import os
+
+imageio.plugins.ffmpeg.download()
+
+from moviepy.editor import *
 
 # Create your views here.
 
@@ -24,6 +31,14 @@ from datetime import datetime
 # retrieve the content of a video
 @login_required
 def get_video(request, video_id):
+    	"""
+    	Retrieve an instance of :model:`videomanagement.Video` from the dB.
+
+    	**Context**
+
+    	``Video``
+        An instance of :model:`videomanagement.Video`.
+    	"""
 	video = get_object_or_404(Video, video_id=video_id)
 	if not video.video:
 		raise Http404
@@ -34,6 +49,18 @@ def get_video(request, video_id):
 # retrive the page to view a video
 @login_required
 def view_video(request, video_id):
+    	"""
+    	View an instance of :model:`videomanagement.Video`.
+
+    	**Context**
+
+    	``Video``
+        	An instance of :model:`videomanagement.Video`.
+
+    	**Template:**
+
+    	:template:`videomanagement/view_video.html`
+    	"""
 	context = {'video_id': video_id}
 	for g in request.user.groups.all():
 		context['group'] = g.name
@@ -64,6 +91,15 @@ def community_retrieve(request):
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
 def delete_video(request, video_id):
+    """
+    Delete an individual :model:`videomanagement.Video`.
+
+    **Context**
+
+    ``Video``
+        An instance of :model:`videomanagement.Video`.
+
+    """
     video = get_object_or_404(Video, video_id=video_id)
 
     context = {}
@@ -86,7 +122,7 @@ def delete_video(request, video_id):
 @user_passes_test(lambda u: u.groups.filter(name='video_manager').count() == 1, login_url='/')
 def upload(request):
     """
-    Create an individual :model:`videomanagement.Video`.
+    Create an individual :model:`videomanagement.Video` from a given videoFile, and generate a gif of that video to display on the community page using the :view:`videomanagement.get_gif` action.
 
     **Context**
 
@@ -118,7 +154,20 @@ def upload(request):
         # is actually a different object than what's return from a DB read.)
         new_video.content_type = form.cleaned_data['video'].content_type
         form.save()
+        
+        # generate gif for community page from the uploaded video
+        #print(new_video.video.path)
+        clip = (VideoFileClip(new_video.video.path).subclip((0,0.00),(0,0.01)).resize(0.5))
+        clip.write_gif("gif/tmp.gif")
+        
+        gif = File(open("gif/tmp.gif", "rb"))
+        name = new_video.video.name
+        new_name = name[name.rfind('/') + 1:name.rfind('.')] + ".gif"
+        new_video.gif.save(new_name, gif, save=True)
+        os.remove("gif/tmp.gif")
+        
         context['message'] = 'Item saved.'
+        
         context['form'] = VideoForm()
 
     # For test purpose, render might need to changed
@@ -147,6 +196,20 @@ def committee_retrieve(request):
     context = {'videos':all_videos}
     return render(request,'videomanagement/committee_main.html',context)
 
+# retrieve the gif of a video
+@login_required
+def get_gif(request, video_id):
+    	"""
+    	Retrieves the gif field from the given :model:`videomanagement.Video`.
 
+    	**Context**
 
-
+    	``Video``
+        	An instance of :model:`videomanagement.Video`.
+    	"""
+	video = get_object_or_404(Video, video_id=video_id)
+	if not video.video:
+		raise Http404
+	gif = video.gif
+	content_type = guess_type(gif.name)
+	return HttpResponse(gif, content_type = content_type)
