@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, Http404
 from django.core.urlresolvers import reverse
+from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
@@ -10,10 +11,12 @@ from mimetypes import guess_type, MimeTypes
 from videomanagement.forms import VideoForm
 from videomanagement.models import Video
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import imageio
 from django.core.files import File
 import os
+
+from django.conf import settings
 
 imageio.plugins.ffmpeg.download()
 
@@ -43,7 +46,6 @@ def get_video(request, video_id):
 	if not video.video:
 		raise Http404
 	content_type = guess_type(video.video.name)
-	print(video.video.name)
 	return HttpResponse(video.video, content_type = content_type)
 
 # retrive the page to view a video
@@ -84,6 +86,14 @@ def community_retrieve(request):
     """
     all_videos = Video.objects.all().order_by('-video_date')
     context = {'videos':all_videos}
+    for video in all_videos:
+    	this_video = FileSystemStorage(location=settings.BASE_DIR)
+    	retention = video.retention
+    	time = this_video.created_time(video.video.name)
+    	time_now = datetime.now()-timedelta(days=retention)
+    	if time_now > time:
+    		video.video.delete()
+    		video.delete()
     return render(request,'videomanagement/community_main.html',context)
 
 ## Views and Actions for Committe Page
@@ -194,6 +204,14 @@ def committee_retrieve(request):
     """
     all_videos = Video.objects.all().order_by('-video_date')
     context = {'videos':all_videos}
+    for video in all_videos:
+    	this_video = FileSystemStorage(location=settings.BASE_DIR)
+    	retention = video.retention
+    	time = this_video.created_time(video.video.name)
+    	time_now = datetime.now()-timedelta(days=retention)
+    	if time_now > time:
+    		video.video.delete()
+    		video.delete()
     return render(request,'videomanagement/committee_main.html',context)
 
 # retrieve the gif of a video
