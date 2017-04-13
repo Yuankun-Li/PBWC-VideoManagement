@@ -35,6 +35,7 @@ def create_request(request, video_id):
 
 ## retrieve all requests
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
 def retrieve_requests(request):
     context = {}
     context['user'] = request.user
@@ -54,6 +55,7 @@ def retrieve_requests(request):
 
 # delete a Request
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
 def delete_request(request, request_id):
     # get the request to delete
     req = get_object_or_404(Request, request_id=request_id)
@@ -61,6 +63,27 @@ def delete_request(request, request_id):
     
     req.delete()
     return redirect(reverse('retrieve_requests'))
+
+# retrieve extend retention request webpage
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
+def extend_retention(request, request_id):
+    context = {}
+    context['request_id'] = request_id
+    # either retrieve the request object, or return 404 error
+    req = get_object_or_404(Request, request_id=request_id)
+    return render(request, 'videomanagement/extend_retention.html', context)
+
+# retrieve make public request webpage
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
+def make_public(request, request_id):
+    context = {}
+    context['meeting_request_id'] = request_id
+    # either retrieve the request object, or return 404 error
+    req = get_object_or_404(MeetingRequest, id=request_id)
+    context['video_date'] = req.video_date
+    return render(request, 'videomanagement/make_public.html', context)
 
 # accept a Request
 def accept_request(request, request_id):
@@ -96,6 +119,7 @@ def create_meeting_request(request):
 
 ## retrieve all meeting requests
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
 def retrieve_meeting_requests(request):
     context = {}
     context['user'] = request.user
@@ -109,6 +133,7 @@ def retrieve_meeting_requests(request):
 
 # delete a meeting Request
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
 def delete_meeting_request(request, id):
     # get the request to delete
     req = get_object_or_404(MeetingRequest, id=id)

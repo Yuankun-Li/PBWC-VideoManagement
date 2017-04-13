@@ -18,7 +18,7 @@ class Video(models.Model):
 	video_id = models.AutoField(primary_key=True)
 	location = models.CharField(max_length=128)
 	video_date = models.DateTimeField(blank=True, null=True)
-	retention = models.CharField(max_length=10)
+	retention = models.IntegerField()
 	upload_date = models.DateTimeField(blank=True, null=True)
 	video = models.FileField(upload_to="videos", blank=True)
 	content_type = models.CharField(max_length=50)
@@ -44,7 +44,10 @@ class Request(models.Model):
 	def accept(self):
 		if self.type == 'delete_video':
 			self.video.video.delete()
-    		self.video.delete()
+    			self.video.delete()
+		elif self.type == 'extend_retention':
+			self.video.retention = 10
+
 
 # MeetingRequest model: handle the review meeting request
 class MeetingRequest(models.Model):

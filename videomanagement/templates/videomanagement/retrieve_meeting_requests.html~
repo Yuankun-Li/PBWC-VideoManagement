@@ -1,0 +1,54 @@
+{% extends "videomanagement/base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}PBWC-VideoManagement Retrieve Requests{% endblock %}
+{% block title %}PBWC-VideoManagement Retrieve Requests{% endblock %}
+{% block css %}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+{% endblock %}
+
+{% block script %}
+	<script src="{% static "videomanagement/js/jquery-3.1.1.js" %}"></script>
+	<script src="{% static "videomanagement/js/bootstrap.min.js" %}"></script>
+{% endblock %}
+
+{% block container %}
+	<div class="container col-md-12 col-sm-10">
+	  <div class="block">
+	    <div class="block_content">
+	      <table style="width:100%">
+			<tr>
+	      	  <th>Video Date</th>
+	      	  <th>Request Date</th>
+	      	  <th>Requested By</th>
+	      	  <th>Location</th>
+	      	  <th>Reason</th>
+	      	  <th>Type</th>
+	      	  <th>Delete</th>
+	      	  <th>Accept</th>
+	      	  <th>Make Public</th>
+	      	</tr>
+	      {% for request in requests %}
+			 <tr>
+	      	  	  	<td>{{request.video_date}}</td>
+	      	  	  	<td>{{request.request_date}}</td>
+	      	  	  	<td>{{request.user.username}}</td>
+	      	  	  	<td>{{request.location}}</td>
+	      	  	  	<td>{{request.reasoning}}</td>
+	      	  	  	<td>{{request.type}}</td>
+	      	  	  	<td><a href="{% url 'delete_meeting_request' request.id %}">delete</a></td>
+	      	  	  	<td><a href="{% url 'accept_meeting_request' request.id %}">accept</a></td>
+	      	  	  	<td><a href="{% url 'make_public'    request.id request.video_date %}">Make Public</a></td>
+	      	  	  </tr>
+	      {% endfor %}
+	      </table>
+	    </div>
+	  </div>
+	</div>
+{% endblock %}
+
+{% block notlog_navbar %}{% endblock %}

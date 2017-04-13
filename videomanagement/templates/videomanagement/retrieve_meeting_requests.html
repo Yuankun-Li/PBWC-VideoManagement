@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block container %}
-	<div class="container col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+	<div class="container col-md-12 col-sm-10">
 	  <div class="block">
 	    <div class="block_content">
 	      <table style="width:100%">
@@ -28,9 +28,12 @@
 	      	  <th>Location</th>
 	      	  <th>Reason</th>
 	      	  <th>Type</th>
+	      	  <th>Delete</th>
+	      	  <th>Accept</th>
+	      	  <th>Make Public</th>
 	      	</tr>
 	      {% for request in requests %}
-				  <tr>
+			 <tr>
 	      	  	  	<td>{{request.video_date}}</td>
 	      	  	  	<td>{{request.request_date}}</td>
 	      	  	  	<td>{{request.user.username}}</td>
@@ -39,6 +42,7 @@
 	      	  	  	<td>{{request.type}}</td>
 	      	  	  	<td><a href="{% url 'delete_meeting_request' request.id %}">delete</a></td>
 	      	  	  	<td><a href="{% url 'accept_meeting_request' request.id %}">accept</a></td>
+	      	  	  	<td><a href="{% url 'make_public'    request.id %}">Make Public</a></td>
 	      	  	  </tr>
 	      {% endfor %}
 	      </table>
