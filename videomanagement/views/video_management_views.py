@@ -16,6 +16,8 @@ import imageio
 from django.core.files import File
 import os
 
+import subprocess
+
 from django.conf import settings
 
 imageio.plugins.ffmpeg.download()
@@ -161,12 +163,22 @@ def upload(request):
     else:
         # Must copy content_type into a new model field because the model
         # FileField will not store this in the database.  (The uploaded file
-        # is actually a different object than what's return from a DB read.)
+        # is actually a different object than what's return from a DB read.)    
         new_video.content_type = form.cleaned_data['video'].content_type
         form.save()
         
         # generate gif for community page from the uploaded video
         #print(new_video.video.path)
+        if new_video.content_type.startswith('video/avi'):
+            print new_video.video.name
+            print new_video.video.name+'.mp4'
+            subprocess.call(['./ffmpeg', '-i', new_video.video.name,'-strict', '-2', new_video.video.name+'.mp4'])
+            os.remove(new_video.video.name)
+            new_video.video=new_video.video.name+'.mp4'
+            new_video.content_type = 'video/mp4'
+            new_video.save()
+
+
         clip = (VideoFileClip(new_video.video.path).subclip((0,0.00),(0,0.01)).resize(0.5))
         clip.write_gif("gif/tmp.gif")
         
