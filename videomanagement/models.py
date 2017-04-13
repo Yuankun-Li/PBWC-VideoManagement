@@ -18,7 +18,7 @@ class Video(models.Model):
 	video_id = models.AutoField(primary_key=True)
 	location = models.CharField(max_length=128)
 	video_date = models.DateTimeField(blank=True, null=True)
-	retention = models.CharField(max_length=10)
+	retention = models.IntegerField()
 	upload_date = models.DateTimeField(blank=True, null=True)
 	video = models.FileField(upload_to="videos", blank=True)
 	content_type = models.CharField(max_length=50)
