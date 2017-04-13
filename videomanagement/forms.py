@@ -11,6 +11,7 @@ class VideoForm(forms.ModelForm):
     class Meta:
         model = Video
         fields = { 'location', 'video_date', 'retention', 'video' }
+        widgets = {'video_date': SelectDateWidget()}
 
     def clean_video(self):
         video = self.cleaned_data['video']
