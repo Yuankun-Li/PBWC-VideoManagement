@@ -30,6 +30,7 @@
 	      	  <th>Type</th>
 	      	  <th>Delete</th>
 	      	  <th>Accept</th>
+		  <th>Inspect Video</th>
 	      	  <th>Make Public</th>
 	      	</tr>
 	      {% for request in requests %}
@@ -42,6 +43,7 @@
 	      	  	  	<td>{{request.type}}</td>
 	      	  	  	<td><a href="{% url 'delete_meeting_request' request.id %}">delete</a></td>
 	      	  	  	<td><a href="{% url 'accept_meeting_request' request.id %}">accept</a></td>
+	      	  	  	<td><a href="{% url 'inspect_video'  request.id %}">Inspect Video</a></td>
 	      	  	  	<td><a href="{% url 'make_public'    request.id %}">Make Public</a></td>
 	      	  	  </tr>
 	      {% endfor %}

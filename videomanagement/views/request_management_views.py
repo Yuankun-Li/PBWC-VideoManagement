@@ -87,6 +87,18 @@ def make_public(request, request_id):
     context['video_date'] = req.video_date
     return render(request, 'videomanagement/make_public.html', context)
 
+# retrieve inspect video request webpage
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
+def inspect_video(request, request_id):
+    context = {}
+    context['meeting_request_id'] = request_id
+    context['form'] = InspectVideoForm()
+    # either retrieve the request object, or return 404 error
+    req = get_object_or_404(MeetingRequest, id=request_id)
+    context['video_date'] = req.video_date
+    return render(request, 'videomanagement/inspect_video.html', context)
+
 # accept a Request
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
