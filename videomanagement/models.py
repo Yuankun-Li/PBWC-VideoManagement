@@ -5,6 +5,9 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
+#needed for request acceptance forms
+#from forms import MakePublicForm
+
 # Create your models here.
 
 # Video model: Include basic information about upload video information
@@ -62,7 +65,16 @@ class MeetingRequest(models.Model):
 	
 	# accept a request
 	def accept(self):
+		#Doesn't currently work: need to re-architect
 		if self.type == 'make_public':
+
 			video = get_object_or_404(Video, video_date=self.video_date, location=self.location)
 			video.is_public = True
 			video.save()
+
+
+
+
+
+
+

@@ -52,3 +52,26 @@ class CreateMeetingRequestForm(forms.ModelForm):
                    'reasoning': forms.Textarea(attrs={'placeholder': 'Reasons', 'rows': 3, 'cols': '80%'})}
 
 
+#### Committee Action Forms
+
+class ExtendRetentionForm(forms.Form):
+	purpose = forms.ChoiceField(choices=(
+			('Use of Force','Use of Force'), 
+			('Registered Complaint','Registered Complaint'), 
+			('Overriding Public Interest','Overriding Public Interest')))
+
+	rationale = forms.CharField(max_length=1000,
+			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
+                                                                    'class': 'form-control'}))
+
+
+class MakePublicForm(forms.Form):
+	purpose = forms.ChoiceField(choices=(
+			('Use of Force','Use of Force'), 
+			('Registered Complaint','Registered Complaint'), 
+			('Overriding Public Interest','Overriding Public Interest')))
+
+	rationale = forms.CharField(max_length=1000,
+			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
+                                                                    'class': 'form-control'}))
+
