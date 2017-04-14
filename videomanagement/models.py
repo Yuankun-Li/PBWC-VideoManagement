@@ -54,7 +54,7 @@ class Request(models.Model):
 
 # MeetingRequest model: handle the review meeting request
 class MeetingRequest(models.Model):
-	TYPE_CHOICES = (('meeting', 'meeting',), ('make_public', 'make_public',))
+	TYPE_CHOICES = (('meeting', 'meeting',), ('make_public', 'make_public',), ('inspect_video', 'inspect_video'))
 	
 	request_date = models.DateTimeField(default=timezone.now)
 	type = models.CharField(max_length=50, choices=TYPE_CHOICES, default='meeting')
@@ -70,6 +70,9 @@ class MeetingRequest(models.Model):
 
 			video = get_object_or_404(Video, video_date=self.video_date, location=self.location)
 			video.is_public = True
+			video.save()
+		if self.type == 'inspect_video':
+			#notify/email user
 			video.save()
 
 

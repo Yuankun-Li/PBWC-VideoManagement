@@ -9,26 +9,32 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
+
 {% endblock %}
 
 {% block script %}
 	<script src="{% static "videomanagement/js/jquery-3.1.1.js" %}"></script>
 	<script src="{% static "videomanagement/js/bootstrap.min.js" %}"></script>
+	<script src="{% static "videomanagement/js/extend_retention.js" %}"></script>
+	<script src="{% static "videomanagement/js/view_video.js" %}"></script>
 {% endblock %}
 
 
 {% block container %}
-
-    <div class = "panel panel-default col-md-6 col-md-offset-3">
+    <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+    <div class = "panel panel-default">
         <div class = "panel-heading"><h2 class = "text-center">Extend Retention</h2></div>
 	<div class = "panel-body">
-	 <form class = "form-horizontal" method = "post" action = "{% url 'accept_request' request_id %}" >
 	 <form method = "post" action = "{% url 'accept_request' request_id %}" >
                 {% csrf_token %}
 		{{form.as_p}}
 		  <input type="submit" class="btn btn-default" value="Accept Request">
 	 </form>
         </div>
+    </div>
+    </div>
     </div>
 
 {% endblock %}
