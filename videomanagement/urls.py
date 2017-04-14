@@ -35,5 +35,6 @@ urlpatterns = [
 	url(r'^make_public/(?P<request_id>\d+)/$', video_views.make_public, name='make_public'),
 	url(r'^inspect_video/(?P<request_id>\d+)/$', video_views.inspect_video, name='inspect_video'),
 	url(r'^committee_videos$', video_views.committee_retrieve, name='committee_retrieve'),
+	url(r'^privacy_policy$', video_views.privacy_policy, name='privacy_policy'),
 	url(r'^gif/(?P<video_id>\d+)/$', video_views.get_gif, name='gif')
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
