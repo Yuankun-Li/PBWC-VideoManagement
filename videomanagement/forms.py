@@ -53,3 +53,41 @@ class CreateMeetingRequestForm(forms.ModelForm):
                    'reasoning': forms.Textarea(attrs={'placeholder': 'Reasons', 'rows': 3, 'cols': '80%'})}
 
 
+#### Committee Action Forms
+
+class ExtendRetentionForm(forms.Form):
+	le_officer     = forms.BooleanField(label="Is the requester a Law Enforcement Officer?", required=False)
+	le_trainingpurpose = forms.BooleanField(label = "Is the request for training purposes?", required=False)
+	le_Evidexculp = forms.BooleanField(label = "Is there Evidentiary or Exculpatory Value?", required=False)
+	
+	le_role = forms.ChoiceField(label="Requester is", required=False, choices=(
+			('', ''),
+			('the Recording Officer','the Recording Officer'), 
+			('Present in the Video','Present in the Video'), 
+			('Superior Officer of Recording Officer','Superior Officer of Recording Officer')))
+
+	datasubject = forms.BooleanField(label = "Is the requester a Data Subject?", required=False)
+
+	## FeatureExtension: Incorporate Additional Policy Clauses
+
+	rationale = forms.CharField(max_length=1000,
+			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
+                                                                    'class': 'form-control'}))
+
+
+class InspectVideoForm(forms.Form):
+	rationale = forms.CharField(max_length=1000,
+			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
+                                                                    'class': 'form-control'}))
+
+
+class MakePublicForm(forms.Form):
+	purpose = forms.ChoiceField(choices=(
+			('Use of Force','Use of Force'), 
+			('Registered Complaint','Registered Complaint'), 
+			('Overriding Public Interest','Overriding Public Interest')))
+
+	rationale = forms.CharField(max_length=1000,
+			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
+                                                                    'class': 'form-control'}))
+

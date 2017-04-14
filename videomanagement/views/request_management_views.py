@@ -70,6 +70,7 @@ def delete_request(request, request_id):
 def extend_retention(request, request_id):
     context = {}
     context['request_id'] = request_id
+    context['form'] = ExtendRetentionForm()
     # either retrieve the request object, or return 404 error
     req = get_object_or_404(Request, request_id=request_id)
     return render(request, 'videomanagement/extend_retention.html', context)
@@ -80,16 +81,34 @@ def extend_retention(request, request_id):
 def make_public(request, request_id):
     context = {}
     context['meeting_request_id'] = request_id
+    context['form'] = MakePublicForm()
     # either retrieve the request object, or return 404 error
     req = get_object_or_404(MeetingRequest, id=request_id)
     context['video_date'] = req.video_date
     return render(request, 'videomanagement/make_public.html', context)
 
+# retrieve inspect video request webpage
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
+def inspect_video(request, request_id):
+    context = {}
+    context['meeting_request_id'] = request_id
+    context['form'] = InspectVideoForm()
+    # either retrieve the request object, or return 404 error
+    req = get_object_or_404(MeetingRequest, id=request_id)
+    context['video_date'] = req.video_date
+    return render(request, 'videomanagement/inspect_video.html', context)
+
 # accept a Request
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
 def accept_request(request, request_id):
     # get the request to accept
     req = get_object_or_404(Request, request_id=request_id)
-    req.accept()
+    if req.type == "extend_retention":
+	form = ExtendRetentionForm(request.POST)
+    if form.is_valid():
+    	req.accept()
     return redirect(reverse('retrieve_requests'))
 
 ## create a meeting request
@@ -151,8 +170,17 @@ def delete_meeting_request(request, id):
     return redirect(reverse('retrieve_meeting_requests'))
 
 # accept a meeting Request
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
 def accept_meeting_request(request, id):
     # get the request to accept
-    req = get_object_or_404(MeetingRequest, id=id)
-    req.accept()
+    if request.method == "POST":
+    	req = get_object_or_404(MeetingRequest, id=id)
+	if req.type == "make_public":
+		form = MakePublicForm(request.POST)
+	if form.is_valid():
+    		req.accept()
     return redirect(reverse('retrieve_meeting_requests'))
+
+
+
