@@ -126,7 +126,15 @@ def retrieve_meeting_requests(request):
     
     requests = MeetingRequest.objects.all()
     
-    context['requests'] = requests
+    videos_for_request = []
+    for re in requests:
+        request_video = {}
+        videos = Video.objects.all().filter(video_date=re.video_date, location=re.location)
+        request_video['videos'] = videos
+        request_video['request'] = re
+        videos_for_request.append(request_video)
+    
+    context['requests'] = videos_for_request
     
     # For test purpose, render might need to changed
     return render(request, 'videomanagement/retrieve_meeting_requests.html', context)

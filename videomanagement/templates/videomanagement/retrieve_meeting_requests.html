@@ -20,32 +20,35 @@
 	<div class="container col-md-12 col-sm-10">
 	  <div class="block">
 	    <div class="block_content">
-	      <table style="width:100%">
-			<tr>
-	      	  <th>Video Date</th>
-	      	  <th>Request Date</th>
-	      	  <th>Requested By</th>
-	      	  <th>Location</th>
-	      	  <th>Reason</th>
-	      	  <th>Type</th>
-	      	  <th>Delete</th>
-	      	  <th>Accept</th>
-	      	  <th>Make Public</th>
-	      	</tr>
 	      {% for request in requests %}
-			 <tr>
-	      	  	  	<td>{{request.video_date}}</td>
-	      	  	  	<td>{{request.request_date}}</td>
-	      	  	  	<td>{{request.user.username}}</td>
-	      	  	  	<td>{{request.location}}</td>
-	      	  	  	<td>{{request.reasoning}}</td>
-	      	  	  	<td>{{request.type}}</td>
-	      	  	  	<td><a href="{% url 'delete_meeting_request' request.id %}">delete</a></td>
-	      	  	  	<td><a href="{% url 'accept_meeting_request' request.id %}">accept</a></td>
-	      	  	  	<td><a href="{% url 'make_public'    request.id %}">Make Public</a></td>
-	      	  	  </tr>
+	      <div>
+	      	 <h3>Request {{request.request.id}}</h3>
+			 <ul style="width:100%">
+	      	  	  	<li>Video Date: {{request.request.video_date}}</li>
+	      	  	  	<li>Request Date: {{request.request.request_date}}</li>
+	      	  	  	<li>Requested By: {{request.request.user.username}}</li>
+	      	  	  	<li>Location: {{request.request.location}}</li>
+	      	  	  	<li>Reason: {{request.request.reasoning}}</li>
+	      	  	  	<li>Type: {{request.request.type}}</li>
+	      	  	  	<li>
+	      	  	  		<a href="{% url 'delete_meeting_request' request.request.id %}">delete</a>
+	      	  	  		<a href="{% url 'accept_meeting_request' request.request.id %}">accept</a>
+	      	  	  	</li>
+	      	  	  	<li><a href="{% url 'make_public'    request.request.id %}">Make Public</a></li>
+	      	  	  </ul>
+	      	  	  <h4>Related videos: </h4>
+	      	  	  {% for video in request.videos %}
+					<span>
+						<span>
+							<a href="{% url 'view_video' video.video_id %}">
+							<img class="img-thumbnail" width="100" height="100"
+								alt="PoliceVideo" src="{% url 'gif' video.video_id %}">
+								</a>
+						</span>
+					</span>
+					{% endfor %} 
+			</div>
 	      {% endfor %}
-	      </table>
 	    </div>
 	  </div>
 	</div>
