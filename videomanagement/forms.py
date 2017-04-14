@@ -11,7 +11,8 @@ class VideoForm(forms.ModelForm):
     class Meta:
         model = Video
         fields = { 'location', 'video_date', 'retention', 'video' }
-        widgets = {'video_date': SelectDateWidget()}
+        widgets = {'video_date': SelectDateWidget(),
+                   'location': forms.Select()}
 
     def clean_video(self):
         video = self.cleaned_data['video']
@@ -48,7 +49,7 @@ class CreateMeetingRequestForm(forms.ModelForm):
         fields = { 'video_date', 'type', 'location', 'reasoning' }
         widgets = {'video_date': SelectDateWidget(),
                    'type': forms.Select(),
-                   'location': forms.Textarea(attrs={'placeholder': 'Location', 'rows': 1, 'cols': '80%'}),
+                   'location': forms.Select(),
                    'reasoning': forms.Textarea(attrs={'placeholder': 'Reasons', 'rows': 3, 'cols': '80%'})}
 
 

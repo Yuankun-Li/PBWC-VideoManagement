@@ -15,11 +15,16 @@ from django.shortcuts import get_object_or_404
 # content_type need to be fixed
 
 class Video(models.Model):
+	LOCATION_CHOICES = (('Gates Center for Computer Science', 'Gates Center for Computer Science',), 
+					('Cyert Hall', 'Cyert Hall',),
+					('Cohon University Center', 'Cohon University Center',),
+					('Hunt Library', 'Hunt Library',),
+					('Other place', 'Other place',))
 	"""
 	Stores a single video entry, related to :model:`auth.User` when User is Officer that took video.
 	"""
 	video_id = models.AutoField(primary_key=True)
-	location = models.CharField(max_length=128)
+	location = models.CharField(max_length=128, choices=LOCATION_CHOICES, default='Gates Center for Computer Science')
 	video_date = models.DateTimeField(blank=True, null=True)
 	retention = models.IntegerField()
 	upload_date = models.DateTimeField(blank=True, null=True)
@@ -60,7 +65,7 @@ class MeetingRequest(models.Model):
 	type = models.CharField(max_length=50, choices=TYPE_CHOICES, default='meeting')
 	video_date = models.DateTimeField()
 	user = models.ForeignKey(User)
-	location = models.CharField(max_length=128)
+	location = models.CharField(max_length=128, choices=Video.LOCATION_CHOICES, default='Gates Center for Computer Science')
 	reasoning = models.CharField(max_length=1000)
 	
 	# accept a request
