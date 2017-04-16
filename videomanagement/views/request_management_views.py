@@ -99,6 +99,28 @@ def inspect_video(request, request_id):
     context['video_date'] = req.video_date
     return render(request, 'videomanagement/inspect_video.html', context)
 
+# retrieve privatize video from public request webpage
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
+def privatize_video(request, request_id):
+    context = {}
+    context['request_id'] = request_id
+    context['form'] = PrivatizeVideoForm()
+    # either retrieve the request object, or return 404 error
+    req = get_object_or_404(Request, request_id=request_id)
+    return render(request, 'videomanagement/privatize_video.html', context)
+
+# retrieve delete video request webpage
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
+def delete_video_request(request, request_id):
+    context = {}
+    context['request_id'] = request_id
+    context['form'] = DeleteVideoForm()
+    # either retrieve the request object, or return 404 error
+    req = get_object_or_404(Request, request_id=request_id)
+    return render(request, 'videomanagement/delete_video.html', context)
+
 # accept a Request
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
@@ -178,8 +200,8 @@ def accept_meeting_request(request, id):
     	req = get_object_or_404(MeetingRequest, id=id)
 	if req.type == "make_public":
 		form = MakePublicForm(request.POST)
-	if form.is_valid():
-    		req.accept()
+		if form.is_valid():
+    			req.accept()
     return redirect(reverse('retrieve_meeting_requests'))
 
 

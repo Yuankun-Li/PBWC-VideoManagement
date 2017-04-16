@@ -80,6 +80,11 @@ class InspectVideoForm(forms.Form):
 			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
                                                                     'class': 'form-control'}))
 
+class DeleteVideoForm(forms.Form):
+	rationale = forms.CharField(max_length=1000,
+			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
+                                                                    'class': 'form-control'}))
+
 
 class MakePublicForm(forms.Form):
 	purpose = forms.ChoiceField(choices=(

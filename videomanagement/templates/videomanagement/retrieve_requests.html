@@ -33,6 +33,7 @@
 	      	  	 	 <th>Is Video Public?</th>
 	      	  	 	 <th>Reason</th>
 	      	  	 	 <th>Delete Video</th>
+	      	  	 	 <th>Remove Video from Public</th>
 	      	  	 	 <th>Extend Retention</th>
 	      	  	 	 <th>Make Public</th>
 	      	  	  </tr>
@@ -45,7 +46,8 @@
 	      	  	  	<td>{{request.video.retention}}</td>
 	      	  	  	<td>{{request.video.is_public}}</td>
 	      	  	  	<td>{{request.reasoning}}</td>
-	      	  	  	<td><a href="{% url 'delete_request' request.request_id %}">delete</a></td>
+	      	  	  	<td><a href="{% url 'delete_video_request' request.request_id %}">delete</a></td>
+	      	  	  	<td><a href="{% url 'privatize_video' request.request_id %}">remove from public</a></td>
 	      	  	  	<td><a href="{% url 'extend_retention' request.request_id %}">extend retention</a></td>
 	      	  	  	<td><a href="{% url 'accept_request' request.request_id %}">accept</a></td>
 	      	  	  </tr>

@@ -29,6 +29,9 @@ from moviepy.editor import *
 
 ########### VIEWS AND ACTIONS FOR NON-LOGGED IN USERS #######################
 
+def privacy_policy(request):
+    	context = {}
+	return render(request,'videomanagement/privacy_policy.html',context)
 
 ########### VIEWS AND ACTIONS FOR LOGGED IN USERS #######################
 
