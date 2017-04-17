@@ -37,9 +37,9 @@ class Video(models.Model):
 #		return "%s %s" % (self.first_name, self.last_name)
 		return "%s %s" % (self.video_id, self.content_type)
 
-# Request model: handle the extended retention, delete video and make public request
+# Request model: handle the extended retention, privatize video, and register complaint request
 class Request(models.Model):
-	TYPE_CHOICES = (('extend_retention', 'extend_retention',), ('delete_video', 'delete_video',))
+	TYPE_CHOICES = (('extend_retention', 'extend_retention'), ('privatize_video','privatize_video'),('register_complaint', 'register_complaint'))
 	
 	request_id = models.AutoField(primary_key=True)
 	request_date = models.DateTimeField(default=timezone.now)

@@ -34,6 +34,7 @@
 	      	  	  		<a href="{% url 'accept_meeting_request' request.request.id %}">accept</a>
 	      	  	  	</li>
 	      	  	  	<li><a href="{% url 'make_public'    request.request.id %}">Make Public</a></li>
+	      	  	  	<li><a href="{% url 'inspect_video'    request.request.id %}">Inspect Video</a></li>
 	      	  	  </ul>
 	      	  	  <h4>Related videos: </h4>
 	      	  	  {% for video in request.videos %}
