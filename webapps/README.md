@@ -7,37 +7,37 @@ To establish an admin user, and subsequently create new users that fit into each
 1. Install docutils using "pip install docutils".
 
 2. Install python-social-auth and social-auth-app-django using the following commands:
-        a. “pip install python-social-auth"
-        b. “pip install social-auth-app-django”
-   Use “—ignore-installed six” if you have any problem when uninstalling six.
+        <br/> a. “pip install python-social-auth"
+        <br/> b. “pip install social-auth-app-django”
+   <br/> Use “—ignore-installed six” if you have any problem when uninstalling six.
 
 3. Download and install pyjwkest from the following URL: https://github.com/rohe/pyjwkest. Get into the directory of pyjwkest and run “python setup.py install”.
 
 4. Install the imageio and moviepy Python packages (if required) with the following commands:
-        a. “pip install imageio"
-        b. “pip install moviepy”
-    If you don't have the latest version of numpy, use the command "pip install numpy --upgrade”. Use “—ignore-installed six” if have any problem when uninstalling six.
+        <br/> a. “pip install imageio"
+        <br/> b. “pip install moviepy”
+    <br/> If you don't have the latest version of numpy, use the command "pip install numpy --upgrade”. Use “—ignore-installed six” if have any problem when uninstalling six.
 
 5. Use the command “python manage.py createsuperuser” to create an admin account. This will require a username, email, and password.
 
 6. Run the server with command “python manage.py runserver”, and then go to “localhost:8000/admin” in your browser. Here, you can enter the same username and password you just created.
 
 7. Once logged in as a superuser, you can click “Add” next to “Group” (which is under Authentication and Authorization). This will allow you to make new user groups with the appropriate permissions from the listing. Specifically:
-        a. Students:
-            i. “videomanagement | request | Can add request”
-            ii. “videomanagement | request | Can add meeting request”
-        b. Officers:
-            i. “videomanagement | request | Can add request”
-            ii. “videomanagement | request | Can add meeting request”
-        c. Sergeants/Administrative Officials:
-            i. “videomanagement | request | Can add request”
-            ii. “videomanagement | request | Can add meeting request”
-            iii. “videomanagement | video | Can add video"
-        d. Committee Members:
-            i. “videomanagement | request | Can delete request”
-            ii. “videomanagement | request | Can delete meeting request”
-            iii. “videomanagement | video | Can change video"
-            iv. “videomanagement | video | Can delete video"
+        <br/> a. Students:
+            <br/> i. “videomanagement | request | Can add request”
+            <br/> ii. “videomanagement | request | Can add meeting request”
+        <br/> b. Officers:
+            <br/> i. “videomanagement | request | Can add request”
+            <br/> ii. “videomanagement | request | Can add meeting request”
+        <br/> c. Sergeants/Administrative Officials:
+            <br/> i. “videomanagement | request | Can add request”
+            <br/> ii. “videomanagement | request | Can add meeting request”
+            <br/> iii. “videomanagement | video | Can add video"
+        <br/> d. Committee Members:
+            <br/> i. “videomanagement | request | Can delete request”
+            <br/> ii. “videomanagement | request | Can delete meeting request”
+            <br/> iii. “videomanagement | video | Can change video"
+            <br/> iv. “videomanagement | video | Can delete video"
 
 8. After you have added all stakeholder groups, you can create individual users for each group. Navigate back to Authentication and Authorization, and click “Add” next to “User”. Provide a username and password for this user, and then click "Save".
 
