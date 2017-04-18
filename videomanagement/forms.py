@@ -76,6 +76,26 @@ class ExtendRetentionForm(forms.Form):
 
 
 class InspectVideoForm(forms.Form):
+	datasubject = forms.BooleanField(label = "Is the requester present in the video?", required=False)
+	community_member     = forms.BooleanField(label="Is the requester a Community Member?", required=False)
+	le_officer     = forms.BooleanField(label="Is the requester a law enforcement officer with jurisdiction over the community?", required=False)
+	le_report = forms.BooleanField(label = "Has the officer filed a report on the incident?", required=False)
+	le_recorder     = forms.BooleanField(label="Is the requesting officer the one who recorded the video?", required=False)
+	le_superior     = forms.BooleanField(label="Is the requesting officer a superior of the officer who recorded the video?", required=False)
+	le_misconduct     = forms.BooleanField(label="Has there been a complaint of police misconduct regarding the events depicted in the video?", required=False)
+
+	legalrep = forms.BooleanField(label = "Is the requester a Legal Representative?", required=False)
+	legalrep_role = forms.ChoiceField(label="Requesting Legal Representative is representing", required=False, choices=(
+			('', ''),
+			('an individual present in the video','an individual present in the video'), 
+			('A parent of an individual present in the video','A parent of an individual present in the video'), 
+			('the spouse of an individual present in the video','the spouse of an individual present in the video'),
+			('the law enforcement officer who recorded the video','the law enforcement officer who recorded the video'),	
+			('a client with a reasonable basis to claim video contains exculpatory evidence','a client with a reasonable basis to claim video contains exculpatory evidence')		
+))
+
+	## FeatureExtension: Incorporate Additional Policy Clauses
+
 	rationale = forms.CharField(max_length=1000,
 			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
                                                                     'class': 'form-control'}))
