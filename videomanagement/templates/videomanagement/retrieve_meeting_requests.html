@@ -27,7 +27,8 @@
 	      	  	  	<li>Request Date: {{request.request.request_date}}</li>
 	      	  	  	<li>Requested By: {{request.request.user.username}}</li>
 	      	  	  	<li>Location: {{request.request.location}}</li>
-	      	  	  	<li>Reason: {{request.request.reasoning}}</li>
+	      	  	  	<li>Description: {{request.request.description}}</li>
+	      	  	  	<li>Reason: {{request.request.reason_for_request}}</li>
 	      	  	  	<li>Type: {{request.request.type}}</li>
 	      	  	  	<li>
 	      	  	  		<a href="{% url 'delete_meeting_request' request.request.id %}">delete</a>
