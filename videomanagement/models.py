@@ -66,7 +66,8 @@ class MeetingRequest(models.Model):
 	video_date = models.DateTimeField()
 	user = models.ForeignKey(User)
 	location = models.CharField(max_length=128, choices=Video.LOCATION_CHOICES, default='Gates Center for Computer Science')
-	reasoning = models.CharField(max_length=1000)
+	description = models.CharField(max_length=1000)
+	reason_for_request = models.CharField(max_length=1000)
 	
 	# accept a request
 	def accept(self):
