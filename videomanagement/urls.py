@@ -37,6 +37,7 @@ urlpatterns = [
 	url(r'^delete_video_request/(?P<request_id>\d+)/$', video_views.delete_video_request, name='delete_video_request'),
 	url(r'^privatize_video/(?P<request_id>\d+)/$', video_views.privatize_video, name='privatize_video'),
 	url(r'^committee_videos$', video_views.committee_retrieve, name='committee_retrieve'),
+	url(r'^committee_actions$', video_views.committee_action_retrieve, name='committee_action_retrieve'),
 	url(r'^privacy_policy$', video_views.privacy_policy, name='privacy_policy'),
 	url(r'^gif/(?P<video_id>\d+)/$', video_views.get_gif, name='gif')
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

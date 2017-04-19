@@ -99,9 +99,9 @@ def community_retrieve(request):
     	if time_now > time:
     		video.video.delete()
     		video.delete()
-    return render(request,'videomanagement/community_main.html',context)
+    return render(request, 'videomanagement/community_main.html',context)
 
-## Views and Actions for Committe Page
+## Views and Actions for Committee
 
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')

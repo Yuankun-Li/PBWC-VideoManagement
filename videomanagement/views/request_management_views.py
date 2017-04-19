@@ -73,6 +73,7 @@ def extend_retention(request, request_id):
     context['form'] = ExtendRetentionForm()
     # either retrieve the request object, or return 404 error
     req = get_object_or_404(Request, request_id=request_id)
+    context['video_id'] = req.video
     return render(request, 'videomanagement/extend_retention.html', context)
 
 
@@ -103,11 +104,17 @@ def delete_video_request(request, request_id):
 @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
 def accept_request(request, request_id):
     # get the request to accept
+    context = {}
     req = get_object_or_404(Request, request_id=request_id)
     if req.type == "extend_retention":
 	form = ExtendRetentionForm(request.POST)
-    if form.is_valid():
-    	req.accept()
+    	if form.is_valid():
+		data = form.cleaned_data
+		policy_justification = data['le_officer']
+		committee_text_reason = data['rationale']
+        	context['message'] = 'Action created'
+    		req.accept(request_id, policy_justification,committee_text_reason)
+    		return render(request,'videomanagement/retrieve_actions.html',context)
     return redirect(reverse('retrieve_requests'))
 
 
