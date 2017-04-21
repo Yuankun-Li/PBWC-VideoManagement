@@ -12,8 +12,9 @@ To establish an admin user, and subsequently create new users that fit into each
 1. Install docutils using "pip install docutils".
 
 2. Install python-social-auth and social-auth-app-django using the following commands:
-  1. “pip install python-social-auth"
-  2. “pip install social-auth-app-django”
+   - “pip install python-social-auth"
+   - “pip install social-auth-app-django”
+
 <br/> Use “—ignore-installed six” if you have any problem when uninstalling six.
 
 3. Download and install pyjwkest from the following URL: https://github.com/rohe/pyjwkest. Get into the directory of pyjwkest and run “python setup.py install”.
