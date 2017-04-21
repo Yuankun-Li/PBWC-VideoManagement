@@ -10,7 +10,7 @@ from models import *
 class VideoForm(forms.ModelForm):
     class Meta:
         model = Video
-        fields = { 'location', 'video_date', 'retention', 'video' }
+        fields = { 'location', 'video_date', 'video' }
         widgets = {'video_date': SelectDateWidget(),
                    'location': forms.Select()}
 
