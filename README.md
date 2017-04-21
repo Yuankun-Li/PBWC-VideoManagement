@@ -1,8 +1,9 @@
-# PBWC-VideoManagement/webapps
+# PBWC-VideoManagement
 
 This is a Django-supported web service for the independent management and disclosure of police body-worn camera (BWC) footage. It has been designed with the privacy of data subjects and accountability of police officers in mind, and is oriented toward deployment on a college campus.
 
 Use of this web service involves 4 stakeholders: students, police officers, police "managers" (who are administrative officials in the campus police department), and members of an independent committee (which manages disclosure of BWC footage).
+
 _______________________________________________________________________________________________________________
 
 Please use Python 2.7 for testing.
@@ -34,11 +35,11 @@ To establish an admin user, and subsequently create new users that fit into each
   * Officers:
     - “videomanagement | request | Can add request”
     - “videomanagement | request | Can add meeting request”
-  * Sergeants/Administrative Officials (*Group must be labled "video_manager" for web service to provide users in this group access to the video upload webpage*):
+  * Sergeants/Administrative Officials (*Group must be labeled "video_manager" for web service to provide users in this group access to the video upload webpage*):
     - “videomanagement | request | Can add request”
     - “videomanagement | request | Can add meeting request”
     - “videomanagement | video | Can add video"
-  * Committee Members (*Group must be labled "committee_member" for web service to provide users in this group access to the full BWC footage database and all requests submitted by students and officers*):
+  * Committee Members (*Group must be labeled "committee_member" for web service to provide users in this group access to the full BWC footage database and all requests submitted by students and officers*):
     - “videomanagement | request | Can delete request”
     - “videomanagement | request | Can delete meeting request”
     - “videomanagement | video | Can change video"
