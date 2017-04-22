@@ -46,7 +46,8 @@ def retrieve_requests(request):
     # get request for each video
     for video in videos:
         requests = Request.objects.filter(video=video)
-        requests_by_id[video] = requests
+        if len(requests) > 0:
+            requests_by_id[video] = requests
     
     context['requests'] = requests_by_id
     
@@ -156,11 +157,12 @@ def retrieve_meeting_requests(request):
     
     videos_for_request = []
     for re in requests:
-        request_video = {}
-        videos = Video.objects.all().filter(video_date=re.video_date, location=re.location)
-        request_video['videos'] = videos
-        request_video['request'] = re
-        videos_for_request.append(request_video)
+        if re.resolved:
+            request_video = {}
+            videos = Video.objects.all().filter(video_date=re.video_date, location=re.location)
+            request_video['videos'] = videos
+            request_video['request'] = re
+            videos_for_request.append(request_video)
     
     context['requests'] = videos_for_request
     
