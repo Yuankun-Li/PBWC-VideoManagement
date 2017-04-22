@@ -73,43 +73,52 @@ def extend_retention(request, request_id):
     context['form'] = ExtendRetentionForm()
     # either retrieve the request object, or return 404 error
     req = get_object_or_404(Request, request_id=request_id)
+    context['video_id'] = req.video
     return render(request, 'videomanagement/extend_retention.html', context)
 
-# retrieve make public request webpage
-@login_required
-@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
-def make_public(request, request_id):
-    context = {}
-    context['meeting_request_id'] = request_id
-    context['form'] = MakePublicForm()
-    # either retrieve the request object, or return 404 error
-    req = get_object_or_404(MeetingRequest, id=request_id)
-    context['video_date'] = req.video_date
-    return render(request, 'videomanagement/make_public.html', context)
 
-# retrieve inspect video request webpage
+# retrieve privatize video from public request webpage
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
-def inspect_video(request, request_id):
+def privatize_video(request, request_id):
     context = {}
-    context['meeting_request_id'] = request_id
-    context['form'] = InspectVideoForm()
+    context['request_id'] = request_id
+    context['form'] = PrivatizeVideoForm()
     # either retrieve the request object, or return 404 error
-    req = get_object_or_404(MeetingRequest, id=request_id)
-    context['video_date'] = req.video_date
-    return render(request, 'videomanagement/inspect_video.html', context)
+    req = get_object_or_404(Request, request_id=request_id)
+    return render(request, 'videomanagement/privatize_video.html', context)
+
+# retrieve delete video request webpage
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
+def delete_video_request(request, request_id):
+    context = {}
+    context['request_id'] = request_id
+    context['form'] = DeleteVideoForm()
+    # either retrieve the request object, or return 404 error
+    req = get_object_or_404(Request, request_id=request_id)
+    return render(request, 'videomanagement/delete_video.html', context)
 
 # accept a Request
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
 def accept_request(request, request_id):
     # get the request to accept
+    context = {}
     req = get_object_or_404(Request, request_id=request_id)
     if req.type == "extend_retention":
 	form = ExtendRetentionForm(request.POST)
-    if form.is_valid():
-    	req.accept()
+    	if form.is_valid():
+		data = form.cleaned_data
+		policy_justification = data['le_officer']
+		committee_text_reason = data['rationale']
+        	context['message'] = 'Action created'
+    		req.accept(request_id, policy_justification,committee_text_reason)
+    		return render(request,'videomanagement/retrieve_actions.html',context)
     return redirect(reverse('retrieve_requests'))
+
+
+#### Meeting Request Views
 
 ## create a meeting request
 @login_required
@@ -158,6 +167,7 @@ def retrieve_meeting_requests(request):
     # For test purpose, render might need to changed
     return render(request, 'videomanagement/retrieve_meeting_requests.html', context)
 
+
 # delete a meeting Request
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
@@ -169,6 +179,31 @@ def delete_meeting_request(request, id):
     req.delete()
     return redirect(reverse('retrieve_meeting_requests'))
 
+
+# retrieve make public meeting request webpage
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
+def make_public(request, request_id):
+    context = {}
+    context['meeting_request_id'] = request_id
+    context['form'] = MakePublicForm()
+    # either retrieve the request object, or return 404 error
+    req = get_object_or_404(MeetingRequest, id=request_id)
+    context['video_date'] = req.video_date
+    return render(request, 'videomanagement/make_public.html', context)
+
+# retrieve inspect video meeting request webpage
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
+def inspect_video(request, request_id):
+    context = {}
+    context['meeting_request_id'] = request_id
+    context['form'] = InspectVideoForm()
+    # either retrieve the request object, or return 404 error
+    req = get_object_or_404(MeetingRequest, id=request_id)
+    context['video_date'] = req.video_date
+    return render(request, 'videomanagement/inspect_video.html', context)
+
 # accept a meeting Request
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
@@ -178,8 +213,8 @@ def accept_meeting_request(request, id):
     	req = get_object_or_404(MeetingRequest, id=id)
 	if req.type == "make_public":
 		form = MakePublicForm(request.POST)
-	if form.is_valid():
-    		req.accept()
+		if form.is_valid():
+    			req.accept()
     return redirect(reverse('retrieve_meeting_requests'))
 
 

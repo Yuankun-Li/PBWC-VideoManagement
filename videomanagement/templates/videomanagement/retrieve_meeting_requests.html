@@ -27,13 +27,15 @@
 	      	  	  	<li>Request Date: {{request.request.request_date}}</li>
 	      	  	  	<li>Requested By: {{request.request.user.username}}</li>
 	      	  	  	<li>Location: {{request.request.location}}</li>
-	      	  	  	<li>Reason: {{request.request.reasoning}}</li>
+	      	  	  	<li>Description: {{request.request.description}}</li>
+	      	  	  	<li>Reason: {{request.request.reason_for_request}}</li>
 	      	  	  	<li>Type: {{request.request.type}}</li>
 	      	  	  	<li>
 	      	  	  		<a href="{% url 'delete_meeting_request' request.request.id %}">delete</a>
 	      	  	  		<a href="{% url 'accept_meeting_request' request.request.id %}">accept</a>
 	      	  	  	</li>
 	      	  	  	<li><a href="{% url 'make_public'    request.request.id %}">Make Public</a></li>
+	      	  	  	<li><a href="{% url 'inspect_video'    request.request.id %}">Inspect Video</a></li>
 	      	  	  </ul>
 	      	  	  <h4>Related videos: </h4>
 	      	  	  {% for video in request.videos %}

@@ -29,6 +29,9 @@ from moviepy.editor import *
 
 ########### VIEWS AND ACTIONS FOR NON-LOGGED IN USERS #######################
 
+def privacy_policy(request):
+    	context = {}
+	return render(request,'videomanagement/privacy_policy.html',context)
 
 ########### VIEWS AND ACTIONS FOR LOGGED IN USERS #######################
 
@@ -96,9 +99,9 @@ def community_retrieve(request):
     	if time_now > time:
     		video.video.delete()
     		video.delete()
-    return render(request,'videomanagement/community_main.html',context)
+    return render(request, 'videomanagement/community_main.html',context)
 
-## Views and Actions for Committe Page
+## Views and Actions for Committee
 
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
@@ -154,7 +157,7 @@ def upload(request):
         return render(request, 'videomanagement/upload.html', context)
 
     # For post method, upload file
-    new_video = Video(upload_date=datetime.now())
+    new_video = Video(upload_date=datetime.now(), retention=180)
     form = VideoForm(request.POST, request.FILES, instance=new_video)
     if not form.is_valid():
         context['message'] = 'Upload failed'

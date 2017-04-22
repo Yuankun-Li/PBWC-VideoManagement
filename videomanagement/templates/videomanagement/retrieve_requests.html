@@ -25,19 +25,22 @@
 	      	  <h3>For video {{key.video_id}}</h3>
 	      	  <table style="width:100%">
 				  <tr>
+	      	  	 	 <th>Review Video as Committee</th>
 	      	  	 	 <th>Type</th>
 	      	  	 	 <th>Request Date</th>
 	      	  	 	 <th>Requested By</th>
 	      	  	 	 <th>Location</th>
-	      	  	 	 <th>Retention</th>
+	      	  	 	 <th>Retention (Days)</th>
 	      	  	 	 <th>Is Video Public?</th>
 	      	  	 	 <th>Reason</th>
 	      	  	 	 <th>Delete Video</th>
+	      	  	 	 <th>Remove Video from Public Page</th>
 	      	  	 	 <th>Extend Retention</th>
-	      	  	 	 <th>Make Public</th>
+
 	      	  	  </tr>
 	      	  	  {% for request in values %}
 				  <tr>
+	      	  	  	<td><a href="{% url 'view_video' request.video_id %}">Review Video</a></td>
 	      	  	  	<td>{{request.type}}</td>
 	      	  	  	<td>{{request.request_date}}</td>
 	      	  	  	<td>{{request.user.username}}</td>
@@ -45,9 +48,9 @@
 	      	  	  	<td>{{request.video.retention}}</td>
 	      	  	  	<td>{{request.video.is_public}}</td>
 	      	  	  	<td>{{request.reasoning}}</td>
-	      	  	  	<td><a href="{% url 'delete_request' request.request_id %}">delete</a></td>
+	      	  	  	<td><a href="{% url 'delete_video_request' request.request_id %}">delete</a></td>
+	      	  	  	<td><a href="{% url 'privatize_video' request.request_id %}">remove from public</a></td>
 	      	  	  	<td><a href="{% url 'extend_retention' request.request_id %}">extend retention</a></td>
-	      	  	  	<td><a href="{% url 'accept_request' request.request_id %}">accept</a></td>
 	      	  	  </tr>
 				  {% endfor %}
 			  </table>

@@ -32,14 +32,15 @@ class Video(models.Model):
 	content_type = models.CharField(max_length=50)
 	is_public = models.BooleanField(default=False)
 	gif = models.ImageField(upload_to="gif", null=True)
+	#TODO: Recording Officer ID
 
 	def __unicode__(self):
 #		return "%s %s" % (self.first_name, self.last_name)
 		return "%s %s" % (self.video_id, self.content_type)
 
-# Request model: handle the extended retention, delete video and make public request
+# Request model: handle the extended retention, privatize video, and register complaint request
 class Request(models.Model):
-	TYPE_CHOICES = (('extend_retention', 'extend_retention',), ('delete_video', 'delete_video',))
+	TYPE_CHOICES = (('extend_retention', 'extend_retention'), ('privatize_video','privatize_video'),('register_complaint', 'register_complaint'))
 	
 	request_id = models.AutoField(primary_key=True)
 	request_date = models.DateTimeField(default=timezone.now)
@@ -49,24 +50,29 @@ class Request(models.Model):
 	reasoning = models.CharField(max_length=1000)
 	
 	# accept a request
-	def accept(self):
+	def accept(self, request_id, policy_justification,committee_text_reason):
 		if self.type == 'delete_video':
 			self.video.video.delete()
     			self.video.delete()
 		elif self.type == 'extend_retention':
 			self.video.retention = 10
+    			new_action = CommitteeAction(type='extend_retention', request_id=request_id, video_id=self.video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
+			new_action.save()
+			
 
 
 # MeetingRequest model: handle the review meeting request
 class MeetingRequest(models.Model):
 	TYPE_CHOICES = (('meeting', 'meeting',), ('make_public', 'make_public',), ('inspect_video', 'inspect_video'))
 	
+
 	request_date = models.DateTimeField(default=timezone.now)
 	type = models.CharField(max_length=50, choices=TYPE_CHOICES, default='meeting')
 	video_date = models.DateTimeField()
 	user = models.ForeignKey(User)
 	location = models.CharField(max_length=128, choices=Video.LOCATION_CHOICES, default='Gates Center for Computer Science')
-	reasoning = models.CharField(max_length=1000)
+	description = models.CharField(max_length=1000)
+	reason_for_request = models.CharField(max_length=1000)
 	
 	# accept a request
 	def accept(self):
@@ -79,6 +85,20 @@ class MeetingRequest(models.Model):
 		if self.type == 'inspect_video':
 			#notify/email user
 			video.save()
+
+
+class CommitteeAction(models.Model):
+	TYPE_CHOICES = (('meeting', 'meeting',), ('make_public', 'make_public',), 
+('inspect_video', 'inspect_video'),('extend_retention', 'extend_retention'), ('privatize_video','privatize_video'))
+
+	action_id = models.AutoField(primary_key=True)
+	action_date = models.DateTimeField(default=timezone.now)
+	type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='meeting')
+	request_id = models.IntegerField()
+	video_id = models.IntegerField()
+	policy_justification = models.CharField(max_length=1000)
+	committee_text_reason = models.CharField(max_length=1000)
+	#TODO: recording officer ID
 
 
 

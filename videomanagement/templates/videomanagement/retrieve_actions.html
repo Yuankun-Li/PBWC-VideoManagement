@@ -1,0 +1,54 @@
+{% extends "videomanagement/base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}PBWC-VideoManagement Retrieve Actions{% endblock %}
+{% block title %}PBWC-VideoManagement Retrieve Actions{% endblock %}
+{% block css %}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+{% endblock %}
+
+{% block script %}
+	<script src="{% static "videomanagement/js/jquery-3.1.1.js" %}"></script>
+	<script src="{% static "videomanagement/js/bootstrap.min.js" %}"></script>
+{% endblock %}
+
+{% block container %}
+	<div class="container col-md-12 col-sm-12">
+	  <div class="block">
+	    <div class="block_content">
+            {% if message %}
+            <h4>
+                {{message}}
+            </h4>
+            {% endif %}
+	      {% for action in actions %}
+	      	<div>
+	      	  <table style="width:100%">
+				  <tr>
+	      	  	 	 <th>Action ID</th>
+	      	  	 	 <th>Action Date</th>
+	      	  	 	 <th>Request Type</th>
+	      	  	 	 <th>Request ID</th>
+	      	  	 	 <th>Video ID</th>
+	      	  	 	 <th>Policy Justification</th>
+	      	  	 	 <th>Committee Reason</th>
+	      	  	  </tr>
+				  <tr>
+	      	  	  	<td>{{action.action_id}}</td>
+	      	  	  	<td>{{action.action_date}}</td>
+	      	  	  	<td>{{action.type}}</td>
+	      	  	  	<td>{{action.request_id}}</td>
+	      	  	  	<td>{{action.video_id}}</td>
+	      	  	  	<td>{{action.policy_justification}}</td>
+	      	  	  	<td>{{action.committee_text_reason}}</td>
+	      	  	  </tr>
+			  </table>
+	      	</div>
+	      {% endfor %}
+	    </div>
+	  </div>
+	</div>
+{% endblock %}
+
+{% block notlog_navbar %}{% endblock %}
