@@ -5,6 +5,11 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
+from django_encrypted_filefield.fields import (
+    EncryptedFileField,
+    EncryptedImageField
+)
+
 #needed for request acceptance forms
 #from forms import MakePublicForm
 
@@ -28,7 +33,8 @@ class Video(models.Model):
 	video_date = models.DateTimeField(blank=True, null=True)
 	retention = models.IntegerField()
 	upload_date = models.DateTimeField(blank=True, null=True)
-	video = models.FileField(upload_to="videos", blank=True)
+	# encrypted filefield
+	video = EncryptedFileField(upload_to="videos", blank=True)
 	content_type = models.CharField(max_length=50)
 	is_public = models.BooleanField(default=False)
 	gif = models.ImageField(upload_to="gif", null=True)
