@@ -51,12 +51,15 @@ class Request(models.Model):
 	
 	# accept a request
 	def accept(self, request_id, policy_justification,committee_text_reason):
-		if self.type == 'delete_video':
-			self.video.video.delete()
-    			self.video.delete()
+		if self.type == 'privatize_video':
+			tmp_video = self.video
+			tmp_video.is_public = False
+			tmp_video.save()
+			new_action = CommitteeAction(type='privatize_video', request_id=request_id, video_id=self.video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
+			new_action.save()
 		elif self.type == 'extend_retention':
 			self.video.retention = 10
-    			new_action = CommitteeAction(type='extend_retention', request_id=request_id, video_id=self.video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
+			new_action = CommitteeAction(type='extend_retention', request_id=request_id, video_id=self.video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
 			new_action.save()
 			
 

@@ -106,6 +106,15 @@ def accept_request(request, request_id):
     # get the request to accept
     context = {}
     req = get_object_or_404(Request, request_id=request_id)
+    if req.type == "privatize_video":
+        form = PrivatizeVideoForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            policy_justification = "none"
+            committee_text_reason = data['rationale']
+            context['message'] = 'Action created'
+            req.accept(request_id, policy_justification,committee_text_reason)
+            return render(request,'videomanagement/retrieve_actions.html',context)
     if req.type == "extend_retention":
 	form = ExtendRetentionForm(request.POST)
     	if form.is_valid():
