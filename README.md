@@ -18,23 +18,23 @@ ________________________________________________________________________________
 
 ## How We've Incorporated Privacy and Accountability
 
-1. Access Control - We've restricted which pages a specific user can access in accordance with their assigned group (as determined by the Django admin superuser).
+1. **Access Control** - We've restricted which pages a specific user can access in accordance with their assigned group (as determined by the Django admin superuser).
 
-2. Restricted Retention Time - Any footage that the police managers upload have an automatic retention time of 180 days, after which the footage is deleted. 
-<br/> See PBWC-VideoManagement/videomanagement/views/video_management_views.py for the implementation.
+2. **Restricted Retention Time** - Any footage that the police managers upload have an automatic retention time of 180 days, after which the footage is deleted. 
+<br/> See **PBWC-VideoManagement/videomanagement/views/video_management_views.py** for the implementation.
 
-3. Video Encryption - All videos are encrypted with Django's inherent video encryption implementation.
-<br/> See <INSERT PATH> for the implementation.
+3. **Video Encryption** - All videos are encrypted with Django's inherent video encryption implementation.
+<br/> See **INSERT PATH** for the implementation.
 
-4. Community Participation - Users in the role of students and officers can submit requests regarding specific BWC footage to the independent committee, as described above. 
-<br/> See <INSERT PATH> for the implementation.
+4. **Community Participation** - Users in the role of students and officers can submit requests regarding specific BWC footage to the independent committee, as described above. 
+<br/> See **INSERT PATH** for the implementation.
 
-5. Purpose Specification - To resolve a submitted request, committee members must complete a form with a series of questions specifically designed for each request type. These questions assist the committee members in determining whether to fulfill or reject the request. These purpose specification forms ensure adherence to the ACLU's Model Act for Use of Body Mounted Cameras by Law Enforcement.
-<br/> See <INSERT PATH> for the implementation.
+5. **Purpose Specification** - To resolve a submitted request, committee members must complete a form with a series of questions specifically designed for each request type. These questions assist the committee members in determining whether to fulfill or reject the request. These purpose specification forms ensure adherence to the ACLU's Model Act for Use of Body Mounted Cameras by Law Enforcement.
+<br/> See **INSERT PATH** for the implementation.
 
-6. Accountability - When a committee member fulfills or rejects a request, that action is recorded in a separate audit log. When the independent committee approves a request to make available to the college community specific BWC footage that has not yet been released, that footage becomes visible on the web service for all users.
-<br/> See PBWC-VideoManagement/videomanagement/models.py~ for the implementation of the committee audit log.
-<br/> See <INSERT PATH> for the implementation of making specific BWC footage public.
+6. **Accountability** - When a committee member fulfills or rejects a request, that action is recorded in a separate audit log. When the independent committee approves a request to make available to the college community specific BWC footage that has not yet been released, that footage becomes visible on the web service for all users.
+<br/> See **PBWC-VideoManagement/videomanagement/models.py~** for the implementation of the committee audit log.
+<br/> See **INSERT PATH** for the implementation of making specific BWC footage public.
 
 _______________________________________________________________________________________________________________
 
