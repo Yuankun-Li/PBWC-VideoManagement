@@ -6,10 +6,10 @@ Use of this web service assumes 4 stakeholders: students of the college or unive
 
 Users in the role of students or campus police officers may log into the web service to view BWC footage captured by campus police officers that independent committee members have approved for disclosure to the college community. These users can also submit requests to the independent committee to:
 
-    <br/> 1. Inspect BWC footage that has not yet been released to the college community (alongside a member of the independent committee).
-    <br/> 2. Extend the retention time for BWC footage.
-    <br/> 3. Make inaccessible BWC footage that is currently visible to the college community.
-    <br/> 4. Make available to the college community specific BWC footage that has not yet been released.
+    1. Inspect BWC footage that has not yet been released to the college community (alongside a member of the independent committee).
+    2. Extend the retention time for BWC footage.
+    3. Make inaccessible BWC footage that is currently visible to the college community.
+    4. Make available to the college community specific BWC footage that has not yet been released.
 
 Users in the role of police managers can do the same as students and campus police officers, and are responsible for uploading BWC footage. However, the footage they upload is not visible to them.
 
