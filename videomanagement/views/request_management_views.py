@@ -88,16 +88,16 @@ def privatize_video(request, request_id):
     req = get_object_or_404(Request, request_id=request_id)
     return render(request, 'videomanagement/privatize_video.html', context)
 
-# retrieve delete video request webpage
-@login_required
-@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
-def delete_video_request(request, request_id):
-    context = {}
-    context['request_id'] = request_id
-    context['form'] = DeleteVideoForm()
-    # either retrieve the request object, or return 404 error
-    req = get_object_or_404(Request, request_id=request_id)
-    return render(request, 'videomanagement/delete_video.html', context)
+# # retrieve delete video request webpage
+# @login_required
+# @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
+# def delete_video_request(request, request_id):
+#     context = {}
+#     context['request_id'] = request_id
+#     context['form'] = DeleteVideoForm()
+#     # either retrieve the request object, or return 404 error
+#     req = get_object_or_404(Request, request_id=request_id)
+#     return render(request, 'videomanagement/delete_video.html', context)
 
 # accept a Request
 @login_required
