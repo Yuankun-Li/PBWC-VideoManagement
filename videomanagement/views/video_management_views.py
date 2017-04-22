@@ -121,9 +121,8 @@ def delete_video(request, video_id):
 
 
     video = Video.objects.get(video_id=video_id)
-    video.video.delete()
-    video.delete()
-    context['message'] = 'video deleted.'
+    video.is_public = False
+    context['message'] = 'remove video from public.'
 
     all_videos = Video.objects.all().order_by('-video_date')
     context['videos'] = all_videos
