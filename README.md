@@ -78,6 +78,12 @@ To establish an admin user, and subsequently create new users that fit into each
     - “videomanagement | request | Can delete meeting request”
     - “videomanagement | video | Can change video"
     - “videomanagement | video | Can delete video"
+<br/> **NOTE:** It is **highly discouraged** to change any group name after adding users, as Django will NOT automatically refresh the database to reflect this change. You will be required to do the following if you make such a change:
+* Delete all files in the migration folder.
+* Delete the db.sqlite3 file.
+* Execute the following command: "python manage.py makemigrations".
+* Execute the following command: "python manage.py migrate".
+* Re-establish all user accounts.
 
 8. After you have added all stakeholder groups, you can create individual users for each group. Navigate back to Authentication and Authorization, and click “Add” next to “User”. Provide a username and password for this user, and then click "Save".
 
