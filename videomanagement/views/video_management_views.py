@@ -268,6 +268,11 @@ def committee_retrieve(request):
     	if time_now > time:
     		video.video.delete()
     		video.delete()
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
     return render(request,'videomanagement/committee_main.html',context)
 
 # retrieve the gif of a video
