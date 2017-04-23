@@ -105,6 +105,8 @@ def privatize_video(request, request_id):
 def accept_request(request, request_id):
     # get the request to accept
     context = {}
+    actions = CommitteeAction.objects.all()
+    context['actions'] = actions
     req = get_object_or_404(Request, request_id=request_id)
     if req.type == "privatize_video":
         form = PrivatizeVideoForm(request.POST)

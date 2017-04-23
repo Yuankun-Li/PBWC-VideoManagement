@@ -5,10 +5,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
-from django_encrypted_filefield.fields import (
-    EncryptedFileField,
-    EncryptedImageField
-)
+from django_encrypted_filefield.fields import EncryptedFileField, EncryptedImageField
 
 #needed for request acceptance forms
 #from forms import MakePublicForm
@@ -21,10 +18,10 @@ from django_encrypted_filefield.fields import (
 
 class Video(models.Model):
 	LOCATION_CHOICES = (('Gates Center for Computer Science', 'Gates Center for Computer Science',), 
-					('Cyert Hall', 'Cyert Hall',),
-					('Cohon University Center', 'Cohon University Center',),
-					('Hunt Library', 'Hunt Library',),
-					('Other place', 'Other place',))
+					('Cyert Hall', 'Cyert Hall'),
+					('Cohon University Center', 'Cohon University Center'),
+					('Hunt Library', 'Hunt Library'),
+					('Other place', 'Other place'))
 	"""
 	Stores a single video entry, related to :model:`auth.User` when User is Officer that took video.
 	"""
@@ -64,7 +61,9 @@ class Request(models.Model):
 			new_action = CommitteeAction(type='privatize_video', request_id=request_id, video_id=self.video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
 			new_action.save()
 		elif self.type == 'extend_retention':
-			self.video.retention = 10
+			tmp_video = self.video
+			tmp_video.retention = 1825
+			tmp_video.save()
 			new_action = CommitteeAction(type='extend_retention', request_id=request_id, video_id=self.video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
 			new_action.save()
 			
