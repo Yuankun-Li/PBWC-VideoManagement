@@ -32,12 +32,20 @@
 	      	  	  	<li>Description: {{request.request.description}}</li>
 	      	  	  	<li>Reason: {{request.request.reason_for_request}}</li>
 	      	  	  	<li>Type: {{request.request.type}}</li>
-	      	  	  	<li>
+	      	  	  	<li>Delete Request:
 	      	  	  		<a href="{% url 'delete_meeting_request' request.request.id %}">delete</a>
-	      	  	  		<a href="{% url 'accept_meeting_request' request.request.id %}">accept</a>
-	      	  	  	</li>
+				</li>
+				{% ifequal request.request.type "meeting"%}
+				<li>
+	      	  	  		<a href="{% url 'accept_meeting_request' request.request.id %}">Accept Meeting</a>
+				</li>
+				{% endifequal %}
+				{% ifequal request.request.type "make_public"%}
 	      	  	  	<li><a href="{% url 'make_public'    request.request.id %}">Make Public</a></li>
+				{% endifequal %}
+				{% ifequal request.request.type "inspect_video"%}
 	      	  	  	<li><a href="{% url 'inspect_video'    request.request.id %}">Inspect Video</a></li>
+				{% endifequal %}
 	      	  	  </ul>
 	      	  	  <h4>Related videos: </h4>
 	      	  	  {% for video in request.videos %}

@@ -34,8 +34,7 @@
 	      	  	 	 <th>Retention (Days)</th>
 	      	  	 	 <th>Is Video Public?</th>
 	      	  	 	 <th>Reason</th>
-	      	  	 	 <th>Remove Video from Public Page</th>
-	      	  	 	 <th>Extend Retention</th>
+	      	  	 	 <th>Request Action</th>
 
 	      	  	  </tr>
 	      	  	  {% for request in values %}
@@ -48,8 +47,12 @@
 	      	  	  	<td>{{request.video.retention}}</td>
 	      	  	  	<td>{{request.video.is_public}}</td>
 	      	  	  	<td>{{request.reasoning}}</td>
+				{% ifequal request.type "privatize_video"%}
 	      	  	  	<td><a href="{% url 'privatize_video' request.request_id %}">remove from public</a></td>
+				{% endifequal%}
+				{% ifequal request.type "extend_retention"%}
 	      	  	  	<td><a href="{% url 'extend_retention' request.request_id %}">extend retention</a></td>
+				{% endifequal%}
 	      	  	  </tr>
 				  {% endfor %}
 			  </table>
