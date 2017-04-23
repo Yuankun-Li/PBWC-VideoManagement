@@ -34,7 +34,12 @@ from moviepy.editor import *
 ########### VIEWS AND ACTIONS FOR NON-LOGGED IN USERS #######################
 
 def privacy_policy(request):
-    	context = {}
+    context = {}
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
 	return render(request,'videomanagement/privacy_policy.html',context)
 
 ########### VIEWS AND ACTIONS FOR LOGGED IN USERS #######################
@@ -73,8 +78,10 @@ def view_video(request, video_id):
     	:template:`videomanagement/view_video.html`
     	"""
 	context = {'video_id': video_id, 'video': get_object_or_404(Video, video_id=video_id)}
+    
 	for g in request.user.groups.all():
-		context['group'] = g.name
+		context['user_type'] = g.name
+    
 	return render(request,'videomanagement/view_video.html',context)
 
 ## Views and Actions for Community Page
@@ -103,6 +110,11 @@ def community_retrieve(request):
     	if time_now > time:
     		video.video.delete()
     		video.delete()
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
     return render(request, 'videomanagement/community_main.html',context)
 
 ## Views and Actions for Committee
@@ -130,6 +142,11 @@ def delete_video(request, video_id):
 
     all_videos = Video.objects.all().order_by('-video_date')
     context['videos'] = all_videos
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
     return render(request,'videomanagement/community_main.html',context)
 
 
@@ -153,6 +170,12 @@ def upload(request):
     """
     context = {}
     context['user'] = request.user
+    
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
 
     # For get method, lead to upload pages
     if request.method == 'GET':

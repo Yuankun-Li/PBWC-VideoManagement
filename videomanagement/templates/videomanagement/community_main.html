@@ -13,11 +13,13 @@
 
 {% block container %}
 
-<h1 class = "text-center"> Community Videos</h1>
 
+<h1 class = "text-center"> Community Videos</h1>
+{% if user_type == 'student' or user_type == 'officer' %}
 <div class="text-right">
 	<a class="btn btn-default" href="{% url 'create_meeting_request' %}">Create Meeting Request</a>
 </div>
+{% endif %}
 
 
 <div class = "row">

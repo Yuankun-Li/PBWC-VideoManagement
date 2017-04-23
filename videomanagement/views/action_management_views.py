@@ -17,6 +17,12 @@ def committee_action_retrieve(request):
     
     context['actions'] = actions
     
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    
     return render(request, 'videomanagement/retrieve_actions.html', context)
 
 
