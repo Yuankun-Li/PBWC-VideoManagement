@@ -32,21 +32,30 @@
 	{% block navbar %}
   	<nav class="navbar navbar-default navbar-fixed-top">
   	  <div class="container">
-        <a class="navbar-brand" href="/">
-          <img alt="Logo" class="brand_img" src="">
-          PBWC-VideoManagement
+        <a class="navbar-brand" href="{% url 'login' %}">
+          <img alt="PBWC Videos" class="brand_img" src="">
         </a>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home <span class="badge"></span></a></li>
-            <li><a href="">More <span class="badge"></span></a></li>
+            <li><a href="/">Home <span class="badge"></span></a></li>
+	{% if perms.videomanagement.change_video %}
+            <li><a href="{% url 'committee_retrieve' %}">Committee-only Videos<span class="badge"></span></a></li>
+            <li><a href="{% url 'retrieve_meeting_requests' %}">Pending Meeting Requests<span class="badge"></span></a></li>
+            <li><a href="{% url 'retrieve_requests' %}">Pending Video Requests <span class="badge"></span></a></li>
+            <li><a href="{% url 'committee_action_retrieve' %}">Committee Action Log <span class="badge"></span></a></li>
+	{% endif %}
+	{% if perms.videomanagement.add_video %}
+            <li><a href="{% url 'upload' %}">Upload Videos <span class="badge"></span></a></li>
+	{% endif %}
           </ul>
 		  <ul class="nav navbar-nav navbar-right">
     	    <li class="dropdown">
  	         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.username}} <span class="caret"></span></a>
     	      <ul class="dropdown-menu">
+	<!--
         	    <li><a href="">My profile</a></li>
  	            <li><a href="">Reset password</a></li>
+	-->
         	    <li role="separator" class="divider"></li>
  	           <li><a href="{% url 'logout' %}">Log out</a></li>
     	      </ul>
@@ -57,41 +66,18 @@
 	</nav>
 	{% endblock %}
 	
+
 	{% block notlog_navbar %}
+	{% if user.is_anonymous %}
   	<nav class="navbar navbar-default navbar-fixed-top">
   	  <div class="container">
         <a class="navbar-brand" href="{% url 'login' %}">
-          <img alt="Logo" class="brand_img" src="">
-          PBWC-VideoManagement
+          <img alt="Login" class="brand_img" src="">
         </a>
   	  </div>
 	</nav>
-	{% endblock %}
-
-	{% block committee_navbar %}
-  	<nav class="navbar navbar-default">
-	<div class="row">
-		<div class="container col-md-12">
-        	<h5 class="text-center">Committee Request Administration<h5>
-		</div>
-
-		<div class="container col-md-2 col-md-offset-1">
-    	    	<a class="btn btn-default" href="{% url 'community_retrieve' %}">Community Videos</a>
-		</div>
-		<div class="container col-md-2">
-    	    	<a class="btn btn-default" href="{% url 'committee_retrieve' %}">Committee-only Videos</a>
-		</div>
-		<div class="container col-md-2">
-    	    	<a class="btn btn-default" href="{% url 'retrieve_meeting_requests' %}">Pending Meeting Requests</a>
-		</div>
-		<div class="container col-md-2">
-    	    	<a class="btn btn-default" href="{% url 'retrieve_requests' %}">Pending Video Requests</a>
-		</div>
-		<div class="container col-md-2">
-    	    	<a class="btn btn-default" href="{% url 'committee_action_retrieve' %}">Committee Action Log</a>
-		</div>
-  	</div>
-	</nav>
+	{% else %}
+	{% endif %}
 	{% endblock %}
 	
 	{% block container %}
