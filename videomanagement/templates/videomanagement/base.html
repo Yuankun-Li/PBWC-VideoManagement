@@ -64,8 +64,33 @@
           <img alt="Logo" class="brand_img" src="">
           PBWC-VideoManagement
         </a>
-
   	  </div>
+	</nav>
+	{% endblock %}
+
+	{% block committee_navbar %}
+  	<nav class="navbar navbar-default">
+	<div class="row">
+		<div class="container col-md-12">
+        	<h5 class="text-center">Committee Request Administration<h5>
+		</div>
+
+		<div class="container col-md-2 col-md-offset-1">
+    	    	<a class="btn btn-default" href="{% url 'community_retrieve' %}">Community Videos</a>
+		</div>
+		<div class="container col-md-2">
+    	    	<a class="btn btn-default" href="{% url 'committee_retrieve' %}">Committee-only Videos</a>
+		</div>
+		<div class="container col-md-2">
+    	    	<a class="btn btn-default" href="{% url 'retrieve_meeting_requests' %}">Pending Meeting Requests</a>
+		</div>
+		<div class="container col-md-2">
+    	    	<a class="btn btn-default" href="{% url 'retrieve_requests' %}">Pending Video Requests</a>
+		</div>
+		<div class="container col-md-2">
+    	    	<a class="btn btn-default" href="{% url 'committee_action_retrieve' %}">Committee Action Log</a>
+		</div>
+  	</div>
 	</nav>
 	{% endblock %}
 	
@@ -73,11 +98,12 @@
 	<div class="container col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
 	  <div class="block">
 	    <div class="block_content">
-	      <p>hhh</p>
+
 	    </div>
 	  </div>
 	</div>
 	{% endblock %}
+
 	
   </body>
 </html>
