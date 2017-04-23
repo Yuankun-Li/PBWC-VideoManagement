@@ -208,7 +208,10 @@ def upload(request):
         # this file will be used for creating gits
         tup = tempfile.mkstemp()
         f = os.fdopen(tup[0], 'w')
-        f.write(data2.read())
+
+        for chunk in request.FILES['video'].chunks():
+            f.write(chunk)
+
         f.close()
         filepath = tup[1]
         
