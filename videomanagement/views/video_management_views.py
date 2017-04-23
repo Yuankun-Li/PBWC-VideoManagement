@@ -19,10 +19,14 @@ import os
 import subprocess
 
 from django.conf import settings
+from copy import deepcopy
+
+import tempfile
 
 imageio.plugins.ffmpeg.download()
 
 from moviepy.editor import *
+
 
 # Create your views here.
 
@@ -68,7 +72,7 @@ def view_video(request, video_id):
 
     	:template:`videomanagement/view_video.html`
     	"""
-	context = {'video_id': video_id}
+	context = {'video_id': video_id, 'video': get_object_or_404(Video, video_id=video_id)}
 	for g in request.user.groups.all():
 		context['group'] = g.name
 	return render(request,'videomanagement/view_video.html',context)
@@ -120,10 +124,9 @@ def delete_video(request, video_id):
     context = {}
 
 
-    video = Video.objects.get(video_id=video_id)
-    video.video.delete()
-    video.delete()
-    context['message'] = 'video deleted.'
+    video.is_public = False
+    video.save()
+    context['message'] = 'remove video from public.'
 
     all_videos = Video.objects.all().order_by('-video_date')
     context['videos'] = all_videos
@@ -157,8 +160,10 @@ def upload(request):
         return render(request, 'videomanagement/upload.html', context)
 
     # For post method, upload file
+
     new_video = Video(upload_date=datetime.now(), retention=180)
     form = VideoForm(request.POST, request.FILES, instance=new_video)
+
     if not form.is_valid():
         context['message'] = 'Upload failed'
         context['form'] = form
@@ -166,9 +171,23 @@ def upload(request):
     else:
         # Must copy content_type into a new model field because the model
         # FileField will not store this in the database.  (The uploaded file
-        # is actually a different object than what's return from a DB read.)    
+        # is actually a different object than what's return from a DB read.)
+        
+        #copy uploaded temp file data
+        data = request.FILES['video']
+        data2 = deepcopy(data)
+
         new_video.content_type = form.cleaned_data['video'].content_type
         form.save()
+
+
+        # write decrypted data into an tmp file
+        # this file will be used for creating gits
+        tup = tempfile.mkstemp()
+        f = os.fdopen(tup[0], 'w')
+        f.write(data2.read())
+        f.close()
+        filepath = tup[1]
         
         # generate gif for community page from the uploaded video
         #print(new_video.video.path)
@@ -181,8 +200,7 @@ def upload(request):
             new_video.content_type = 'video/mp4'
             new_video.save()
 
-
-        clip = (VideoFileClip(new_video.video.path).subclip((0,0.00),(0,0.01)).resize(0.5))
+        clip = (VideoFileClip(filepath).subclip((0,0.00),(0,0.01)).resize(0.5))
         clip.write_gif("gif/tmp.gif")
         
         gif = File(open("gif/tmp.gif", "rb"))
@@ -246,3 +264,4 @@ def get_gif(request, video_id):
 	gif = video.gif
 	content_type = guess_type(gif.name)
 	return HttpResponse(gif, content_type = content_type)
+

@@ -5,6 +5,8 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
+from django_encrypted_filefield.fields import EncryptedFileField, EncryptedImageField
+
 #needed for request acceptance forms
 #from forms import MakePublicForm
 
@@ -16,10 +18,10 @@ from django.shortcuts import get_object_or_404
 
 class Video(models.Model):
 	LOCATION_CHOICES = (('Gates Center for Computer Science', 'Gates Center for Computer Science',), 
-					('Cyert Hall', 'Cyert Hall',),
-					('Cohon University Center', 'Cohon University Center',),
-					('Hunt Library', 'Hunt Library',),
-					('Other place', 'Other place',))
+					('Cyert Hall', 'Cyert Hall'),
+					('Cohon University Center', 'Cohon University Center'),
+					('Hunt Library', 'Hunt Library'),
+					('Other place', 'Other place'))
 	"""
 	Stores a single video entry, related to :model:`auth.User` when User is Officer that took video.
 	"""
@@ -28,7 +30,8 @@ class Video(models.Model):
 	video_date = models.DateTimeField(blank=True, null=True)
 	retention = models.IntegerField()
 	upload_date = models.DateTimeField(blank=True, null=True)
-	video = models.FileField(upload_to="videos", blank=True)
+	# encrypted filefield
+	video = EncryptedFileField(upload_to="videos", blank=True)
 	content_type = models.CharField(max_length=50)
 	is_public = models.BooleanField(default=False)
 	gif = models.ImageField(upload_to="gif", null=True)
@@ -56,11 +59,15 @@ class Request(models.Model):
 		self.save()
 		
 		if self.type == 'privatize_video':
-			self.video.is_public = False
-			self.video.save()
+			tmp_video = self.video
+			tmp_video.is_public = False
+			tmp_video.save()
+			new_action = CommitteeAction(type='privatize_video', request_id=request_id, video_id=self.video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
+			new_action.save()
 		elif self.type == 'extend_retention':
-			self.video.retention = 10
-			self.video.save()
+			tmp_video = self.video
+			tmp_video.retention = 1825
+			tmp_video.save()
 			new_action = CommitteeAction(type='extend_retention', request_id=request_id, video_id=self.video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
 			new_action.save()
 
@@ -79,8 +86,8 @@ class MeetingRequest(models.Model):
 	resolved = models.BooleanField(default=False)
 	
 	# accept a request
-	def accept(self):
-		self.resolved = True
+	def accept(self, request_id, policy_justification, committee_text_reason):
+    self.resolved = True
 		self.save()
 		#Doesn't currently work: need to re-architect
 		if self.type == 'make_public':
@@ -89,7 +96,10 @@ class MeetingRequest(models.Model):
 			video.save()
 		elif self.type == 'inspect_video':
 			#notify/email user
+			video = get_object_or_404(Video, video_date=self.video_date, location=self.location)
 			video.save()
+			new_action = CommitteeAction(type='inspect_video', request_id=request_id, video_id=video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
+			new_action.save()
 
 class CommitteeAction(models.Model):
 	TYPE_CHOICES = (('meeting', 'meeting',), ('make_public', 'make_public',), 

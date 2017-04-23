@@ -97,16 +97,16 @@ def privatize_video(request, request_id):
     req = get_object_or_404(Request, request_id=request_id)
     return render(request, 'videomanagement/privatize_video.html', context)
 
-# retrieve delete video request webpage
-@login_required
-@user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
-def delete_video_request(request, request_id):
-    context = {}
-    context['request_id'] = request_id
-    context['form'] = DeleteVideoForm()
-    # either retrieve the request object, or return 404 error
-    req = get_object_or_404(Request, request_id=request_id)
-    return render(request, 'videomanagement/delete_video.html', context)
+# # retrieve delete video request webpage
+# @login_required
+# @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
+# def delete_video_request(request, request_id):
+#     context = {}
+#     context['request_id'] = request_id
+#     context['form'] = DeleteVideoForm()
+#     # either retrieve the request object, or return 404 error
+#     req = get_object_or_404(Request, request_id=request_id)
+#     return render(request, 'videomanagement/delete_video.html', context)
 
 # accept a Request
 @login_required
@@ -114,7 +114,19 @@ def delete_video_request(request, request_id):
 def accept_request(request, request_id):
     # get the request to accept
     context = {}
+    actions = CommitteeAction.objects.all()
+    context['actions'] = actions
     req = get_object_or_404(Request, request_id=request_id)
+    if req.type == "privatize_video":
+        form = PrivatizeVideoForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            policy_justification = "none"
+            committee_text_reason = data['rationale']
+            context['message'] = 'Action created'
+            req.accept(request_id, policy_justification,committee_text_reason)
+    	    req.delete()
+            return render(request,'videomanagement/retrieve_actions.html',context)
     if req.type == "extend_retention":
 	form = ExtendRetentionForm(request.POST)
     	if form.is_valid():
@@ -123,6 +135,7 @@ def accept_request(request, request_id):
 		committee_text_reason = data['rationale']
         	context['message'] = 'Action created'
     		req.accept(request_id, policy_justification,committee_text_reason)
+		req.delete()
     		return render(request,'videomanagement/retrieve_actions.html',context)
     return redirect(reverse('retrieve_requests'))
 
@@ -219,12 +232,31 @@ def inspect_video(request, request_id):
 @user_passes_test(lambda u: u.groups.filter(name='committee_member').count() == 1, login_url='/')
 def accept_meeting_request(request, id):
     # get the request to accept
-    if request.method == "POST":
+    context = {}
+    actions = CommitteeAction.objects.all()
+    context['actions'] = actions
+    if request.method == 'POST':
     	req = get_object_or_404(MeetingRequest, id=id)
 	if req.type == "make_public":
 		form = MakePublicForm(request.POST)
 		if form.is_valid():
-    			req.accept()
+			data = form.cleaned_data
+            		policy_justification = "none"
+            		committee_text_reason = data['rationale']
+            		context['message'] = 'Action created'
+            		req.accept(id, policy_justification,committee_text_reason)
+    			req.delete()
+            		return render(request,'videomanagement/retrieve_actions.html',context)
+	if req.type == "inspect_video":
+		form = InspectVideoForm(request.POST)
+		if form.is_valid():
+			data = form.cleaned_data
+            		policy_justification = "none"
+            		committee_text_reason = data['rationale']
+            		context['message'] = 'Action created'
+            		req.accept(id, policy_justification,committee_text_reason)
+    			req.delete()
+            		return render(request,'videomanagement/retrieve_actions.html',context)
     return redirect(reverse('retrieve_meeting_requests'))
 
 

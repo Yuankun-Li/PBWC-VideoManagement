@@ -40,7 +40,7 @@
 	  <div class="block">
 	    <div class="block_content">
 	      <video class="mejs-player" controls preload="true" width="600" height="400">
-  			<source src="{% url 'get_video' video_id %}" type="video/mp4" />
+  			<source src="{{video.video.url}}" type="video/mp4" />
 		  </video>
 		  
 		  {% if group == 'committee_member' %}
