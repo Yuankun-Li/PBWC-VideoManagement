@@ -63,10 +63,10 @@ To establish an admin user, and subsequently create new users that fit into each
 6. Run the server with command “python manage.py runserver”, and then go to “localhost:8000/admin” in your browser. Here, you can enter the same username and password you just created.
 
 7. Once logged in as a superuser, you can click “Add” next to “Group” (which is under Authentication and Authorization). This will allow you to make new user groups with the appropriate permissions from the listing. Specifically:
-  * Students:
+  * Students (*Group must be labeled "student"):
     - “videomanagement | request | Can add request”
     - “videomanagement | request | Can add meeting request”
-  * Officers:
+  * Officers (*Group must be labeled "officer"):
     - “videomanagement | request | Can add request”
     - “videomanagement | request | Can add meeting request”
   * Police Managers/Administrative Officials (*Group must be labeled "video_manager" for web service to provide users in this group access to the video upload webpage*):
