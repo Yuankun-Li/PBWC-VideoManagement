@@ -6,6 +6,9 @@ from django.core.urlresolvers import reverse
 from videomanagement.forms import *
 from videomanagement.models import *
 
+########### VIEWS AND ACTIONS FOR LOGGED IN USERS #######################
+
+## Views and Actions for request on a specific video
 ## create a request
 @login_required
 def create_request(request, video_id):
@@ -19,12 +22,16 @@ def create_request(request, video_id):
         return render(request, 'videomanagement/create_request.html', context)
 
     # For post method, create request
+    # retrieve the video that request is for
     video = get_object_or_404(Video, video_id=video_id)
     new_request = Request(video=video, user=request.user)
+    # get the create request form
     form = CreateRequestForm(request.POST, instance=new_request)
+    # handle invalid form
     if not form.is_valid():
         context['form'] = form
         return render(request, 'videomanagement/create_request.html', context)
+    # save the new request
     else:
         form.save()
         context['message'] = 'Request created.'
@@ -46,7 +53,8 @@ def retrieve_requests(request):
     # get request for each video
     for video in videos:
         requests = Request.objects.filter(video=video)
-        requests_by_id[video] = requests
+        if len(requests) > 0:
+            requests_by_id[video] = requests
     
     context['requests'] = requests_by_id
     
@@ -61,6 +69,7 @@ def delete_request(request, request_id):
     req = get_object_or_404(Request, request_id=request_id)
     context = {}
     
+    # delete the request
     req.delete()
     return redirect(reverse('retrieve_requests'))
 
@@ -131,7 +140,7 @@ def accept_request(request, request_id):
     return redirect(reverse('retrieve_requests'))
 
 
-#### Meeting Request Views
+## Views and Actions for request based on time and location
 
 ## create a meeting request
 @login_required
@@ -169,11 +178,12 @@ def retrieve_meeting_requests(request):
     
     videos_for_request = []
     for re in requests:
-        request_video = {}
-        videos = Video.objects.all().filter(video_date=re.video_date, location=re.location)
-        request_video['videos'] = videos
-        request_video['request'] = re
-        videos_for_request.append(request_video)
+        if re.resolved:
+            request_video = {}
+            videos = Video.objects.all().filter(video_date=re.video_date, location=re.location)
+            request_video['videos'] = videos
+            request_video['request'] = re
+            videos_for_request.append(request_video)
     
     context['requests'] = videos_for_request
     
