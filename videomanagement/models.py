@@ -83,16 +83,24 @@ class MeetingRequest(models.Model):
 	reason_for_request = models.CharField(max_length=1000)
 	
 	# accept a request
-	def accept(self):
+	def accept(self, request_id, policy_justification, committee_text_reason):
 		#Doesn't currently work: need to re-architect
 		if self.type == 'make_public':
-
 			video = get_object_or_404(Video, video_date=self.video_date, location=self.location)
+			video.is_public = True
+			video.save()
+			new_action = CommitteeAction(type='make_public', request_id=request_id, video_id=video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
+			new_action.save()
+
+
 			video.is_public = True
 			video.save()
 		if self.type == 'inspect_video':
 			#notify/email user
+			video = get_object_or_404(Video, video_date=self.video_date, location=self.location)
 			video.save()
+			new_action = CommitteeAction(type='inspect_video', request_id=request_id, video_id=video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
+			new_action.save()
 
 
 class CommitteeAction(models.Model):
