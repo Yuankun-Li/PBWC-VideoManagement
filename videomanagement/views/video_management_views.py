@@ -195,6 +195,14 @@ def upload(request):
         # Must copy content_type into a new model field because the model
         # FileField will not store this in the database.  (The uploaded file
         # is actually a different object than what's return from a DB read.)
+        time = form.cleaned_data['video_date']
+        loc = form.cleaned_data['location']
+
+        if Video.objects.filter(video_date=time, location=loc):
+            context['message'] = 'video with same time and location is existed'
+            context['form'] = form
+            return render(request, 'videomanagement/upload.html', context)
+
         
         #copy uploaded temp file data
         data = request.FILES['video']
