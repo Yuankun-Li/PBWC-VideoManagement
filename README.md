@@ -32,6 +32,26 @@ ________________________________________________________________________________
 
 _______________________________________________________________________________________________________________
 
+## Key Elements of This Repository
+
+PBWC-VideoManagement/videomanagement/models.py contains the models that enable video upload, a student's or officer's submission of requests, a committee member's resolution of a request, and the transfer of a committee action to the audit log.
+
+PBWC-VideoManagement/videomanagement/forms.py contains code for all forms pertaining to login, video upload, request creation, and all committee request resolution.
+
+PBWC-VideoManagement/videomanagement/views/account_management_views.py provides the controller for login.
+
+PBWC-VideoManagement/videomanagement/views/action_management_views.py provides the controller to retrieve committee actions.
+
+PBWC-VideoManagement/videomanagement/views/request_management_views.py provides the controller for request submission and resolution.
+
+PBWC-VideoManagement/videomanagement/views/video_management_views.py provides the controller for video retrieval (which enables viewing) and upload.
+
+PBWC-VideoManagement/videomanagement/templates/videomanagement/ contains the HTML templates that enable all actions specified in models.py.
+
+PBWC-VideoManagement/videomanagement/static/videomanagement/js/ contains the purpose specification form logic and media player implementation.
+
+_______________________________________________________________________________________________________________
+
 ## User Guide for Testing the Web Service
 
 Please use Python 2.7 for testing.
@@ -88,7 +108,7 @@ To establish an admin user, and subsequently create new users that fit into each
     - “videomanagement | video | Can change video"
     - “videomanagement | video | Can delete video"
 
-  * **NOTE:** It is **highly discouraged** to change any group name after adding users, as Django will NOT automatically refresh the database to reflect this change. You will be required to do the following if you make such a change:
+  * **NOTE:** The site will not function properly if you use a different string for police manager and committee member group names. It is also **highly discouraged** to change the student and officer group names after adding users, as Django will NOT automatically refresh the database to reflect this change. You will be required to do the following if you make such a change:
     - Delete all files in the migration folder.
     - Delete the db.sqlite3 file.
     - Execute the following command: "python manage.py makemigrations".
