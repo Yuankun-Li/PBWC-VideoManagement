@@ -16,6 +16,12 @@ def create_request(request, video_id):
     context['user'] = request.user
     context['video_id'] = video_id
     
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    
     # For get method, lead to create request pages
     if request.method == 'GET':
         context['form'] = CreateRequestForm()
@@ -48,11 +54,17 @@ def retrieve_requests(request):
     context['user'] = request.user
     requests_by_id = {}
     
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    
     # get all videos
     videos = Video.objects.all()
     # get request for each video
     for video in videos:
-        requests = Request.objects.filter(video=video)
+        requests = Request.objects.filter(video=video, resolved=False)
         if len(requests) > 0:
             requests_by_id[video] = requests
     
@@ -69,6 +81,12 @@ def delete_request(request, request_id):
     req = get_object_or_404(Request, request_id=request_id)
     context = {}
     
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    
     # delete the request
     req.delete()
     return redirect(reverse('retrieve_requests'))
@@ -83,6 +101,13 @@ def extend_retention(request, request_id):
     # either retrieve the request object, or return 404 error
     req = get_object_or_404(Request, request_id=request_id)
     context['video_id'] = req.video
+    
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    
     return render(request, 'videomanagement/extend_retention.html', context)
 
 
@@ -95,6 +120,13 @@ def privatize_video(request, request_id):
     context['form'] = PrivatizeVideoForm()
     # either retrieve the request object, or return 404 error
     req = get_object_or_404(Request, request_id=request_id)
+    
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    
     return render(request, 'videomanagement/privatize_video.html', context)
 
 # # retrieve delete video request webpage
@@ -116,6 +148,13 @@ def accept_request(request, request_id):
     context = {}
     actions = CommitteeAction.objects.all()
     context['actions'] = actions
+    
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    
     req = get_object_or_404(Request, request_id=request_id)
     if req.type == "privatize_video":
         form = PrivatizeVideoForm(request.POST)
@@ -148,6 +187,12 @@ def create_meeting_request(request):
     context = {}
     context['user'] = request.user
     
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    
     # For get method, lead to create request pages
     if request.method == 'GET':
         context['form'] = CreateMeetingRequestForm()
@@ -174,11 +219,17 @@ def retrieve_meeting_requests(request):
     context = {}
     context['user'] = request.user
     
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    
     requests = MeetingRequest.objects.all()
     
     videos_for_request = []
     for re in requests:
-        if re.resolved:
+        if not re.resolved:
             request_video = {}
             videos = Video.objects.all().filter(video_date=re.video_date, location=re.location)
             request_video['videos'] = videos
@@ -200,6 +251,13 @@ def delete_meeting_request(request, id):
     context = {}
     
     req.delete()
+    
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    
     return redirect(reverse('retrieve_meeting_requests'))
 
 
@@ -213,6 +271,13 @@ def make_public(request, request_id):
     # either retrieve the request object, or return 404 error
     req = get_object_or_404(MeetingRequest, id=request_id)
     context['video_date'] = req.video_date
+    
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    
     return render(request, 'videomanagement/make_public.html', context)
 
 # retrieve inspect video meeting request webpage
@@ -225,6 +290,13 @@ def inspect_video(request, request_id):
     # either retrieve the request object, or return 404 error
     req = get_object_or_404(MeetingRequest, id=request_id)
     context['video_date'] = req.video_date
+    
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    
     return render(request, 'videomanagement/inspect_video.html', context)
 
 # accept a meeting Request
@@ -235,6 +307,13 @@ def accept_meeting_request(request, id):
     context = {}
     actions = CommitteeAction.objects.all()
     context['actions'] = actions
+    
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    
     if request.method == 'POST':
     	req = get_object_or_404(MeetingRequest, id=id)
 	if req.type == "make_public":

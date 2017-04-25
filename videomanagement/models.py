@@ -21,7 +21,8 @@ class Video(models.Model):
 					('Cyert Hall', 'Cyert Hall'),
 					('Cohon University Center', 'Cohon University Center'),
 					('Hunt Library', 'Hunt Library'),
-					('Other place', 'Other place'))
+					('Other place', 'Other place'),
+					('Morewood Apartments', 'Morewood Apartments'))
 	"""
 	Stores a single video entry, related to :model:`auth.User` when User is Officer that took video.
 	"""
@@ -87,13 +88,16 @@ class MeetingRequest(models.Model):
 	
 	# accept a request
 	def accept(self, request_id, policy_justification, committee_text_reason):
-    self.resolved = True
+
+		self.resolved = True
 		self.save()
 		#Doesn't currently work: need to re-architect
 		if self.type == 'make_public':
 			video = get_object_or_404(Video, video_date=self.video_date, location=self.location)
 			video.is_public = True
 			video.save()
+			new_action = CommitteeAction(type='make_public', request_id=request_id, video_id=video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
+			new_action.save()
 		elif self.type == 'inspect_video':
 			#notify/email user
 			video = get_object_or_404(Video, video_date=self.video_date, location=self.location)

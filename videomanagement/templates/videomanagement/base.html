@@ -32,21 +32,33 @@
 	{% block navbar %}
   	<nav class="navbar navbar-default navbar-fixed-top">
   	  <div class="container">
-        <a class="navbar-brand" href="/">
-          <img alt="Logo" class="brand_img" src="">
-          PBWC-VideoManagement
+        <a class="navbar-brand" href="{% url 'login' %}">
+          <img alt="PBWC Videos" class="brand_img" src="">
         </a>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home <span class="badge"></span></a></li>
-            <li><a href="">More <span class="badge"></span></a></li>
+            <li><a href="/">Home <span class="badge"></span></a></li>
+            {% if user_type == 'student' or user_type == 'officer' %}
+            <li><a href="{% url 'create_meeting_request' %}">Create Request <span class="badge"></span></a></li>
+            {% endif %}
+            {% if user_type == 'video_manager' %}
+            <li><a href="{% url 'upload' %}">Upload <span class="badge"></span></a></li>
+            {% endif %}
+            {% if user_type == 'committee_member' %}
+            <li><a href="{% url 'committee_retrieve' %}">Committee-only Videos<span class="badge"></span></a></li>
+            <li><a href="{% url 'retrieve_requests' %}">All Pending Video Requests <span class="badge"></span></a></li>
+            <li><a href="{% url 'retrieve_meeting_requests' %}">All Pending Meeting Requests <span class="badge"></span></a></li>
+            <li><a href="{% url 'committee_action_retrieve' %}">Committee Action Log <span class="badge"></span></a></li>
+            {% endif %}
           </ul>
 		  <ul class="nav navbar-nav navbar-right">
     	    <li class="dropdown">
  	         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.username}} <span class="caret"></span></a>
     	      <ul class="dropdown-menu">
+	<!--
         	    <li><a href="">My profile</a></li>
  	            <li><a href="">Reset password</a></li>
+	-->
         	    <li role="separator" class="divider"></li>
  	           <li><a href="{% url 'logout' %}">Log out</a></li>
     	      </ul>
@@ -57,27 +69,30 @@
 	</nav>
 	{% endblock %}
 	
+
 	{% block notlog_navbar %}
+	{% if user.is_anonymous %}
   	<nav class="navbar navbar-default navbar-fixed-top">
   	  <div class="container">
         <a class="navbar-brand" href="{% url 'login' %}">
-          <img alt="Logo" class="brand_img" src="">
-          PBWC-VideoManagement
+          <img alt="Login" class="brand_img" src="">
         </a>
-
   	  </div>
 	</nav>
+	{% else %}
+	{% endif %}
 	{% endblock %}
 	
 	{% block container %}
 	<div class="container col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
 	  <div class="block">
 	    <div class="block_content">
-	      <p>hhh</p>
+
 	    </div>
 	  </div>
 	</div>
 	{% endblock %}
+
 	
   </body>
 </html>

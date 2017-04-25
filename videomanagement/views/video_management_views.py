@@ -34,7 +34,12 @@ from moviepy.editor import *
 ########### VIEWS AND ACTIONS FOR NON-LOGGED IN USERS #######################
 
 def privacy_policy(request):
-    	context = {}
+    context = {}
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
 	return render(request,'videomanagement/privacy_policy.html',context)
 
 ########### VIEWS AND ACTIONS FOR LOGGED IN USERS #######################
@@ -73,8 +78,10 @@ def view_video(request, video_id):
     	:template:`videomanagement/view_video.html`
     	"""
 	context = {'video_id': video_id, 'video': get_object_or_404(Video, video_id=video_id)}
+    
 	for g in request.user.groups.all():
-		context['group'] = g.name
+		context['user_type'] = g.name
+    
 	return render(request,'videomanagement/view_video.html',context)
 
 ## Views and Actions for Community Page
@@ -103,6 +110,11 @@ def community_retrieve(request):
     	if time_now > time:
     		video.video.delete()
     		video.delete()
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
     return render(request, 'videomanagement/community_main.html',context)
 
 ## Views and Actions for Committee
@@ -130,6 +142,11 @@ def delete_video(request, video_id):
 
     all_videos = Video.objects.all().order_by('-video_date')
     context['videos'] = all_videos
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
     return render(request,'videomanagement/community_main.html',context)
 
 
@@ -153,6 +170,12 @@ def upload(request):
     """
     context = {}
     context['user'] = request.user
+    
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
 
     # For get method, lead to upload pages
     if request.method == 'GET':
@@ -172,6 +195,14 @@ def upload(request):
         # Must copy content_type into a new model field because the model
         # FileField will not store this in the database.  (The uploaded file
         # is actually a different object than what's return from a DB read.)
+        time = form.cleaned_data['video_date']
+        loc = form.cleaned_data['location']
+
+        if Video.objects.filter(video_date=time, location=loc):
+            context['message'] = 'video with same time and location is existed'
+            context['form'] = form
+            return render(request, 'videomanagement/upload.html', context)
+
         
         #copy uploaded temp file data
         data = request.FILES['video']
@@ -185,7 +216,10 @@ def upload(request):
         # this file will be used for creating gits
         tup = tempfile.mkstemp()
         f = os.fdopen(tup[0], 'w')
-        f.write(data2.read())
+
+        for chunk in request.FILES['video'].chunks():
+            f.write(chunk)
+
         f.close()
         filepath = tup[1]
         
@@ -245,6 +279,11 @@ def committee_retrieve(request):
     	if time_now > time:
     		video.video.delete()
     		video.delete()
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
     return render(request,'videomanagement/committee_main.html',context)
 
 # retrieve the gif of a video
