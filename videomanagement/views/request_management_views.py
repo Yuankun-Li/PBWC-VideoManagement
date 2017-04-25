@@ -170,7 +170,7 @@ def accept_request(request, request_id):
 	form = ExtendRetentionForm(request.POST)
     	if form.is_valid():
 		data = form.cleaned_data
-		policy_justification = data['le_officer']
+		policy_justification = "none"
 		committee_text_reason = data['rationale']
         	context['message'] = 'Action created'
     		req.accept(request_id, policy_justification,committee_text_reason)

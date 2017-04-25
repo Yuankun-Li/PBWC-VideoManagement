@@ -40,7 +40,7 @@ def privacy_policy(request):
         context['user_type'] = request.user.groups.all()[0].name
     else:
         context['user_type'] = ""
-	return render(request,'videomanagement/privacy_policy.html',context)
+    return render(request,'videomanagement/privacy_policy.html',context)
 
 ########### VIEWS AND ACTIONS FOR LOGGED IN USERS #######################
 
