@@ -22,7 +22,7 @@ ________________________________________________________________________________
 
 2. **Restricted Retention Time** - Any footage that the police managers upload have an automatic retention time of 180 days, after which the footage is deleted (though students and officers may request to extend the retention time for specific footage, as noted in the Overview).
 
-3. **Video Encryption** - All videos are encrypted with Django's inherent video encryption implementation.
+3. **Video Encryption** - We use a third-party library that provides methods for encryption upon storage and decryption/fetching of video files upon request.
 
 4. **Community Participation** - Users in the role of students and officers can submit requests regarding specific BWC footage to the independent committee, as noted in the Overview. 
 
