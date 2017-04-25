@@ -29,7 +29,8 @@
 	 <form method = "post" action = "{% url 'accept_meeting_request' meeting_request_id %}" >
                 {% csrf_token %}
 		{{form.as_p}}
-		  <input type="submit" class="btn btn-default" value="Accept Request">
+		  <input type="submit" class="btn btn-default" name="accept" value="Accept Request">
+		  <input type="submit" class="btn btn-default" name="reject" value="Reject Request">
 	 </form>
         </div>
     </div>

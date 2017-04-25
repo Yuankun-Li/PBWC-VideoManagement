@@ -17,42 +17,45 @@
 {% endblock %}
 
 {% block container %}
-	<div class="container col-md-12 col-sm-12">
+	<h1 class = "text-center"> Meeting Requests History</h1>
+	<div class="container col-md-12 col-sm-10">
 	  <div class="block">
 	    <div class="block_content">
-	      {% for key, values in requests.items %}
 	      	<div>
-	      	  <h3>For video {{key.video_id}}</h3>
 	      	  <table style="width:100%">
 				  <tr>
 	      	  	 	 <th>Type</th>
 	      	  	 	 <th>Request Date</th>
-	      	  	 	 <th>Requested By</th>
+	      	  	 	 <th>Video Date</th>
 	      	  	 	 <th>Location</th>
-	      	  	 	 <th>Retention</th>
-	      	  	 	 <th>Is Video Public?</th>
+	      	  	 	 <th>Description</th>
 	      	  	 	 <th>Reason</th>
-	      	  	 	 <th>Delete Video</th>
-	      	  	 	 <th>Extend Retention</th>
-	      	  	 	 <th>Make Public</th>
+	      	  	 	 <th>Status</th>
+
 	      	  	  </tr>
-	      	  	  {% for request in values %}
+	      	  	  {% for request in requests %}
 				  <tr>
 	      	  	  	<td>{{request.type}}</td>
 	      	  	  	<td>{{request.request_date}}</td>
-	      	  	  	<td>{{request.user.username}}</td>
-	      	  	  	<td>{{request.video.location}}</td>
-	      	  	  	<td>{{request.video.retention}}</td>
-	      	  	  	<td>{{request.video.is_public}}</td>
-	      	  	  	<td>{{request.reasoning}}</td>
-	      	  	  	<td><a href="{% url 'delete_request' request.request_id %}">delete</a></td>
-	      	  	  	<td><a href="{% url 'extend_retention' request.request_id %}">accept</a></td>
-	      	  	  	<td><a href="{% url 'accept_request' request.request_id %}">accept</a></td>
+	      	  	  	<td>{{request.video_date}}</td>
+	      	  	  	<td>{{request.location}}</td>
+	      	  	  	<td>{{request.description}}</td>
+	      	  	  	<td>{{request.reason_for_request}}</td>
+				{% ifequal request.resolved False %}
+	      	  	  	<td>Pending</td>
+				{% endifequal%}
+				{% ifequal request.resolved True %}
+					{% ifequal request.accepted True %}
+	      	  	  	<td>Accepted</td>
+	      	  	  	{% endifequal%}
+	      	  	  	{% ifequal request.accepted False %}
+	      	  	  	<td>Rejected</td>
+	      	  	  	{% endifequal%}
+				{% endifequal%}
 	      	  	  </tr>
 				  {% endfor %}
 			  </table>
 	      	</div>
-	      {% endfor %}
 	    </div>
 	  </div>
 	</div>

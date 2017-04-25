@@ -53,10 +53,12 @@ class Request(models.Model):
 	user = models.ForeignKey(User)
 	reasoning = models.CharField(max_length=1000)
 	resolved = models.BooleanField(default=False)
+	accepted = models.BooleanField(default=False)
 	
 	# accept a request
 	def accept(self, request_id, policy_justification,committee_text_reason):
 		self.resolved = True
+		self.accepted = True
 		self.save()
 		
 		if self.type == 'privatize_video':
@@ -72,6 +74,11 @@ class Request(models.Model):
 			new_action = CommitteeAction(type='extend_retention', request_id=request_id, video_id=self.video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
 			new_action.save()
 
+	# reject a request
+	def reject(self, request_id):
+		self.resolved = True
+		self.save()
+
 # MeetingRequest model: handle the review meeting request
 class MeetingRequest(models.Model):
 	TYPE_CHOICES = (('meeting', 'meeting',), ('make_public', 'make_public',), ('inspect_video', 'inspect_video'))
@@ -85,11 +92,13 @@ class MeetingRequest(models.Model):
 	description = models.CharField(max_length=1000)
 	reason_for_request = models.CharField(max_length=1000)
 	resolved = models.BooleanField(default=False)
+	accepted = models.BooleanField(default=False)
 	
 	# accept a request
 	def accept(self, request_id, policy_justification, committee_text_reason):
 
 		self.resolved = True
+		self.accepted = True
 		self.save()
 		#Doesn't currently work: need to re-architect
 		if self.type == 'make_public':
@@ -104,6 +113,11 @@ class MeetingRequest(models.Model):
 			video.save()
 			new_action = CommitteeAction(type='inspect_video', request_id=request_id, video_id=video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
 			new_action.save()
+
+	# reject a request
+	def reject(self, request_id):
+		self.resolved = True
+		self.save()
 
 class CommitteeAction(models.Model):
 	TYPE_CHOICES = (('meeting', 'meeting',), ('make_public', 'make_public',), 
