@@ -115,6 +115,13 @@ def community_retrieve(request):
         context['user_type'] = request.user.groups.all()[0].name
     else:
         context['user_type'] = ""
+        
+    # get request number if student or officer
+    if context['user_type'] == 'student' or context['user_type'] == 'officer':
+        context['request_num'] = len(request.user.request_set.all())
+        context['request_pending_num'] = len(request.user.request_set.filter(resolved = False))
+        context['meeting_request_num'] = len(request.user.meetingrequest_set.all())
+        context['meeting_request_pending_num'] = len(request.user.meetingrequest_set.filter(resolved = False))
     return render(request, 'videomanagement/community_main.html',context)
 
 ## Views and Actions for Committee

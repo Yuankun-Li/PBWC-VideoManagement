@@ -13,17 +13,25 @@
 
 {% block container %}
 
-
+<div class = "row">
+<div class="container">
 <h1 class = "text-center"> Community Videos</h1>
 {% if user_type == 'student' or user_type == 'officer' %}
+<div>
+	<p>You have submitted 
+		<a href="{% url 'retrieve_made_requests' %}">{{request_num}}</a>
+		 requests that are based on a single video. Among them, {{request_pending_num}} requests are still pending.
+	</p>
+	<p>You have submitted 
+		<a href="{% url 'retrieve_meeting_made_requests' %}">{{meeting_request_num}}</a>
+		 general requests. Among them, {{meeting_request_pending_num}} requests are still pending.
+	</p>
+</div>
 <div class="text-right">
 	<a class="btn btn-default" href="{% url 'create_meeting_request' %}">Create Meeting Request</a>
 </div>
 {% endif %}
 
-
-<div class = "row">
-<div class="container">
 	{% for video in videos %}
 	{% if video.is_public %}
 	<div class="col-md-2 text-center">

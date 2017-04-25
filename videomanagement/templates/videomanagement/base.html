@@ -39,7 +39,7 @@
           <ul class="nav navbar-nav">
             <li><a href="/">Home <span class="badge"></span></a></li>
             {% if user_type == 'student' or user_type == 'officer' %}
-            <li><a href="{% url 'create_meeting_request' %}">Create Request <span class="badge"></span></a></li>
+            <li><a href="{% url 'create_meeting_request' %}">Create Meeting Request <span class="badge"></span></a></li>
             {% endif %}
             {% if user_type == 'video_manager' %}
             <li><a href="{% url 'upload' %}">Upload <span class="badge"></span></a></li>
@@ -58,8 +58,8 @@
 	<!--
         	    <li><a href="">My profile</a></li>
  	            <li><a href="">Reset password</a></li>
-	-->
         	    <li role="separator" class="divider"></li>
+    -->
  	           <li><a href="{% url 'logout' %}">Log out</a></li>
     	      </ul>
      	  	 </li>
