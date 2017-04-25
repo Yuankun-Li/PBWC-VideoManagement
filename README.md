@@ -34,21 +34,21 @@ ________________________________________________________________________________
 
 ## Key Elements of This Repository
 
-PBWC-VideoManagement/videomanagement/models.py contains the models that enable video upload, a student's or officer's submission of requests, a committee member's resolution of a request, and the transfer of a committee action to the audit log.
+**PBWC-VideoManagement/videomanagement/models.py** contains the models that enable video upload, a student's or officer's submission of requests, a committee member's resolution of a request, and the transfer of a committee action to the audit log.
 
-PBWC-VideoManagement/videomanagement/forms.py contains code for all forms pertaining to login, video upload, request creation, and all committee request resolution.
+**PBWC-VideoManagement/videomanagement/forms.py** contains code for all forms pertaining to login, video upload, request creation, and all committee request resolution.
 
-PBWC-VideoManagement/videomanagement/views/account_management_views.py provides the controller for login.
+**PBWC-VideoManagement/videomanagement/views/account_management_views.py** provides the controller for login.
 
-PBWC-VideoManagement/videomanagement/views/action_management_views.py provides the controller to retrieve committee actions.
+**PBWC-VideoManagement/videomanagement/views/action_management_views.py** provides the controller to retrieve committee actions.
 
-PBWC-VideoManagement/videomanagement/views/request_management_views.py provides the controller for request submission and resolution.
+**PBWC-VideoManagement/videomanagement/views/request_management_views.py** provides the controller for request submission and resolution.
 
-PBWC-VideoManagement/videomanagement/views/video_management_views.py provides the controller for video retrieval (which enables viewing) and upload.
+**PBWC-VideoManagement/videomanagement/views/video_management_views.py** provides the controller for video retrieval (which enables viewing) and upload.
 
-PBWC-VideoManagement/videomanagement/templates/videomanagement/ contains the HTML templates that enable all actions specified in models.py.
+**PBWC-VideoManagement/videomanagement/templates/videomanagement/** contains the HTML templates that enable all actions specified in models.py.
 
-PBWC-VideoManagement/videomanagement/static/videomanagement/js/ contains the purpose specification form logic and media player implementation.
+**PBWC-VideoManagement/videomanagement/static/videomanagement/js/** contains the purpose specification form logic and media player implementation.
 
 _______________________________________________________________________________________________________________
 
