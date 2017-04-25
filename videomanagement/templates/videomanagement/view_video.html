@@ -43,9 +43,6 @@
   			<source src="{{video.video.url}}" type="video/mp4" />
 		  </video>
 		  
-		  {% if user_type == 'committee_member' %}
-		  <a href="{% url 'delete_video' video_id %}">delete</a>
-		  {% endif %}
 		  {% if user_type == 'student' or user_type == 'officer' %}
 		  <a href="{% url 'create_request' video_id %}">create request</a>
 		  {% endif %}
