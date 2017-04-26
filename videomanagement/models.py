@@ -81,7 +81,7 @@ class Request(models.Model):
 
 # MeetingRequest model: handle the review meeting request
 class MeetingRequest(models.Model):
-	TYPE_CHOICES = (('meeting', 'meeting',), ('make_public', 'make_public',), ('inspect_video', 'inspect_video'))
+	TYPE_CHOICES = (('make_public', 'make_public',), ('inspect_video', 'inspect_video'))
 	
 
 	request_date = models.DateTimeField(default=timezone.now)
@@ -120,7 +120,7 @@ class MeetingRequest(models.Model):
 		self.save()
 
 class CommitteeAction(models.Model):
-	TYPE_CHOICES = (('meeting', 'meeting',), ('make_public', 'make_public',), 
+	TYPE_CHOICES = (('make_public', 'make_public',), 
 ('inspect_video', 'inspect_video'),('extend_retention', 'extend_retention'), ('privatize_video','privatize_video'))
 
 	action_id = models.AutoField(primary_key=True)

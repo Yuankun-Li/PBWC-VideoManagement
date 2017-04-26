@@ -168,6 +168,7 @@ def accept_request(request, request_id):
     # get the request to accept
     context = {}
     actions = CommitteeAction.objects.all()
+    context['request_id'] = request_id
     context['actions'] = actions
     
     groups = request.user.groups.all()
@@ -183,25 +184,26 @@ def accept_request(request, request_id):
             data = form.cleaned_data
             policy_justification = "none"
             committee_text_reason = data['rationale']
-            context['message'] = 'Action created'
+
             if 'accept' in request.POST:
                 req.accept(request_id, policy_justification,committee_text_reason)
             elif 'reject' in request.POST:
                 req.reject(id)
-            return render(request,'videomanagement/retrieve_actions.html',context)
+#    	    return render(request,'videomanagement/privatize_video.html',context)
     if req.type == "extend_retention":
 	form = ExtendRetentionForm(request.POST)
     	if form.is_valid():
 		data = form.cleaned_data
 		policy_justification = "none"
 		committee_text_reason = data['rationale']
-        	context['message'] = 'Action created'
                 if 'accept' in request.POST:
     		      req.accept(request_id, policy_justification,committee_text_reason)
                 elif 'reject' in request.POST:
                     req.reject(id)
-    		return render(request,'videomanagement/retrieve_actions.html',context)
+#    	        return render(request,'videomanagement/extend_retention.html',context)
     return redirect(reverse('retrieve_requests'))
+
+
 
 
 ## Views and Actions for request based on time and location
@@ -351,6 +353,7 @@ def accept_meeting_request(request, id):
     # get the request to accept
     context = {}
     actions = CommitteeAction.objects.all()
+    context['request_id'] = id
     context['actions'] = actions
     
     groups = request.user.groups.all()
@@ -367,25 +370,24 @@ def accept_meeting_request(request, id):
 			data = form.cleaned_data
             		policy_justification = "none"
             		committee_text_reason = data['rationale']
-            		context['message'] = 'Action created'
 			if 'accept' in request.POST:
 				req.accept(id, policy_justification,committee_text_reason)
                         elif 'reject' in request.POST:
                             req.reject(id)
-            		return render(request,'videomanagement/retrieve_actions.html',context)
+#            		return render(request,'videomanagement/retrieve_actions.html',context)
 	if req.type == "inspect_video":
 		form = InspectVideoForm(request.POST)
 		if form.is_valid():
 			data = form.cleaned_data
             		policy_justification = "none"
             		committee_text_reason = data['rationale']
-            		context['message'] = 'Action created'
+
                         if 'accept' in request.POST:
             	               req.accept(id, policy_justification,committee_text_reason)
                         elif 'reject' in request.POST:
                             req.reject(id)
-            		return render(request,'videomanagement/retrieve_actions.html',context)
     return redirect(reverse('retrieve_meeting_requests'))
+
 
 
 
