@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^$', video_views.community_retrieve, name='community_retrieve'),
     url(r'^login$', video_views.login_, name='login'),
     url(r'^logout$', video_views.logout_, name='logout'),
+    url(r'^search$', video_views.search, name='search'),
     url(r'^upload$', video_views.upload, name='upload'),
     url(r'^delete_video/(?P<video_id>\d+)/$', video_views.delete_video, name='delete_video'),
     url(r'^view_video/(?P<video_id>\d+)/$', video_views.view_video, name='view_video'),

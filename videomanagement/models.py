@@ -17,12 +17,12 @@ from django_encrypted_filefield.fields import EncryptedFileField, EncryptedImage
 # content_type need to be fixed
 
 class Video(models.Model):
-	LOCATION_CHOICES = (('Gates Center for Computer Science', 'Gates Center for Computer Science',), 
+	LOCATION_CHOICES = [('Gates Center for Computer Science', 'Gates Center for Computer Science',), 
 					('Cyert Hall', 'Cyert Hall'),
 					('Cohon University Center', 'Cohon University Center'),
 					('Hunt Library', 'Hunt Library'),
 					('Other place', 'Other place'),
-					('Morewood Apartments', 'Morewood Apartments'))
+					('Morewood Apartments', 'Morewood Apartments')]
 	"""
 	Stores a single video entry, related to :model:`auth.User` when User is Officer that took video.
 	"""

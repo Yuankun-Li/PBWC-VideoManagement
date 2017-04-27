@@ -8,7 +8,7 @@ from django.contrib.auth import login, authenticate
 from django.db import transaction
 from mimetypes import guess_type, MimeTypes
 
-from videomanagement.forms import VideoForm
+from videomanagement.forms import VideoForm, SearchForm
 from videomanagement.models import Video
 
 from datetime import datetime, timedelta
@@ -101,6 +101,7 @@ def community_retrieve(request):
     :template:`videomanagement/community_main.html`
     """
     all_videos = Video.objects.all().order_by('-video_date')
+    all_videos = all_videos.filter(is_public=True)
     context = {'videos':all_videos}
     for video in all_videos:
     	this_video = FileSystemStorage(location=settings.BASE_DIR)
@@ -122,6 +123,9 @@ def community_retrieve(request):
         context['request_pending_num'] = len(request.user.request_set.filter(resolved = False))
         context['meeting_request_num'] = len(request.user.meetingrequest_set.all())
         context['meeting_request_pending_num'] = len(request.user.meetingrequest_set.filter(resolved = False))
+        
+    # get the search form
+    context['form'] = SearchForm()
     return render(request, 'videomanagement/community_main.html',context)
 
 ## Views and Actions for Committee
@@ -294,7 +298,7 @@ def committee_retrieve(request):
     return render(request,'videomanagement/committee_main.html',context)
 
 # retrieve the gif of a video
-@login_required
+# @login_required
 def get_gif(request, video_id):
     	"""
     	Retrieves the gif field from the given :model:`videomanagement.Video`.
@@ -311,3 +315,22 @@ def get_gif(request, video_id):
 	content_type = guess_type(gif.name)
 	return HttpResponse(gif, content_type = content_type)
 
+# search video based on given time and location
+def search(request):
+    # get date and location for search
+    video_date_year = int(request.POST['video_date_year'])
+    video_date_month = int(request.POST['video_date_month'])
+    video_date_day = int(request.POST['video_date_day'])
+    location = request.POST['location']
+    # get all videos that are public
+    all_videos = Video.objects.all().order_by('-video_date')
+    all_videos = all_videos.filter(is_public=True)
+    # if the user has given a date for search
+    if not video_date_year == 0 and not video_date_month == 0 and not video_date_day == 0:
+        all_videos = all_videos.filter(video_date=datetime(video_date_year,video_date_month,video_date_day))
+    # if the user has given a location for search
+    if not location == 'All':
+        all_videos = all_videos.filter(location=location)
+    context = {'videos': all_videos}
+    print(render(request, 'videomanagement/json/videos.json', context, content_type='application/json'))
+    return render(request, 'videomanagement/json/videos.json', context, content_type='application/json')

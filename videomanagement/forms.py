@@ -132,3 +132,6 @@ class MakePublicForm(forms.Form):
 			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
                                                                     'class': 'form-control'}))
 
+class SearchForm(forms.Form):
+    video_date = forms.DateTimeField(widget = SelectDateWidget(attrs={'id': 'video_date'}), required=False)
+    location = forms.ChoiceField(choices=[('All','All')] + Video.LOCATION_CHOICES, required=False, widget = forms.Select(attrs={'id': 'location'}))
