@@ -1,0 +1,272 @@
+{% extends "videomanagement/base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}PBWC-VideoManagement Best Practices{% endblock %}
+{% block title %}PBWC-VideoManagement Best Practices{% endblock %}
+{% block css %}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+{% endblock %}
+
+{% block script %}
+	<script src="{% static "videomanagement/js/jquery-3.1.1.js" %}"></script>
+	<script src="{% static "videomanagement/js/bootstrap.min.js" %}"></script>
+{% endblock %}
+
+{% block container %}
+<h2 class = "text-center"> 	 Best Practices for the Implementation of a Police Body-Worn Camera Video Management and Disclosure Web Service </h2>
+	<div class="container col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+
+
+         <h3> Section 1. Introduction</h3>
+         <p> The following serves as a set of best practices for adopting our web service for body-worn camera (BWC) footage management and disclosure in the college setting. While we have implemented multiple privacy principles within the software, thus removing part of the burden from users to make privacy-sensitive decisions, meaningful privacy and accountability is only possible with appropriate use. Our software involves the following stakeholders:</p>
+	<ol>
+	<li>The college administration</li>
+	<li>Students of the college</li>
+	<li>College police officers</li>
+	<li>A police administrator within the campus security office</li>
+	<li>An independent committee, composed of representatives for the student body and campus security office, faculty, staff, and legal counsel.</li>
+	</ol>
+
+	<p>This web service is accessible only to those with valid college login credentials. Upon logging in, all members of the college community can only view BWC footage that has been approved for release by the independent committee. Students and officers may submit requests through the web service to:</p>
+	<ol>
+	<li>Establish a meeting with the independent committee to view BWC footage that has not yet been approved for public viewing.</li>
+	<li>Delete BWC footage.</li>
+	<li>Release BWC footage for public viewing.</li>
+	<li>Extend the retention time for BWC footage.</li>
+	</ol>
+
+	<p>The independent committee decides whether to approve any requested action after considering the implications of this action for the privacy of those recorded and the accountability of campus police forces.</p>
+
+	<p>In formulating these best practices, we consider only the situation in which a campus police officer records their entry into a dormitory building using a BWC. We assume that the officer would be responding to a complaint submitted through the campus security office. While some of these guidelines are applicable beyond this narrowly defined situation, we maintain a limited scope to highlight the careful considerations that college administrations must make to ensure both privacy and accountability. Ideally, our software and this accompanying document will provide the foundation from which to consider extensions into other recorded situations.</p>
+
+	<p>The following sections provide detailed information for each stakeholder on appropriate use of this management and disclosure system, and where applicable, the considerations each stakeholder should make prior to adoption and before any action is taken within the system. This research team acknowledges that the practices enumerated here directly conflict with current laws and policies that dictate who controls management of BWC footage. Specifically, our incorporation of an independent committee contradicts many police departments’ assumption that BWC footage is private property only obtainable through a court order. Additionally, the Family Educational Rights and Privacy Act (FERPA) typically excludes records created by law enforcement from those records that a student may access. However, we believe it is essential to externalize control over BWC footage to a third party. This is the only way to maintain public trust in the use of BWCs, provide meaningful participation to the campus community, and mitigate the power imbalance between police and civilians.</p>
+
+	<h3>Section 2. Guidelines for College Administration</h3>
+<ol type="a">
+	<li>The college administration must ensure that students are aware of the deployment of police BWCs on the college campus. The administration should notify students of this proposed practice at least 6 months prior to official deployment.</li>
+	<li>During the 6-month window between announcing the intent to deploy and actual deployment, the administration should
+		<ol type="1">
+			<li>Host at least 3 open community forums to gather student opinions on the proposed BWC policy specific to this campus, and</li>
+			<li>Post a draft policy online for a 30-day comment period. </li>
+		</ol>
+Insights from both community forums and the comment period should be incorporated into iterative revisions of the BWC policy. This will serve to increase awareness of and trust in BWC deployment.</li>
+
+	<li>The administration must ensure that students are aware of the policy for deployment of BWCs once finalized.
+		<ol type="1">
+			<li>The administration must communicate to students what they can expect from a campus officer in terms of notice and choice (see guidelines for college police in Section 3).</li>
+			<li>The administration must communicate to students what they can expect in terms of access to BWC recordings (see guidelines for students in Section 5).</li>
+		</ol>
+	</li>
+	<li> Once BWCs have been deployed, the administration is responsible for sponsoring 2 additional community forums per year to allow students, faculty, staff, officers, and independent committee members to raise concerns about current BWC practices.</li>
+	<li>At the end of the first year following initial deployment of BWCs, the administration must review whether the current BWC policy has had unintended consequences that necessitate further revision.</li>
+	<li>The administration must ensure that external law enforcement agencies do not have access to any stored recordings, unless they provide a valid judicial warrant to review a specific recording as part of an ongoing criminal investigation.</li>
+	<li>The administration must prevent any entity from accessing stored recordings for commercial purposes.</li>
+	<li>The administration is responsible for granting and revoking access to the public web service for both students and police officers, as deemed necessary by the independent committee (see guidelines for the independent committee in Section 6).</li>
+	<li>Based on the current implementation of BWCs in a large metropolitan area, a mid-sized college campus with a staff of approximately 50 police officers can expect to require storage for at least 1 TB of raw footage at any given time. This estimate assumes a standard retention time of 6 months and provides enough buffer to include footage for which the retention time is extended to 3 years.</li>
+	<li>When allotting funding for the BWC program, the administration must consider not only the cost of the BWCs, accompanying computers, and server, but also the cost of upkeep, continued training for officers, and the services of forensic experts in case of legal proceedings.</li>
+
+</ol>
+
+	<h3>Section 3: Guidelines for College Police</h3>
+
+<ol type="a">
+	<li>Any BWC used by campus police officers must have a prominent indicator (i.e. an LED light) to show anyone in the vicinity that it is recording, and the officer should not be able to turn the indicator off while recording.</li>
+	<li>Police officers should not be able to access, modify, or delete footage directly from the BWC.</li>
+	<li>The BWC must be placed on the police officer in a manner that maximizes the camera’s view of the recorded situation.</li>
+	<li>Officers must record from their BWCs throughout their shift. However, the officer must begin recording when they have affirmatively responded to a complaint received through the campus security office, and no later.
+	<ol type="1">
+		<li>Many models of BWCs maintain the last 30 seconds of footage prior to the officer turning on the BWC. Thus, each recording should capture the officer’s affirmation to respond to the complaint.</li>
+	</ol>
+	</li>
+	<li>When an officer plans to enter a dormitory building, they must make a reasonable attempt to obtain verbal consent from the residents to record the situation with their BWC. 
+
+	<ol type="1">
+		<li>If the residents deny consent to recording, the officer must turn the camera off prior to entering the dorm. The recording up to this point must include the request to cease recording.</li>
+
+		<li>If the residents consent to being recorded, the officer must keep the public awareness light on for the duration of the recording. BWCs that prevent officers from turning off the public awareness light are highly preferable, though such models are not currently available on the market.</li>
+
+		<li>If consent cannot be obtained, the officer must keep the recording indicator on for the duration of the recording, and notify residents of the recording at the earliest reasonable time during the interaction.</li>
+
+		<li>If an officer claims equipment malfunction prevented adherence to this procedure for gaining consent, a forensic expert must review the BWC and determine whether the officer has a legitimate claim.</li>
+	</ol>
+	</li>
+
+
+
+	<li>Individual officers must submit their BWCs to the police administrator at the end of every shift to allow the administrator to upload footage to the video database.
+	<ol type="1">
+		<li>Failure to do so should be met with disciplinary action, with increasing severity (and possible termination) for subsequent infractions.</li>
+		<li>Individual officers should not be allowed to upload footage to the video database themselves. This responsibility is entrusted to the police administrator (see guidelines for the police administrator in Section 4).</li>
+	</ol>
+	</li>
+
+	<li>Individual officers should not be allowed to view footage stored in the database, unless they have submitted a legitimate request through the campus web service to review footage they personally recorded.
+	<ol type="1">
+		<li>A legitimate request entails that they specify a time and place during which they completed a recording, along with their officer ID.</li>
+		<li>Officers cannot submit requests until they have drafted a thorough initial report of the incident during which they recorded footage from their BWC.</li>
+		<li>Officers who knowingly submit any request to view footage they did not record should be met with disciplinary action, with increasing severity (and possible termination) for subsequent infractions.</li>
+	</ol>
+	</li>
+
+	<li>Individual officers should not be allowed to download, tamper with, or delete footage stored in the database under any circumstances. Any attempt to do so should be met with termination of the officer’s employment.</li>
+
+	<li>Officers can submit requests for removing recordings from the database or extending the retention time for a specific recording, but only for footage they recorded.</li>
+
+	<li>If the police officer records footage that becomes relevant to a court case but has violated any of these best practices in the process of creating or handling this footage, the BWC footage should be excluded from any further consideration.</li>
+
+<p>
+
+<h3>Section 4. Guidelines for the Police Administrator</h3>
+
+<ol type="a">
+	<li>The police administrator is responsible for training officers in the use of BWCs and best practices for interacting with the software.
+	<ol type="1">
+		<li>Training should be conducted regularly to ensure that all officers can fulfill new obligations as dictated by subsequent updates to the college’s BWC policy.</li>
+	</ol>
+	</li>
+	<li>The police administrator, with the support of required technicians, is responsible for uploading all footage from campus police officers’ BWCs every day.
+	<ol type="1">
+		<li>The police administrator should not skip days for upload, as students and officers may submit requests to review the footage immediately after an initial report has been submitted for the recorded incident.</li>
+	</ol>
+	</li>
+
+	</li>The police administrator is prohibited from delegating this responsibility to anyone else beyond designated support staff within the campus security office.</li>
+
+	<li>The police administrator is responsible for purchasing BWCs that 
+
+	<ol type="1">
+		<li>ensure public awareness of recording, and</li>
+		<li>prevent officers from accessing or tampering with footage on the BWC.</li>
+	</ol>
+	</li>
+</ol>
+
+
+<h3>Section 5. Guidelines for Students</h3>
+
+<ol type="a">
+	<li>Students must only submit legitimate requests to view BWC recordings. This means that they should only submit requests that pertain to a time and place in which they encountered a campus police officer who they know to have been recording. Students would become aware of the officer’s recording when the officer
+
+	<ol type="1">
+		<li>Obtains consent to record from their BWC prior to entering the dorm, and/or</li>
+		<li>Provides clear visual or verbal confirmation that they were recording the scene from their BWC after entering the dorm.</li>
+	</ol>
+	It is important to note that students will not be able to abide by this guideline unless the college administration and campus police strictly follow these best practices as well.</li>
+
+	<li>The following disciplinary actions should be taken in response to illegitimate requests for viewing:
+
+	<ol type="1">
+		<li>Students who knowingly submit 3 requests to view a recording in which they were not recorded should be prohibited from accessing this web service for 1 month.</li>
+		<li>A subsequent offense of this nature should lead to a 6-month ban from accessing the web service. </li>
+		<li>A fifth and final offense of this nature should result in a permanent ban for the duration of the student’s time at the college.</li>
+	</ol>
+	</li>
+
+	<li>The following disciplinary actions should be taken in response to illegitimate requests for removal, extension of retention, or publicizing footage (see guidelines for independent committee members in Section 6):
+
+	<ol type="1">
+		<li>Students who knowingly submit 3 requests to remove, extend the retention time for, and/or publicize footage in which they were not recorded should be prohibited from accessing this web service for 1 month.</li>
+		<li>A subsequent offense of this nature should lead to a 6-month ban from accessing the web service.</li>
+		<li>A fifth and final offense of this nature should result in a permanent ban for the duration of the student’s time at the college.</li>
+	</ol>
+	</li>
+
+	<li>Beyond these restrictions, students must have full freedom to submit as many legitimate requests through the community web service as desired. Disciplinary actions are only included here to deter abuse of the web service.</li>
+
+	<li>Any student may submit a general complaint about BWC footage that is visible to the campus community as well.</li>
+	<li>A student can expect a response from the independent committee within 5 business days of submitting a legitimate request.
+	<ol type="1">
+		<li>If the student does not receive a response within this time, they should report the delay to the campus administration.</li>
+	</ol>
+	</li>
+
+</ol>
+
+<h3>Section 6. Guidelines for the Independent Committee</h3>
+
+<ol type = "a">
+
+	<li>The independent committee must have the full staff necessary to process all requests from students and campus officers within 3 business days of a request submission.</li>
+
+	<li>The independent committee is responsible for keeping track of legitimate and illegitimate requests, and reporting to the college administration students or officers who submit multiple illegitimate requests (see guidelines for students and campus police).</li>
+
+	<li>Committee members that receive a notice of the use of force from witnesses to the incident must immediately change the retention time for the video capturing this use of force to 3 years. it is vitally important to note the following:
+	<ol type="1">
+		<li>This practice assumes witnesses that are members of the campus community are comfortable submitting requests to extend retention for a video capturing an officer using force.</li>
+
+		<li>Witnesses that are not members of the campus community are unable to submit these requests, as access to the web service requires valid college login credentials.</li>
+	</ol>
+	</li>
+
+	<li>A committee member must approve a request to view footage in accordance with the ACLU’s Model Act for Regulating the Use of Wearable Body Cameras by Law Enforcement. A form accompanying the meeting request will direct the committee member through the decisions required to determine whether they should fulfill the request.
+
+	<ol type="1">
+		<li>If a student who was present during the recording but was not personally recorded requests to view the BWC footage, the final decision of whether to fulfill the request is left to the committee’s discretion.</li>
+	</ol>
+	In all cases, the committee must provide a text-based summary of their decision.
+	</li>
+
+	<li>The committee must deny requests for removing a video from the community webpage if
+	<ol type="1">
+		<li>It captures a use of force.</li>
+		<li>It captures officer misconduct.</li>
+		<li>It captures student misconduct.</li>
+		<li>The requester claims the footage is integral to an ongoing criminal trial or investigation.</li>
+	</ol>
+	If the committee determines 6.e.1 - 6.e.4 do not apply, the final decision of whether to fulfill the request is left to the committee’s discretion. In all cases, the committee must provide a text-based summary of their decision.
+	</li>
+
+	<li>A committee member must approve a request to extend the retention time of BWC footage in accordance with the ACLU’s Model Act for Regulating the Use of Wearable Body Cameras by Law Enforcement. A form accompanying the extended retention request will direct the committee member through the decisions required to determine whether they should fulfill the request.
+	<ol type="1">
+		<li>The final decision of whether to fulfill the request is left to the committee’s discretion if
+		<ol type="I">
+		
+			<li>A student who was present during the recording but was not personally recorded requests the extended retention.</li>
+			<li>An officer claims that the BWC footage would support training within the campus police department.</li>
+		</ol>
+		</li>
+	</ol>
+	In all cases, the committee must provide a text-based summary of their decision.
+	</li>
+
+	<li>Requests for making BWC footage public must be approved if
+		
+	<ol type="1">
+		<li>There exists a strong public interest in releasing the footage that outweighs the privacy concerns of recorded individuals.</li>
+		<li>The request follows submission of a complaint by a recorded individual.</li>
+		<li>The footage captures the use of force.</li>
+
+	</ol>
+	For the cases described in 6.g.1 and 6.g.2, the committee must provide a text-based summary of their decision. For the case described in 6.g.3, no explanation of the committee’s rationale is required.
+	</li>
+
+</ol>
+
+<h3>Section 7. Additional Resources</h3>
+
+<p>The following reports may prove useful for individual college administrations to determine how to apply these best practices beyond the narrowly defined situation of an officer entering a dormitory building.</p>
+
+<ol type ="a">
+
+	<li>A set of policies recommended by the ACLU: J. Stanley, "A model act for regulating the use of Wearable body cameras by law enforcement," American Civil Liberties Union, 2017. [Online]. Available: https://www.aclu.org/other/model-act-regulating-use-wearable-body-cameras-law-enforcement?redirect=model-act-regulating-use-wearable-body-cameras-law-enforcement.</li>
+
+	<li>A supporting document for the ACLU’s policy, detailing the privacy concerns that accompany use of police BWCs: J. Stanley, "Police Body-Mounted Cameras: With Right Policies in Place, a Win for All,” American Civil Liberties Union, 2015. [Online]. Available: https://www.aclu.org/other/police-body-mounted-cameras-right-policies-place-win-all?redirect=police-body-mounted-cameras-right-policies-place-win-all </li>
+
+	<li>A report by the National Association of Criminal Defense Lawyers providing additional guidelines for BWCs and validating the concept of an independent committee: B. Pollack et al., “Policing Body Cameras: Policies and Procedures to Safeguard the Rights of the Accused,” NACDL, 2017. [Online]. Available: www.nacdl.org/policingbodycameras </li>
+
+	<li>A report by the Police Executive Research Forum, in conjunction with the Department of Justice: J. Toliver, L. Miller, S. Yanda, and C. Fischer, "Implementing a Body-Worn Camera Program: Recommendations and Lessons Learned," Police Executive Research Forum, 2014. [Online]. Available: https://s3.amazonaws.com/s3.documentcloud.org/documents/1301037/cops-office-report.pdf </li>
+
+	<li>Results from a review conducted by the Office of Community Oriented Policing Services, in Washington, DC: M.D. White. “Police Officer Body-Worn Cameras: Assessing the Evidence.” Washington, DC: Office of Community Oriented Policing Services, 2014. [Online]. Available: https://www.ojpdiagnosticcenter.org/sites/default/files/spotlight/download/Police%20Officer%20Body-Worn%20Cameras.pdf </li>
+	
+	<li>A FAQs page used by Indiana University to notify community members of its BWC policy: "Body-worn cameras at IU," in Police and Public Safety, Protect IU, 2017. [Online]. Available: https://protect.iu.edu/police-safety/policies/bwc-faq.html.</li>
+
+</ol>
+
+	</div>
+{% endblock %}
+
+{% block notlog_navbar %}{% endblock %}

@@ -17,10 +17,30 @@
 {% endblock %}
 
 {% block container %}
-<h1 class = "text-center"> Privacy Policy</h1>
-	<div class="container col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
-	  <p> foo bar</p>
+<h1 class = "text-center"> Privacy Policy Table</h1>
+	<p class="text-center"> For Complete Privacy Policy, click <a href="{% url 'full_privacy' %}">here</a>.</p>
+	<div class="container col-md-12 text-center">
+
+
+	<nav aria-label="Page navigation">
+		<ul class="pagination">
+
+		<li><button class="btn btn-default" href="#">Link</button></li>
+		<li><button class="btn btn-default" href="#">Link</button></li>
+		<li><button class="btn btn-default" href="#">Link</button></li>
+		<li><button class="btn btn-default" href="#">Link</button></li>
+
+  		</ul>
+	</nav>
+
+	<p>
+	<img src="{% static "videomanagement/images/policy_table3.png" %}" height="387" width="951" alt="policy" />
+	</p>
+
+
 	</div>
+
+
 {% endblock %}
 
 {% block notlog_navbar %}{% endblock %}

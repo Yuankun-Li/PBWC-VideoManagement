@@ -40,7 +40,25 @@ def privacy_policy(request):
         context['user_type'] = request.user.groups.all()[0].name
     else:
         context['user_type'] = ""
-	return render(request,'videomanagement/privacy_policy.html',context)
+    return render(request,'videomanagement/privacy_policy.html',context)
+
+def full_privacy(request):
+    context = {}
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    return render(request,'videomanagement/full_privacy.html',context)
+
+def best_practices(request):
+    context = {}
+    groups = request.user.groups.all()
+    if len(groups) > 0:
+        context['user_type'] = request.user.groups.all()[0].name
+    else:
+        context['user_type'] = ""
+    return render(request,'videomanagement/best_practices.html',context)
 
 ########### VIEWS AND ACTIONS FOR LOGGED IN USERS #######################
 
