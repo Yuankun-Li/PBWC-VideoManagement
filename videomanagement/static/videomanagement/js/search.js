@@ -19,9 +19,9 @@ $( document ).ready(function() {
 	        	for (var i = 0; i < data.videos.length; i++) {
 	        		var video = data.videos[i];
 		        	$('#videos').append("<div class=\"col-md-2 text-center\">" +
-		        			"<div class=\"row\">" +
+		        			"<div class=\"row\"><a href=\"view_video\\" + video.id + "\">" +
 		        			"<img class= \"img-thumbnail\" width=\"100\" height=\"100\" alt=\"PoliceVideo\" src=\"gif\\" + video.id + "\">" +
-		        			"</div><div class=\"row\">" +
+		        			"</a></div><div class=\"row\">" +
 		        			"<a href=\"view_video\\" + video.id + "\">Date:" + video.video_date + " Location:" + video.location + "</a>" +
 		        			"</div></div>");
 	        	}

@@ -1,6 +1,6 @@
 { "videos" : [
 	  {% for video in videos %}
-	  {"video_date" : "{{video.video_date}}", 
+	  {"video_date" : "{{video.video_date|date:"M d, Y"}}", 
 	  "location" : "{{video.location}}", 
 	  "id": "{{video.video_id}}"}
 	  {% if not forloop.last %}, {% endif %}{% endfor %}
