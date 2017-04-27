@@ -9,7 +9,11 @@
 {% block css %}
 {% endblock %} 
 
-
+{% block script %}
+	<script src="{% static "videomanagement/js/jquery-3.1.1.js" %}"></script>
+	<script src="{% static "videomanagement/js/bootstrap.min.js" %}"></script>
+	<script src="{% static "videomanagement/js/search.js" %}"></script>
+{% endblock %}
 
 {% block container %}
 
@@ -32,8 +36,22 @@
 </div>
 {% endif %}
 
+<form id='search_form' method="post" action="">
+	{% for field in form.visible_fields %}
+	<span class="form-group">
+                <label>{{field.label_tag}}</label>
+                <span>
+                    {{field}}
+                </span>
+    </span>
+	{% endfor %}
+    <button class="btn btn-info btn-xs" type="submit" value="Search">Search</button>
+    <a href="" id="get_all">Get all videos</a>
+    {% csrf_token %}
+</form>
+
+<div id='videos'>
 	{% for video in videos %}
-	{% if video.is_public %}
 	<div class="col-md-2 text-center">
 		<div class="row">
     	    		<img class= "img-thumbnail" width="100" height="100" alt="PoliceVideo" src="{% url 'gif' video.video_id %}">
@@ -42,11 +60,9 @@
 			<a href="{% url 'view_video' video.video_id %}">Date:{{video.video_date}} Location:{{video.location}}</a>
 		</div>
 	</div>
-	{% endif %}
 	{% endfor %}
 </div>
 </div>
-
-
+</div>
 
 {% endblock %}
