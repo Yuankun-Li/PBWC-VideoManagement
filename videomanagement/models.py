@@ -44,7 +44,7 @@ class Video(models.Model):
 
 # Request model: handle the extended retention, privatize video, and register complaint request
 class Request(models.Model):
-	TYPE_CHOICES = (('extend_retention', 'extend_retention'), ('privatize_video','privatize_video'),('register_complaint', 'register_complaint'))
+	TYPE_CHOICES = (('extend_retention', 'Extend Retention Time'), ('privatize_video','Remove This Video from the Public Page'),('register_complaint', 'Register a General Complaint'))
 	
 	request_id = models.AutoField(primary_key=True)
 	request_date = models.DateTimeField(default=timezone.now)
@@ -81,7 +81,7 @@ class Request(models.Model):
 
 # MeetingRequest model: handle the review meeting request
 class MeetingRequest(models.Model):
-	TYPE_CHOICES = (('make_public', 'make_public',), ('inspect_video', 'inspect_video'))
+	TYPE_CHOICES = (('make_public', 'Make The Referred Video Public',), ('inspect_video', 'Inspect a Video'))
 	
 
 	request_date = models.DateTimeField(default=timezone.now)
