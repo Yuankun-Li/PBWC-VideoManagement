@@ -25,25 +25,17 @@
 	      <div>
 	      	 <h3>Request {{request.request.id}}</h3>
 			 <ul style="width:100%">
-	      	  	  	<li>Video Date: {{request.request.video_date}}</li>
+	      	  	  	<li>Video Date: {{request.request.Date_That_Footage_Was_Recorded}}</li>
 	      	  	  	<li>Request Date: {{request.request.request_date}}</li>
 	      	  	  	<li>Requested By: {{request.request.user.username}}</li>
-	      	  	  	<li>Location: {{request.request.location}}</li>
-	      	  	  	<li>Description: {{request.request.description}}</li>
-	      	  	  	<li>Reason: {{request.request.reason_for_request}}</li>
-	      	  	  	<li>Type: {{request.request.type}}</li>
-	      	  	  	<li>Delete Request:
-	      	  	  		<a href="{% url 'delete_meeting_request' request.request.id %}">delete</a>
-				</li>
-				{% ifequal request.request.type "meeting"%}
-				<li>
-	      	  	  		<a href="{% url 'accept_meeting_request' request.request.id %}">Accept Meeting</a>
-				</li>
-				{% endifequal %}
-				{% ifequal request.request.type "make_public"%}
+	      	  	  	<li>Location: {{request.request.Location_of_Recorded_Event}}</li>
+	      	  	  	<li>Description: {{request.request.Description_of_Recorded_Event}}</li>
+	      	  	  	<li>Reason: {{request.request.Reason_for_Request}}</li>
+	      	  	  	<li>Type: {{request.request.Type_of_Request}}</li>
+				{% ifequal request.request.Type_of_Request "make_public"%}
 	      	  	  	<li><a href="{% url 'make_public'    request.request.id %}">Make Public</a></li>
 				{% endifequal %}
-				{% ifequal request.request.type "inspect_video"%}
+				{% ifequal request.request.Type_of_Request "inspect_video"%}
 	      	  	  	<li><a href="{% url 'inspect_video'    request.request.id %}">Inspect Video</a></li>
 				{% endifequal %}
 	      	  	  </ul>

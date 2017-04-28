@@ -46,12 +46,12 @@ class CreateRequestForm(forms.ModelForm):
 class CreateMeetingRequestForm(forms.ModelForm):
     class Meta:
         model = MeetingRequest
-        fields = { 'video_date', 'type', 'location', 'description','reason_for_request' }
-        widgets = {'video_date': SelectDateWidget(),
-                   'type': forms.Select(),
-                   'location': forms.Select(),
-		   'description': forms.Textarea(attrs={'placeholder': 'Description of Events', 'rows': 3, 'cols': '80%'}),
-                   'reason_for_request': forms.Textarea(attrs={'placeholder': 'Reasons', 'rows': 3, 'cols': '80%'})}
+        fields = { 'Date_That_Footage_Was_Recorded', 'Type_of_Request', 'Location_of_Recorded_Event', 'Description_of_Recorded_Event','Reason_for_Request' }
+        widgets = {'Date_That_Footage_Was_Recorded': SelectDateWidget(),
+                   'Type_of_Request': forms.Select(),
+                   'Location_of_Recorded_Event': forms.Select(),
+		   'Description_of_Recorded_Event': forms.Textarea(attrs={'placeholder': 'Description of Recorded Event', 'rows': 3, 'cols': '80%'}),
+                   'Reason_for_Request': forms.Textarea(attrs={'placeholder': 'Reason for Request', 'rows': 3, 'cols': '80%'})}
 
 
 #### Committee Action Forms

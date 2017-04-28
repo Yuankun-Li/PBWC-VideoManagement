@@ -83,14 +83,13 @@ class Request(models.Model):
 class MeetingRequest(models.Model):
 	TYPE_CHOICES = (('make_public', 'Make The Referred Video Public',), ('inspect_video', 'Inspect a Video'))
 	
-
 	request_date = models.DateTimeField(default=timezone.now)
-	type = models.CharField(max_length=50, choices=TYPE_CHOICES, default='meeting')
-	video_date = models.DateTimeField()
+	Type_of_Request = models.CharField(max_length=50, choices=TYPE_CHOICES, default='meeting')
+	Date_That_Footage_Was_Recorded = models.DateTimeField()
 	user = models.ForeignKey(User)
-	location = models.CharField(max_length=128, choices=Video.LOCATION_CHOICES, default='Gates Center for Computer Science')
-	description = models.CharField(max_length=1000)
-	reason_for_request = models.CharField(max_length=1000)
+	Location_of_Recorded_Event = models.CharField(max_length=128, choices=Video.LOCATION_CHOICES, default='Gates Center for Computer Science')
+	Description_of_Recorded_Event = models.CharField(max_length=1000)
+	Reason_for_Request = models.CharField(max_length=1000)
 	resolved = models.BooleanField(default=False)
 	accepted = models.BooleanField(default=False)
 	
@@ -101,15 +100,15 @@ class MeetingRequest(models.Model):
 		self.accepted = True
 		self.save()
 		#Doesn't currently work: need to re-architect
-		if self.type == 'make_public':
-			video = get_object_or_404(Video, video_date=self.video_date, location=self.location)
+		if self.Type_of_Request == 'make_public':
+			video = get_object_or_404(Video, video_date=self.Date_That_Footage_Was_Recorded, location=self.Location_of_Recorded_Event )
 			video.is_public = True
 			video.save()
 			new_action = CommitteeAction(type='make_public', request_id=request_id, video_id=video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
 			new_action.save()
-		elif self.type == 'inspect_video':
+		elif self.Type_of_Request == 'inspect_video':
 			#notify/email user
-			video = get_object_or_404(Video, video_date=self.video_date, location=self.location)
+			video = get_object_or_404(Video, video_date=self.Date_That_Footage_Was_Recorded, location=self.Location_of_Recorded_Event )
 			video.save()
 			new_action = CommitteeAction(type='inspect_video', request_id=request_id, video_id=video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
 			new_action.save()

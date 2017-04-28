@@ -258,7 +258,7 @@ def retrieve_meeting_requests(request):
     for re in requests:
         if not re.resolved:
             request_video = {}
-            videos = Video.objects.all().filter(video_date=re.video_date, location=re.location)
+            videos = Video.objects.all().filter(video_date=re.Date_That_Footage_Was_Recorded, location=re.Location_of_Recorded_Event)
             request_video['videos'] = videos
             request_video['request'] = re
             videos_for_request.append(request_video)
@@ -317,7 +317,7 @@ def make_public(request, request_id):
     context['form'] = MakePublicForm()
     # either retrieve the request object, or return 404 error
     req = get_object_or_404(MeetingRequest, id=request_id)
-    context['video_date'] = req.video_date
+    context['video_date'] = req.Date_That_Footage_Was_Recorded
     
     groups = request.user.groups.all()
     if len(groups) > 0:
@@ -336,7 +336,7 @@ def inspect_video(request, request_id):
     context['form'] = InspectVideoForm()
     # either retrieve the request object, or return 404 error
     req = get_object_or_404(MeetingRequest, id=request_id)
-    context['video_date'] = req.video_date
+    context['video_date'] = req.Date_That_Footage_Was_Recorded
     
     groups = request.user.groups.all()
     if len(groups) > 0:
@@ -364,7 +364,7 @@ def accept_meeting_request(request, id):
     
     if request.method == 'POST':
     	req = get_object_or_404(MeetingRequest, id=id)
-	if req.type == "make_public":
+	if req.Type_of_Request == "make_public":
 		form = MakePublicForm(request.POST)
 		if form.is_valid():
 			data = form.cleaned_data
@@ -375,7 +375,7 @@ def accept_meeting_request(request, id):
                         elif 'reject' in request.POST:
                             req.reject(id)
 #            		return render(request,'videomanagement/retrieve_actions.html',context)
-	if req.type == "inspect_video":
+	if req.Type_of_Request == "inspect_video":
 		form = InspectVideoForm(request.POST)
 		if form.is_valid():
 			data = form.cleaned_data

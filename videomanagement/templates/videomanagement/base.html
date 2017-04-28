@@ -39,15 +39,15 @@
           <ul class="nav navbar-nav">
             <li><a href="/">Home <span class="badge"></span></a></li>
             {% if user_type == 'student' or user_type == 'officer' %}
-            <li><a href="{% url 'create_meeting_request' %}">Create Meeting Request <span class="badge"></span></a></li>
+            <li><a href="{% url 'create_meeting_request' %}">Make a Request Regarding Non-Public Footage<span class="badge"></span></a></li>
             {% endif %}
             {% if user_type == 'video_manager' %}
             <li><a href="{% url 'upload' %}">Upload <span class="badge"></span></a></li>
             {% endif %}
             {% if user_type == 'committee_member' %}
             <li><a href="{% url 'committee_retrieve' %}">Committee-only Videos<span class="badge"></span></a></li>
-            <li><a href="{% url 'retrieve_requests' %}">All Pending Video Requests <span class="badge"></span></a></li>
-            <li><a href="{% url 'retrieve_meeting_requests' %}">All Pending Meeting Requests <span class="badge"></span></a></li>
+            <li><a href="{% url 'retrieve_requests' %}">Public Footage Requests <span class="badge"></span></a></li>
+            <li><a href="{% url 'retrieve_meeting_requests' %}">Non-Public Footage Requests <span class="badge"></span></a></li>
             <li><a href="{% url 'committee_action_retrieve' %}">Committee Action Log <span class="badge"></span></a></li>
             {% endif %}
           </ul>
