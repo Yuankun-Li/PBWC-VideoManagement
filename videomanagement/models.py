@@ -21,8 +21,8 @@ class Video(models.Model):
 					('Cyert Hall', 'Cyert Hall'),
 					('Cohon University Center', 'Cohon University Center'),
 					('Hunt Library', 'Hunt Library'),
-					('Other place', 'Other place'),
-					('Morewood Apartments', 'Morewood Apartments')]
+					('Morewood Apartments', 'Morewood Apartments'),
+					('Other place', 'Other place')]
 	"""
 	Stores a single video entry, related to :model:`auth.User` when User is Officer that took video.
 	"""
