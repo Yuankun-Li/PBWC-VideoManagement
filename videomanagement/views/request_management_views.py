@@ -176,6 +176,7 @@ def accept_request(request, request_id):
         context['user_type'] = request.user.groups.all()[0].name
     else:
         context['user_type'] = ""
+    requests_by_id = {}
     
     req = get_object_or_404(Request, request_id=request_id)
     if req.type == "privatize_video":
@@ -184,10 +185,12 @@ def accept_request(request, request_id):
             data = form.cleaned_data
             policy_justification = "none"
             committee_text_reason = data['rationale']
-
+	    print "passed"
             if 'accept' in request.POST:
+        	context['message'] = "Request Accepted."
                 req.accept(request_id, policy_justification,committee_text_reason)
             elif 'reject' in request.POST:
+        	context['message'] = "Request Rejected."
                 req.reject(id)
 #    	    return render(request,'videomanagement/privatize_video.html',context)
     if req.type == "extend_retention":
@@ -197,11 +200,24 @@ def accept_request(request, request_id):
 		policy_justification = "none"
 		committee_text_reason = data['rationale']
                 if 'accept' in request.POST:
+        	      context['message'] = "Request Accepted."
     		      req.accept(request_id, policy_justification,committee_text_reason)
                 elif 'reject' in request.POST:
+        	    context['message'] = "Request Rejected."
                     req.reject(id)
+
+## Re-do retrieve-requests in order to obtain updated list of requests
+    # get all videos
+    videos = Video.objects.all()
+    # get request for each video
+    for video in videos:
+        requests = Request.objects.filter(video=video, resolved=False)
+        if len(requests) > 0:
+            requests_by_id[video] = requests
+    
+    context['requests'] = requests_by_id
 #    	        return render(request,'videomanagement/extend_retention.html',context)
-    return redirect(reverse('retrieve_requests'))
+    return render(request, 'videomanagement/retrieve_requests.html', context)
 
 
 
@@ -371,8 +387,10 @@ def accept_meeting_request(request, id):
             		policy_justification = "none"
             		committee_text_reason = data['rationale']
 			if 'accept' in request.POST:
+        	      		context['message'] = "Request Accepted."
 				req.accept(id, policy_justification,committee_text_reason)
                         elif 'reject' in request.POST:
+       			    context['message'] = "Request Accepted."
                             req.reject(id)
 #            		return render(request,'videomanagement/retrieve_actions.html',context)
 	if req.Type_of_Request == "inspect_video":
@@ -383,10 +401,25 @@ def accept_meeting_request(request, id):
             		committee_text_reason = data['rationale']
 
                         if 'accept' in request.POST:
+        	      	       context['message'] = "Request Accepted."
             	               req.accept(id, policy_justification,committee_text_reason)
                         elif 'reject' in request.POST:
+        	      	    context['message'] = "Request Accepted."
                             req.reject(id)
-    return redirect(reverse('retrieve_meeting_requests'))
+# Re-do retrieve-meeting-requests in order to obtain updated request list
+    requests = MeetingRequest.objects.all()
+    
+    videos_for_request = []
+    for re in requests:
+        if not re.resolved:
+            request_video = {}
+            videos = Video.objects.all().filter(video_date=re.Date_That_Footage_Was_Recorded, location=re.Location_of_Recorded_Event)
+            request_video['videos'] = videos
+            request_video['request'] = re
+            videos_for_request.append(request_video)
+    
+    context['requests'] = videos_for_request
+    return render(request, 'videomanagement/retrieve_meeting_requests.html', context)
 
 
 
