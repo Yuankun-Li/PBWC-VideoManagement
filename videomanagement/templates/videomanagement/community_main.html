@@ -59,7 +59,7 @@
     	    </a>
 		</div>
 		<div class = "row">
-			<a href="{% url 'view_video' video.video_id %}">Date:{{video.video_date|date:"M d, Y"}} Location:{{video.location}}</a>
+			<a href="{% url 'view_video' video.video_id %}">{{video.video_id}}. {{video.video_date|date:"M d, Y"}}. {{video.location}}</a>
 		</div>
 	</div>
 	{% endfor %}
