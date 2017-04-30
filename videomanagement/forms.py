@@ -1,7 +1,9 @@
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget
+from django.contrib.auth.models import User
 
 from models import *
+from form_validators import validate_committee_user
 
 # MAX_UPLOAD_SIZE need to be set
 
@@ -57,6 +59,9 @@ class CreateMeetingRequestForm(forms.ModelForm):
 #### Committee Action Forms
 
 class ExtendRetentionForm(forms.Form):
+	Com1           = forms.CharField(label="Username for Committee Member 1", required=True, validators=[User.username_validator,validate_committee_user])
+	Com2           = forms.CharField(label="Username for Committee Member 2", required=True, validators=[User.username_validator,validate_committee_user])
+	Com3           = forms.CharField(label="Username for Committee Member 3", required=True, validators=[User.username_validator,validate_committee_user])
 	le_officer     = forms.BooleanField(label="Is the requester a Law Enforcement Officer?", required=False)
 	le_trainingpurpose = forms.BooleanField(label = "Is the request for training purposes?", required=False)
 	le_Evidexculp = forms.BooleanField(label = "Is there Evidentiary or Exculpatory Value?", required=False)

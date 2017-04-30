@@ -314,6 +314,11 @@ engaging in actions contrary to the policy. Assuming an action justified by the 
     				req = get_object_or_404(Request, request_id=request_id)
     				context['video_id'] = req.video
     				return render(request, 'videomanagement/extend_retention.html', context)
+    	else:
+        	context['form'] = form
+    		req = get_object_or_404(Request, request_id=request_id)
+    		context['video_id'] = req.video
+    		return render(request, 'videomanagement/extend_retention.html', context)
 
 ## Re-do retrieve-requests in order to obtain updated list of requests
     # get all videos
