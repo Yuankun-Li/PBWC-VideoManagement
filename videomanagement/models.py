@@ -79,7 +79,7 @@ class Request(models.Model):
 		self.resolved = True
 		self.save()
 		new_action = CommitteeAction(type='extend_retention', request_id=request_id, video_id=self.video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
-			new_action.save()
+		new_action.save()
 
 	def justify_extend(self, data, policy_justification):
 		justify_deny = False
