@@ -26,7 +26,13 @@
     <div class = "panel panel-default">
         <div class = "panel-heading"><h2 class = "text-center">Extend Retention</h2></div>
 	<div class = "panel-body">
+            {% if message %}
+            <h4>
+                {{message}}
+            </h4>
+            {% endif %}
 	 <form method = "post" action = "{% url 'accept_request' request_id %}" >
+		{{ form.non_field_errors }}
                 {% csrf_token %}
 		{{form.as_p}}
 		  <input type="submit" class="btn btn-default" name="accept" value="Accept Request">

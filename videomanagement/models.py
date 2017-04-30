@@ -75,9 +75,49 @@ class Request(models.Model):
 			new_action.save()
 
 	# reject a request
-	def reject(self, request_id):
+	def reject(self, request_id, policy_justification,committee_text_reason):
 		self.resolved = True
 		self.save()
+		new_action = CommitteeAction(type='extend_retention', request_id=request_id, video_id=self.video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
+			new_action.save()
+
+	def justify_extend(self, data, policy_justification):
+		justify_deny = False
+		justify_accept = False
+
+		if data['datasubject'] is True:	
+			justify_accept=True
+			policy_justification = "Extension approved by Section 6.f, ACLU clause 1.j.2.E"
+		else:
+			if data['le_officer'] is True:
+				if data['le_trainingpurpose'] is False:
+					if data['le_Evidexculp'] is False:
+						justify_deny=True
+						policy_justification = "Extension denied by Section 6.f, ACLU clause 1.j.2"
+					elif data['le_Evidexculp'] is True:
+						if data['le_role'] == 'the Recording Officer':
+							justify_accept=True
+							policy_justification = "Extension approved by Section 6.f, ACLU clause 1.j.2.A"	
+						elif data['le_role'] == 'Present in the Video':
+							justify_accept=True
+							policy_justification = "Extension approved by Section 6.f, ACLU clause 1.j.2.B"	
+						elif data['le_role'] == 'Superior Officer of Recording Officer':
+							justify_accept=True
+							policy_justification = "Extension approved by Section 6.f, ACLU clause 1.j.2.C"	
+						else:
+							justify_deny=True
+							policy_justification = "Extension denied by Section 6.f, ACLU clause 1.j.2.D"	
+				elif data['le_trainingpurpose'] is True:
+					justify_accept=True
+					policy_justification = "Extension approved by Section 6.f, ACLU clause 1.j.2.D"
+			else:
+				justify_deny=True
+				policy_justification = "Extension denied by Section 6.f, ACLU clause 1.j.2"
+			#consider adding functionality from ACLU policy 1.j.2.F,G, and witness/evidentiary/exculpatory value	
+			#else: 
+		return justify_accept,justify_deny, policy_justification
+
+	
 
 # MeetingRequest model: handle the review meeting request
 class MeetingRequest(models.Model):

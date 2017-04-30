@@ -185,26 +185,46 @@ def accept_request(request, request_id):
             data = form.cleaned_data
             policy_justification = "none"
             committee_text_reason = data['rationale']
-	    print "passed"
             if 'accept' in request.POST:
         	context['message'] = "Request Accepted."
                 req.accept(request_id, policy_justification,committee_text_reason)
             elif 'reject' in request.POST:
         	context['message'] = "Request Rejected."
-                req.reject(id)
+                req.reject(id, policy_justification, committee_text_reason)
 #    	    return render(request,'videomanagement/privatize_video.html',context)
     if req.type == "extend_retention":
 	form = ExtendRetentionForm(request.POST)
     	if form.is_valid():
 		data = form.cleaned_data
-		policy_justification = "none"
+		policy_justification = "Request Denied since this action conflicts with the Policy. Review the criteria and the Policy."
 		committee_text_reason = data['rationale']
+		justify_accept,justify_deny, policy_justification = req.justify_extend(data, policy_justification)
+        	context['message'] = policy_justification
                 if 'accept' in request.POST:
-        	      context['message'] = "Request Accepted."
-    		      req.accept(request_id, policy_justification,committee_text_reason)
+			if justify_accept:
+    		      		req.accept(request_id,
+ policy_justification,committee_text_reason)
+			else:
+        			context['message'] = "Request should be denied according to Policy. Review Criteria and Policy."
+        	        	context['form'] = ExtendRetentionForm()
+    				req = get_object_or_404(Request, request_id=request_id)
+    				context['video_id'] = req.video
+    				return render(request, 'videomanagement/extend_retention.html', context)
                 elif 'reject' in request.POST:
-        	    context['message'] = "Request Rejected."
-                    req.reject(id)
+			if justify_deny:
+                    		req.reject(id,policy_justification,committee_text_reason)
+			else:
+				context['message'] = "Request should be approved according to Policy. Review Criteria and Policy."
+        	        	context['form'] = ExtendRetentionForm()
+    				req = get_object_or_404(Request, request_id=request_id)
+    				context['video_id'] = req.video
+    				return render(request, 'videomanagement/extend_retention.html', context)
+		else:
+        	        	context['message'] = policy_justification
+        	        	context['form'] = ExtendRetentionForm()
+    				req = get_object_or_404(Request, request_id=request_id)
+    				context['video_id'] = req.video
+    				return render(request, 'videomanagement/extend_retention.html', context)
 
 ## Re-do retrieve-requests in order to obtain updated list of requests
     # get all videos

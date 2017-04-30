@@ -56,16 +56,6 @@ class CreateMeetingRequestForm(forms.ModelForm):
 
 #### Committee Action Forms
 
-#class CreateActionForm(forms.ModelForm):
-#    class Meta:
-#        model = CommitteeAction
-#        fields = { 'type', 'video_id', 'request_id', 'policy_justification', 'committee_text_reason' }
-#        widgets = {'type': forms.Select(),
-#		   'request_id': forms.NumberInput(),
-#		   'video_id': forms.NumberInput(),
-#                   'policy_justification': forms.Textarea(),
-#                   'committee_text_reason': forms.Textarea()}
-
 class ExtendRetentionForm(forms.Form):
 	le_officer     = forms.BooleanField(label="Is the requester a Law Enforcement Officer?", required=False)
 	le_trainingpurpose = forms.BooleanField(label = "Is the request for training purposes?", required=False)
