@@ -36,7 +36,7 @@
 	      	  	  	<li>Location: {{request.request.Location_of_Recorded_Event}}</li>
 	      	  	  	<li>Description: {{request.request.Description_of_Recorded_Event}}</li>
 	      	  	  	<li>Reason: {{request.request.Reason_for_Request}}</li>
-	      	  	  	<li>Type: {{request.request.Type_of_Request}}</li>
+	      	  	  	<li>Request Type: {{request.request.get_Type_of_Request_display}}</li>
 				{% ifequal request.request.Type_of_Request "make_public"%}
 	      	  	  	<li><a href="{% url 'make_public'    request.request.id %}">Make Public</a></li>
 				{% endifequal %}

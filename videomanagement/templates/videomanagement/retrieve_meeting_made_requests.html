@@ -35,7 +35,7 @@
 	      	  	  </tr>
 	      	  	  {% for request in requests %}
 				  <tr>
-	      	  	  	<td>{{request.Type_of_Request}}</td>
+	      	  	  	<td>{{request.get_Type_of_Request_display}}</td>
 	      	  	  	<td>{{request.request_date}}</td>
 	      	  	  	<td>{{request.Date_That_Footage_Was_Recorded}}</td>
 	      	  	  	<td>{{request.Location_of_Recorded_Event}}</td>
