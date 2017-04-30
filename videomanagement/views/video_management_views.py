@@ -34,6 +34,14 @@ from moviepy.editor import *
 ########### VIEWS AND ACTIONS FOR NON-LOGGED IN USERS #######################
 
 def privacy_policy(request):
+    """
+    **Template:**
+
+    :template:`videomanagement/privacy_policy.html`
+
+    **Description**
+    Retrieve the site's privacy policy in a nutrition label form, as inspired by http://cups.cs.cmu.edu/privacylabel-05-2009/current/1.php
+    """
     context = {}
     groups = request.user.groups.all()
     if len(groups) > 0:
@@ -43,6 +51,14 @@ def privacy_policy(request):
     return render(request,'videomanagement/privacy_policy.html',context)
 
 def full_privacy(request):
+    """
+    **Template:**
+
+    :template:`videomanagement/full_privacy.html`
+
+    **Description**
+    Retrieve the site's full text privacy policy.
+    """
     context = {}
     groups = request.user.groups.all()
     if len(groups) > 0:
@@ -52,6 +68,14 @@ def full_privacy(request):
     return render(request,'videomanagement/full_privacy.html',context)
 
 def best_practices(request):
+    """
+    **Template:**
+
+    :template:`videomanagement/best_practices.html`
+
+    **Description**
+    Retrieve the site's description of recommended best practices for the management of police body-worn camera footage.
+    """
     context = {}
     groups = request.user.groups.all()
     if len(groups) > 0:

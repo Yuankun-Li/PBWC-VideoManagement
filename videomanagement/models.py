@@ -17,15 +17,15 @@ from django_encrypted_filefield.fields import EncryptedFileField, EncryptedImage
 # content_type need to be fixed
 
 class Video(models.Model):
+	"""
+	Stores a single video entry, related to :model:`auth.User` when User is Officer that took video.
+	"""
 	LOCATION_CHOICES = [('Gates Center for Computer Science', 'Gates Center for Computer Science',), 
 					('Cyert Hall', 'Cyert Hall'),
 					('Cohon University Center', 'Cohon University Center'),
 					('Hunt Library', 'Hunt Library'),
 					('Other place', 'Other place'),
 					('Morewood Apartments', 'Morewood Apartments')]
-	"""
-	Stores a single video entry, related to :model:`auth.User` when User is Officer that took video.
-	"""
 	video_id = models.AutoField(primary_key=True)
 	location = models.CharField(max_length=128, choices=LOCATION_CHOICES, default='Gates Center for Computer Science')
 	video_date = models.DateTimeField(blank=True, null=True)
@@ -44,6 +44,9 @@ class Video(models.Model):
 
 # Request model: handle the extended retention, privatize video, and register complaint request
 class Request(models.Model):
+	"""
+	Stores a single Request entry, related to :model:`auth.User` where User is requesting user, and :model:`videomanagement.Video` where Video is the one on which the User is making a Request.
+	"""
 	TYPE_CHOICES = (('extend_retention', 'Extend Retention Time'), ('privatize_video','Remove This Video from the Public Page'),('register_complaint', 'Register a General Complaint'))
 	
 	request_id = models.AutoField(primary_key=True)
@@ -57,6 +60,9 @@ class Request(models.Model):
 	
 	# accept a request
 	def accept(self, request_id, policy_justification,committee_text_reason):
+		"""
+		Accepts the corresponding Request, marks it as resolved, affects the action corresponding to its type (Make Video Private, or Extend Retention Time), and creates and saves a CommitteeAction in the dB
+		"""
 		self.resolved = True
 		self.accepted = True
 		self.save()
@@ -76,12 +82,18 @@ class Request(models.Model):
 
 	# reject a request
 	def reject(self, request_id, policy_justification,committee_text_reason):
+		"""
+		Denies the corresponding Request, and marks the Request as resolved.
+		"""
 		self.resolved = True
 		self.save()
 		new_action = CommitteeAction(type='extend_retention', request_id=request_id, video_id=self.video.video_id, policy_justification=policy_justification, committee_text_reason=committee_text_reason)
 		new_action.save()
 
 	def justify_extend(self, data, policy_justification):
+		"""
+		This function provides the logic validating that the Committee's Action to accept or deny the extension of retention is justified by the policy outlined in the Best Practices.
+		"""
 		justify_deny = False
 		justify_accept = False
 
@@ -121,6 +133,9 @@ class Request(models.Model):
 
 # MeetingRequest model: handle the review meeting request
 class MeetingRequest(models.Model):
+	"""
+	Stores a single MeetingRequest entry, related to :model:`auth.User` where User is requesting user.
+	"""
 	TYPE_CHOICES = (('make_public', 'Make The Referred Video Public',), ('inspect_video', 'Inspect a Video'))
 	
 	request_date = models.DateTimeField(default=timezone.now)
@@ -135,7 +150,9 @@ class MeetingRequest(models.Model):
 	
 	# accept a request
 	def accept(self, request_id, policy_justification, committee_text_reason):
-
+		"""
+		Accepts the corresponding MeetingRequest, marks it as resolved, affects the action corresponding to its type (Makes the Video Public, or allows Video Inspection), and creates and saves a CommitteeAction in the dB
+		"""
 		self.resolved = True
 		self.accepted = True
 		self.save()
@@ -154,10 +171,16 @@ class MeetingRequest(models.Model):
 
 	# reject a request
 	def reject(self, request_id):
+		"""
+		Denies the corresponding MeetingRequest, and marks the MeetingRequest as resolved.
+		"""
 		self.resolved = True
 		self.save()
 
 class CommitteeAction(models.Model):
+	"""
+	Stores a single committeeaction entry. This table is designed to be de-coupled from other tables in site and potentially extant in a separate database, so no ID fields (request_id, video_id) are foreign keys.
+	"""
 	TYPE_CHOICES = (('make_public', 'Make Video Public',), 
 ('inspect_video', 'Inspect Video'),('extend_retention', 'Extend Retention Time'), ('privatize_video','Make Video Private'))
 
