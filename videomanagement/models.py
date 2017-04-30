@@ -159,8 +159,8 @@ class MeetingRequest(models.Model):
 		self.save()
 
 class CommitteeAction(models.Model):
-	TYPE_CHOICES = (('make_public', 'make_public',), 
-('inspect_video', 'inspect_video'),('extend_retention', 'extend_retention'), ('privatize_video','privatize_video'))
+	TYPE_CHOICES = (('make_public', 'Make Video Public',), 
+('inspect_video', 'Inspect Video'),('extend_retention', 'Extend Retention Time'), ('privatize_video','Make Video Private'))
 
 	action_id = models.AutoField(primary_key=True)
 	action_date = models.DateTimeField(default=timezone.now)
