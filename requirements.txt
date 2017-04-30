@@ -3,6 +3,7 @@ asn1crypto==0.22.0
 cffi==1.10.0
 cryptography==1.8.1
 decorator==4.0.11
+dj-database-url==0.4.2
 Django==1.10.6
 django-encrypted-filefield==0.1.1
 docutils==0.13.1
