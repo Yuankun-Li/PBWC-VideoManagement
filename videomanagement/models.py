@@ -139,7 +139,6 @@ class MeetingRequest(models.Model):
 		self.resolved = True
 		self.accepted = True
 		self.save()
-		#Doesn't currently work: need to re-architect
 		if self.Type_of_Request == 'make_public':
 			video = get_object_or_404(Video, video_date=self.Date_That_Footage_Was_Recorded, location=self.Location_of_Recorded_Event )
 			video.is_public = True
