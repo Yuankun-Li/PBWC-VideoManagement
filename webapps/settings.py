@@ -184,8 +184,12 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('OAUTH2_SECRET')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 LOGIN_URL='login'
 LOGIN_REDIRECT_URL = '/upload'
