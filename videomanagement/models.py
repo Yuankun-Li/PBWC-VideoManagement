@@ -24,8 +24,9 @@ class Video(models.Model):
 					('Cyert Hall', 'Cyert Hall'),
 					('Cohon University Center', 'Cohon University Center'),
 					('Hunt Library', 'Hunt Library'),
-					('Other place', 'Other place'),
-					('Morewood Apartments', 'Morewood Apartments')]
+					('Morewood Apartments', 'Morewood Apartments'),
+					('Other place', 'Other place')]
+
 	video_id = models.AutoField(primary_key=True)
 	location = models.CharField(max_length=128, choices=LOCATION_CHOICES, default='Gates Center for Computer Science')
 	video_date = models.DateTimeField(blank=True, null=True)
