@@ -374,5 +374,6 @@ def search(request):
     if not location == 'All':
         all_videos = all_videos.filter(location=location)
     context = {'videos': all_videos}
-    print(render(request, 'videomanagement/json/videos.json', context, content_type='application/json'))
+
     return render(request, 'videomanagement/json/videos.json', context, content_type='application/json')
+
