@@ -16,9 +16,9 @@
         <div class="block_content">
             <h3>Upload BWC Footage:</h3>
             {% if message %}
-            <h4>
+            <div class="alert alert-info" role="alert">
                 {{message}}
-            </h4>
+            </div>
             {% endif %}
             <form enctype="multipart/form-data" method="post" action="{% url 'upload' %}">
             {% for field in form.visible_fields %}
