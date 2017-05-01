@@ -107,9 +107,9 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-# Update database configuration with $DATABASE_URL.
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
+## Update database configuration with $DATABASE_URL.
+#db_from_env = dj_database_url.config()
+#DATABASES['default'].update(db_from_env)
 
 
 SOCIAL_AUTH_PIPELINE = [

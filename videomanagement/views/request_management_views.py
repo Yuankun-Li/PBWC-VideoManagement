@@ -279,7 +279,7 @@ engaging in actions contrary to the policy. Assuming an action justified by the 
                 req.accept(request_id, policy_justification,committee_text_reason)
             elif 'reject' in request.POST:
         	context['message'] = "Request Rejected."
-                req.reject(id, policy_justification, committee_text_reason)
+                req.reject(request_id, policy_justification, committee_text_reason)
 #    	    return render(request,'videomanagement/privatize_video.html',context)
     if req.type == "extend_retention":
 	form = ExtendRetentionForm(request.POST)
@@ -301,7 +301,7 @@ engaging in actions contrary to the policy. Assuming an action justified by the 
     				return render(request, 'videomanagement/extend_retention.html', context)
                 elif 'reject' in request.POST:
 			if justify_deny:
-                    		req.reject(id,policy_justification,committee_text_reason)
+                    		req.reject(request_id,policy_justification,committee_text_reason)
 			else:
 				context['message'] = "Request should be approved according to Policy. Review Criteria and Policy."
         	        	context['form'] = ExtendRetentionForm()
