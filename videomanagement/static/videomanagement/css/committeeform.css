@@ -1,0 +1,9 @@
+/* 
+Solution format attributed to: http://stackoverflow.com/questions/572263/how-do-i-create-a-django-form-that-displays-a-checkbox-label-to-the-right-of-the#2045308
+*/
+
+input[type="checkbox"] {
+    float: left;
+    margin-right: 10px;
+    margin-top: 3px;
+}

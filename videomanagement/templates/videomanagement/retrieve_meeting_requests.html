@@ -21,9 +21,15 @@
 	<div class="container col-md-12 col-sm-10">
 	  <div class="block">
 	    <div class="block_content">
+            {% if message %}
+            <h4>
+                {{message}}
+            </h4>
+            {% endif %}
 	     {% for request in requests %}
 	      <div>
 	      	 <h3>Request {{request.request.id}}</h3>
+
 			 <table style="width:50%" border="1">
 	      	  	  	<tr><td>Video Date</td><td>{{request.request.video_date|date:"M d, Y"}}</td></tr>
 	      	  	  	<tr><td>Request Date</td><td>{{request.request.request_date}}</td></tr>
@@ -35,14 +41,12 @@
 	      	  	  	
 	      	  	  </table>
 				<div style="margin-top: 4px;">
-				{% ifequal request.request.type "meeting"%}
-	      	  	  		<a href="{% url 'accept_meeting_request' request.request.id %}" class="btn btn-primary">Accept Meeting</a>
-				{% endifequal %}
 				{% ifequal request.request.type "make_public"%}
 	      	  	  	<a href="{% url 'make_public'    request.request.id %}" class="btn btn-primary">Make Public</a>
 				{% endifequal %}
 				{% ifequal request.request.type "inspect_video"%}
 	      	  	  	<a href="{% url 'inspect_video'    request.request.id %}" class="btn btn-primary">Inspect Video</a>
+
 				{% endifequal %}
 				</div>
 				
