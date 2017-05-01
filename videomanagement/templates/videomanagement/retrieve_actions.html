@@ -24,9 +24,9 @@
             </h4>
             {% endif %}
 	      	<div>
-	      	  <table style="width:100%">
+	      	  <table style="width:100%" border="1">
 				  <tr >
-	      	  	 	 <th>Action ID</th>
+	      	  	 	 <th class="text-center">Action ID</th>
 	      	  	 	 <th class="text-center">Action Date</th>
 	      	  	 	 <th class="text-center">Request Type</th>
 	      	  	 	 <th class="text-center">Request ID</th>
@@ -37,7 +37,7 @@
 	     		{% for action in actions %}
 				  <tr>
 
-	      	  	  	<td>{{action.action_id}}</td>
+	      	  	  	<td class="text-center">{{action.action_id}}</td>
 	      	  	  	<td class="text-center">{{action.action_date}}</td>
 	      	  	  	<td class="text-center">{{action.get_type_display}}</td>
 	      	  	  	<td class="text-center">{{action.request_id}}</td>

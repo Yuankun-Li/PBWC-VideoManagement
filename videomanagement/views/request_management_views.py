@@ -595,11 +595,11 @@ engaging in actions contrary to the policy. Assuming an action justified by the 
             		committee_text_reason = data['rationale']
 
                         if 'accept' in request.POST:
-        	      	       context['message'] = "Request Accepted."
-            	               req.accept(id, policy_justification,committee_text_reason)
+        	      		context['message'] = "Request Accepted."
+            	        	req.accept(id, policy_justification,committee_text_reason)
                         elif 'reject' in request.POST:
-        	      	    context['message'] = "Request Accepted."
-                            req.reject(id)
+        			context['message'] = "Request Rejected."
+                        	req.reject(id)
 # Re-do retrieve-meeting-requests in order to obtain updated request list
     requests = MeetingRequest.objects.all()
     

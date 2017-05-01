@@ -31,20 +31,20 @@
 	      	 <h3>Request {{request.request.id}}</h3>
 
 			 <table style="width:50%" border="1">
-	      	  	  	<tr><td>Video Date</td><td>{{request.request.video_date|date:"M d, Y"}}</td></tr>
+	      	  	  	<tr><td>Video Date</td><td>{{request.request.Date_That_Footage_Was_Recorded|date:"M d, Y"}}</td></tr>
 	      	  	  	<tr><td>Request Date</td><td>{{request.request.request_date}}</td></tr>
 	      	  	  	<tr><td>Requested By</td><td>{{request.request.user.username}}</td></tr>
-	      	  	  	<tr><td>Location</td><td>{{request.request.location}}</td></tr>
-	      	  	  	<tr><td>Description</td><td>{{request.request.description}}</td></tr>
-	      	  	  	<tr><td>Reason</td><td>{{request.request.reason_for_request}}</td></tr>
-	      	  	  	<tr><td>Type</td><td>{{request.request.type}}</td></tr>
+	      	  	  	<tr><td>Location</td><td>{{request.request.Location_of_Recorded_Event}}</td></tr>
+	      	  	  	<tr><td>Description</td><td>{{request.request.Description_of_Recorded_Event}}</td></tr>
+	      	  	  	<tr><td>Reason</td><td>{{request.request.Reason_for_Request}}</td></tr>
+	      	  	  	<tr><td>Type</td><td>{{request.request.Type_of_Request}}</td></tr>
 	      	  	  	
 	      	  	  </table>
 				<div style="margin-top: 4px;">
-				{% ifequal request.request.type "make_public"%}
+				{% ifequal request.request.Type_of_Request  "make_public"%}
 	      	  	  	<a href="{% url 'make_public'    request.request.id %}" class="btn btn-primary">Make Public</a>
 				{% endifequal %}
-				{% ifequal request.request.type "inspect_video"%}
+				{% ifequal request.request.Type_of_Request  "inspect_video"%}
 	      	  	  	<a href="{% url 'inspect_video'    request.request.id %}" class="btn btn-primary">Inspect Video</a>
 
 				{% endifequal %}
