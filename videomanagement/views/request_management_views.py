@@ -580,11 +580,10 @@ engaging in actions contrary to the policy. Assuming an action justified by the 
     
     if request.method == 'POST':
     	req = get_object_or_404(MeetingRequest, id=id)
-        
-    # do not allow re-handle a request
-    if req.resolved == True:
-        context['message'] = "Current request has already been handled!"
-        return render(request, 'videomanagement/retrieve_meeting_requests.html', context)
+        # do not allow re-handle a request
+        if req.resolved == True:
+            context['message'] = "Current request has already been handled!"
+            return render(request, 'videomanagement/retrieve_meeting_requests.html', context)
     
 	if req.Type_of_Request == "make_public":
 		form = MakePublicForm(request.POST)
