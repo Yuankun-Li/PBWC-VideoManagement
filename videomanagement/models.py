@@ -20,7 +20,8 @@ class Video(models.Model):
 	"""
 	Stores a single video entry, related to :model:`auth.User` when User is Officer that took video.
 	"""
-	LOCATION_CHOICES = [('Gates Center for Computer Science', 'Gates Center for Computer Science',), 
+	LOCATION_CHOICES = [('Please select location', 'Please select location'),
+					('Gates Center for Computer Science', 'Gates Center for Computer Science',), 
 					('Cyert Hall', 'Cyert Hall'),
 					('Cohon University Center', 'Cohon University Center'),
 					('Hunt Library', 'Hunt Library'),
@@ -28,8 +29,8 @@ class Video(models.Model):
 					('Other place', 'Other place')]
 
 	video_id = models.AutoField(primary_key=True)
-	location = models.CharField(max_length=128, choices=LOCATION_CHOICES, default='Gates Center for Computer Science')
-	video_date = models.DateTimeField(blank=True, null=True)
+	location = models.CharField(max_length=128, choices=LOCATION_CHOICES, default='Please select location')
+	video_date = models.DateTimeField(blank=False, null=True, default=timezone.now)
 	retention = models.IntegerField()
 	upload_date = models.DateTimeField(blank=True, null=True)
 	# encrypted filefield
@@ -193,10 +194,3 @@ class CommitteeAction(models.Model):
 	policy_justification = models.CharField(max_length=1000)
 	committee_text_reason = models.CharField(max_length=1000)
 	#TODO: recording officer ID
-
-
-
-
-
-
-
