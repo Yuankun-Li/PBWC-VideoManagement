@@ -20,11 +20,11 @@
 	<div class="container col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
 	  <div class="block">
 	    <div class="block_content">
-	      <h3>Create request for {{video_id}}:</h3>
+	      <h3>Create a request regarding video {{video_id}}:</h3>
             {% if message %}
-            <h4>
+            <div class="alert alert-info" role="alert">
                 {{message}}
-            </h4>
+            </div>
             {% endif %}
             <form method="post" action="{% url 'create_request' video_id %}">
             {% for field in form.visible_fields %}

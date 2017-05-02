@@ -46,25 +46,15 @@ class CreateRequestForm(forms.ModelForm):
 class CreateMeetingRequestForm(forms.ModelForm):
     class Meta:
         model = MeetingRequest
-        fields = { 'video_date', 'type', 'location', 'description','reason_for_request' }
-        widgets = {'video_date': SelectDateWidget(),
-                   'type': forms.Select(),
-                   'location': forms.Select(),
-		   'description': forms.Textarea(attrs={'placeholder': 'Description of Events', 'rows': 3, 'cols': '80%'}),
-                   'reason_for_request': forms.Textarea(attrs={'placeholder': 'Reasons', 'rows': 3, 'cols': '80%'})}
+        fields = { 'Date_That_Footage_Was_Recorded', 'Type_of_Request', 'Location_of_Recorded_Event', 'Description_of_Recorded_Event','Reason_for_Request' }
+        widgets = {'Date_That_Footage_Was_Recorded': SelectDateWidget(),
+                   'Type_of_Request': forms.Select(),
+                   'Location_of_Recorded_Event': forms.Select(),
+		   'Description_of_Recorded_Event': forms.Textarea(attrs={'placeholder': 'Description of Recorded Event', 'rows': 3, 'cols': '80%'}),
+                   'Reason_for_Request': forms.Textarea(attrs={'placeholder': 'Reason for Request', 'rows': 3, 'cols': '80%'})}
 
 
 #### Committee Action Forms
-
-#class CreateActionForm(forms.ModelForm):
-#    class Meta:
-#        model = CommitteeAction
-#        fields = { 'type', 'video_id', 'request_id', 'policy_justification', 'committee_text_reason' }
-#        widgets = {'type': forms.Select(),
-#		   'request_id': forms.NumberInput(),
-#		   'video_id': forms.NumberInput(),
-#                   'policy_justification': forms.Textarea(),
-#                   'committee_text_reason': forms.Textarea()}
 
 class ExtendRetentionForm(forms.Form):
 	le_officer     = forms.BooleanField(label="Is the requester a Law Enforcement Officer?", required=False)
@@ -84,17 +74,12 @@ class ExtendRetentionForm(forms.Form):
 	rationale = forms.CharField(max_length=1000,
 			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
                                                                     'class': 'form-control'}))
+	class Media:
+		css = {'all': 'committeeform.css'}
 
 
 class InspectVideoForm(forms.Form):
 	datasubject = forms.BooleanField(label = "Is the requester present in the video?", required=False)
-	community_member     = forms.BooleanField(label="Is the requester a Community Member?", required=False)
-	le_officer     = forms.BooleanField(label="Is the requester a law enforcement officer with jurisdiction over the community?", required=False)
-	le_report = forms.BooleanField(label = "Has the officer filed a report on the incident?", required=False)
-	le_recorder     = forms.BooleanField(label="Is the requesting officer the one who recorded the video?", required=False)
-	le_superior     = forms.BooleanField(label="Is the requesting officer a superior of the officer who recorded the video?", required=False)
-	le_misconduct     = forms.BooleanField(label="Has there been a complaint of police misconduct regarding the events depicted in the video?", required=False)
-
 	legalrep = forms.BooleanField(label = "Is the requester a Legal Representative?", required=False)
 	legalrep_role = forms.ChoiceField(label="Requesting Legal Representative is representing", required=False, choices=(
 			('', ''),
@@ -104,6 +89,14 @@ class InspectVideoForm(forms.Form):
 			('the law enforcement officer who recorded the video','the law enforcement officer who recorded the video'),	
 			('a client with a reasonable basis to claim video contains exculpatory evidence','a client with a reasonable basis to claim video contains exculpatory evidence')		
 ))
+	community_member     = forms.BooleanField(label="Is the requester a Community Member?", required=False)
+	le_officer     = forms.BooleanField(label="Is the requester an officer with community jurisdiction?", required=False)
+	le_report = forms.BooleanField(label = "Has the officer filed a report on the incident?", required=False)
+	le_recorder     = forms.BooleanField(label="Is the requesting officer the one who recorded the video?", required=False)
+	le_superior     = forms.BooleanField(label="Is the requesting officer a superior of the officer who recorded the video?", required=False)
+	le_misconduct     = forms.BooleanField(label="Is police misconduct depicted in the video?", required=False)
+	class Media:
+		css = {'all': 'committeeform.css'}
 
 	## FeatureExtension: Incorporate Additional Policy Clauses
 

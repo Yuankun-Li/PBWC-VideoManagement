@@ -21,13 +21,18 @@
 	<div class="container col-md-12 col-sm-12">
 	  <div class="block">
 	    <div class="block_content">
+            {% if message %}
+            <div class="alert alert-info" role="alert">
+                {{message}}
+            </div>
+            {% endif %}
 	      {% for key, values in requests.items %}
 	      	<div>
 	      	  <h3>For video {{key.video_id}}</h3>
 	      	  <table style="width:100%">
 				  <tr>
 	      	  	 	 <th>Review Video as Committee</th>
-	      	  	 	 <th>Type</th>
+	      	  	 	 <th>Request Type</th>
 	      	  	 	 <th>Request Date</th>
 	      	  	 	 <th>Requested By</th>
 	      	  	 	 <th>Location</th>
@@ -40,7 +45,7 @@
 	      	  	  {% for request in values %}
 				  <tr>
 	      	  	  	<td><a href="{% url 'view_video' request.video_id %}">Review Video</a></td>
-	      	  	  	<td>{{request.type}}</td>
+	      	  	  	<td>{{request.get_type_display}}</td>
 	      	  	  	<td>{{request.request_date}}</td>
 	      	  	  	<td>{{request.user.username}}</td>
 	      	  	  	<td>{{request.video.location}}</td>

@@ -24,23 +24,23 @@
 	      	<div>
 	      	  <table style="width:100%">
 				  <tr>
-	      	  	 	 <th>Type</th>
+	      	  	 	 <th>Type of Request</th>
 	      	  	 	 <th>Request Date</th>
-	      	  	 	 <th>Video Date</th>
-	      	  	 	 <th>Location</th>
-	      	  	 	 <th>Description</th>
-	      	  	 	 <th>Reason</th>
+	      	  	 	 <th>Date That Footage Was Recorded</th>
+	      	  	 	 <th>Location of Recorded_Event</th>
+	      	  	 	 <th>Description of Recorded_Event</th>
+	      	  	 	 <th>Reason for Request</th>
 	      	  	 	 <th>Status</th>
 
 	      	  	  </tr>
 	      	  	  {% for request in requests %}
 				  <tr>
-	      	  	  	<td>{{request.type}}</td>
+	      	  	  	<td>{{request.get_Type_of_Request_display}}</td>
 	      	  	  	<td>{{request.request_date}}</td>
-	      	  	  	<td>{{request.video_date}}</td>
-	      	  	  	<td>{{request.location}}</td>
-	      	  	  	<td>{{request.description}}</td>
-	      	  	  	<td>{{request.reason_for_request}}</td>
+	      	  	  	<td>{{request.Date_That_Footage_Was_Recorded}}</td>
+	      	  	  	<td>{{request.Location_of_Recorded_Event}}</td>
+	      	  	  	<td>{{request.Description_of_Recorded_Event}}</td>
+	      	  	  	<td>{{request.Reason_for_Request}}</td>
 				{% ifequal request.resolved False %}
 	      	  	  	<td>Pending</td>
 				{% endifequal%}

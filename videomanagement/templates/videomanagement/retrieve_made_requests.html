@@ -35,7 +35,7 @@
 	      	  	  </tr>
 	      	  	  {% for request in requests %}
 				  <tr>
-	      	  	  	<td>{{request.type}}</td>
+	      	  	  	<td>{{request.get_type_display}}</td>
 	      	  	  	<td>{{request.request_date}}</td>
 	      	  	  	<td>{{request.video.location}}</td>
 	      	  	  	<td>{{request.video.retention}}</td>

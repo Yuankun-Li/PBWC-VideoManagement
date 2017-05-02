@@ -19,34 +19,36 @@
 	  <div class="block">
 	    <div class="block_content">
             {% if message %}
-            <h4>
+            <div class="alert alert-info" role="alert">
                 {{message}}
-            </h4>
+            </div>
             {% endif %}
-	      {% for action in actions %}
 	      	<div>
-	      	  <table style="width:100%">
-				  <tr>
-	      	  	 	 <th>Action ID</th>
-	      	  	 	 <th>Action Date</th>
-	      	  	 	 <th>Request Type</th>
-	      	  	 	 <th>Request ID</th>
-	      	  	 	 <th>Video ID</th>
-	      	  	 	 <th>Policy Justification</th>
-	      	  	 	 <th>Committee Reason</th>
+	      	  <table style="width:100%" border="1">
+				  <tr >
+	      	  	 	 <th class="text-center">Action ID</th>
+	      	  	 	 <th class="text-center">Action Date</th>
+	      	  	 	 <th class="text-center">Request Type</th>
+	      	  	 	 <th class="text-center">Request ID</th>
+	      	  	 	 <th class="text-center">Video ID</th>
+	      	  	 	 <th class="text-center">Policy Justification</th>
+	      	  	 	 <th class="text-center">Committee Reason</th>
 	      	  	  </tr>
+	     		{% for action in actions %}
 				  <tr>
-	      	  	  	<td>{{action.action_id}}</td>
-	      	  	  	<td>{{action.action_date}}</td>
-	      	  	  	<td>{{action.type}}</td>
-	      	  	  	<td>{{action.request_id}}</td>
-	      	  	  	<td>{{action.video_id}}</td>
-	      	  	  	<td>{{action.policy_justification}}</td>
-	      	  	  	<td>{{action.committee_text_reason}}</td>
+
+	      	  	  	<td class="text-center">{{action.action_id}}</td>
+	      	  	  	<td class="text-center">{{action.action_date}}</td>
+	      	  	  	<td class="text-center">{{action.get_type_display}}</td>
+	      	  	  	<td class="text-center">{{action.request_id}}</td>
+	      	  	  	<td class="text-center">{{action.video_id}}</td>
+	      	  	  	<td class="text-center">{{action.policy_justification}}</td>
+	      	  	  	<td class="text-center">{{action.committee_text_reason}}</td>
 	      	  	  </tr>
+	      		{% endfor %}
 			  </table>
 	      	</div>
-	      {% endfor %}
+
 	    </div>
 	  </div>
 	</div>

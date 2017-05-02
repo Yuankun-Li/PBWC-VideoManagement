@@ -18,20 +18,29 @@ $(document).ready(function(){
 
   	$('#id_community_member').click(function(){
 			$('#id_le_officer').prop('checked', false);
-			$('#id_le_report').prop('checked', false);
-			$('#id_le_recorder').prop('checked', false);
-			$('#id_le_superior').prop('checked', false);
-			$('#id_le_misconduct').prop('checked', false);
 			$('#id_le_officer').toggle(this.checked);
 			$("label[for='id_le_officer']").toggle(this.checked);
+	});
+
+  	$('#id_le_officer').click(function(){
+			$('#id_le_report').prop('checked', false);
 			$('#id_le_report').toggle(this.checked);
 			$("label[for='id_le_report']").toggle(this.checked);
+	});
+
+  	$('#id_le_report').click(function(){
+			$('#id_le_recorder').prop('checked', false);
+			$('#id_le_superior').prop('checked', false);
 			$('#id_le_recorder').toggle(this.checked);
 			$("label[for='id_le_recorder']").toggle(this.checked);
 			$('#id_le_superior').toggle(this.checked);
 			$("label[for='id_le_superior']").toggle(this.checked);
+	});
+
+  	$('#id_le_superior').click(function(){
+			$('#id_le_misconduct').prop('checked', false);
 			$('#id_le_misconduct').toggle(this.checked);
-			$("label[for='id_le_misconduct']").toggle(this.checked)
+			$("label[for='id_le_misconduct']").toggle(this.checked);
 	});
 
   	$('#id_legalrep').click(function(){
