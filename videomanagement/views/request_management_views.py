@@ -268,6 +268,12 @@ engaging in actions contrary to the policy. Assuming an action justified by the 
     requests_by_id = {}
     
     req = get_object_or_404(Request, request_id=request_id)
+    
+    # do not allow re-handle a request
+    if req.resolved == True:
+        context['message'] = "Current request has already been handled!"
+        return render(request, 'videomanagement/retrieve_requests.html', context)
+    
     if req.type == "privatize_video":
         form = PrivatizeVideoForm(request.POST)
         if form.is_valid():
@@ -574,6 +580,12 @@ engaging in actions contrary to the policy. Assuming an action justified by the 
     
     if request.method == 'POST':
     	req = get_object_or_404(MeetingRequest, id=id)
+        
+    # do not allow re-handle a request
+    if req.resolved == True:
+        context['message'] = "Current request has already been handled!"
+        return render(request, 'videomanagement/retrieve_meeting_requests.html', context)
+    
 	if req.Type_of_Request == "make_public":
 		form = MakePublicForm(request.POST)
 		if form.is_valid():
