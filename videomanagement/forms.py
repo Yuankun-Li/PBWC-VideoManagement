@@ -8,50 +8,53 @@ from models import *
 # VideoForm: Form used in video upload
 # Validation need to be fixed
 class VideoForm(forms.ModelForm):
-    class Meta:
-        model = Video
-        fields = { 'location', 'video_date', 'video' }
-        widgets = {'video_date': SelectDateWidget(),
-                   'location': forms.Select()}
+	class Meta:
+		model = Video
+		fields = { 'location', 'video_date', 'video' }
+		widgets = {'video_date': SelectDateWidget(),
+				   'location': forms.Select()}
 
-    def clean_video(self):
-        video = self.cleaned_data['video']
-        if not video:
-            raise forms.ValidationError('You must upload a video')
-        if not video.content_type:
-          raise forms.ValidationError('File type is not video')
-        if not video.content_type.startswith('video/mp4')  and not video.content_type.startswith('video/avi'):
-          raise forms.ValidationError('File type is not video')
-        # if picture.size > MAX_UPLOAD_SIZE:
-        #     raise forms.ValidationError('File too big (max size is {0} bytes)'.format(MAX_UPLOAD_SIZE))
-        return video
-    
+	def clean_video(self):
+		video = self.cleaned_data['video']
+		video_date=self.cleaned_data['video_date']
+		if not video_date:
+			raise forms.ValidationError('Please input a date')
+		if not video:
+			raise forms.ValidationError('You must upload a video')
+		if not video.content_type:
+		  raise forms.ValidationError('File type is not video')
+		if not video.content_type.startswith('video/mp4')  and not video.content_type.startswith('video/avi'):
+		  raise forms.ValidationError('File type is not video')
+		# if picture.size > MAX_UPLOAD_SIZE:
+		#     raise forms.ValidationError('File too big (max size is {0} bytes)'.format(MAX_UPLOAD_SIZE))
+		return video
+	
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length = 200, 
-                               widget = forms.TextInput(attrs={'placeholder': 'Username',
-                                                               'class': 'form-control login-register-field',
-                                                               'autofocus': 'autofocus'}))
-    
-    password = forms.CharField(max_length = 200, 
-                                widget = forms.PasswordInput(attrs={'placeholder': 'Password',
-                                                                    'class': 'form-control login-register-field'}))
-    
+	username = forms.CharField(max_length = 200, 
+							   widget = forms.TextInput(attrs={'placeholder': 'Username',
+															   'class': 'form-control login-register-field',
+															   'autofocus': 'autofocus'}))
+	
+	password = forms.CharField(max_length = 200, 
+								widget = forms.PasswordInput(attrs={'placeholder': 'Password',
+																	'class': 'form-control login-register-field'}))
+	
 class CreateRequestForm(forms.ModelForm):
-    class Meta:
-        model = Request
-        fields = { 'type', 'reasoning' }
-        widgets = {'type': forms.Select(),
-                   'reasoning': forms.Textarea(attrs={'placeholder': 'Reasons', 'rows': 3, 'cols': '80%'})}
-        
+	class Meta:
+		model = Request
+		fields = { 'type', 'reasoning' }
+		widgets = {'type': forms.Select(),
+				   'reasoning': forms.Textarea(attrs={'placeholder': 'Reasons', 'rows': 3, 'cols': '80%'})}
+		
 class CreateMeetingRequestForm(forms.ModelForm):
-    class Meta:
-        model = MeetingRequest
-        fields = { 'Date_That_Footage_Was_Recorded', 'Type_of_Request', 'Location_of_Recorded_Event', 'Description_of_Recorded_Event','Reason_for_Request' }
-        widgets = {'Date_That_Footage_Was_Recorded': SelectDateWidget(),
-                   'Type_of_Request': forms.Select(),
-                   'Location_of_Recorded_Event': forms.Select(),
+	class Meta:
+		model = MeetingRequest
+		fields = { 'Date_That_Footage_Was_Recorded', 'Type_of_Request', 'Location_of_Recorded_Event', 'Description_of_Recorded_Event','Reason_for_Request' }
+		widgets = {'Date_That_Footage_Was_Recorded': SelectDateWidget(),
+				   'Type_of_Request': forms.Select(),
+				   'Location_of_Recorded_Event': forms.Select(),
 		   'Description_of_Recorded_Event': forms.Textarea(attrs={'placeholder': 'Description of Recorded Event', 'rows': 3, 'cols': '80%'}),
-                   'Reason_for_Request': forms.Textarea(attrs={'placeholder': 'Reason for Request', 'rows': 3, 'cols': '80%'})}
+				   'Reason_for_Request': forms.Textarea(attrs={'placeholder': 'Reason for Request', 'rows': 3, 'cols': '80%'})}
 
 
 #### Committee Action Forms
@@ -73,7 +76,7 @@ class ExtendRetentionForm(forms.Form):
 
 	rationale = forms.CharField(max_length=1000,
 			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
-                                                                    'class': 'form-control'}))
+																	'class': 'form-control'}))
 	class Media:
 		css = {'all': 'committeeform.css'}
 
@@ -102,17 +105,17 @@ class InspectVideoForm(forms.Form):
 
 	rationale = forms.CharField(max_length=1000,
 			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
-                                                                    'class': 'form-control'}))
+																	'class': 'form-control'}))
 
 class PrivatizeVideoForm(forms.Form):
 	rationale = forms.CharField(max_length=1000,
 			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
-                                                                    'class': 'form-control'}))
+																	'class': 'form-control'}))
 
 class DeleteVideoForm(forms.Form):
 	rationale = forms.CharField(max_length=1000,
 			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
-                                                                    'class': 'form-control'}))
+																	'class': 'form-control'}))
 
 
 class MakePublicForm(forms.Form):
@@ -123,8 +126,8 @@ class MakePublicForm(forms.Form):
 
 	rationale = forms.CharField(max_length=1000,
 			widget = forms.TextInput(attrs={'placeholder': 'Rationale',
-                                                                    'class': 'form-control'}))
+																	'class': 'form-control'}))
 
 class SearchForm(forms.Form):
-    video_date = forms.DateTimeField(widget = SelectDateWidget(attrs={'id': 'video_date'}), required=False)
-    location = forms.ChoiceField(choices=[('All','All')] + Video.LOCATION_CHOICES, required=False, widget = forms.Select(attrs={'id': 'location'}))
+	video_date = forms.DateTimeField(widget = SelectDateWidget(attrs={'id': 'video_date'}), required=False)
+	location = forms.ChoiceField(choices=[('All','All')] + Video.LOCATION_CHOICES, required=False, widget = forms.Select(attrs={'id': 'location'}))
