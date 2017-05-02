@@ -22,9 +22,9 @@
 	  <div class="block">
 	    <div class="block_content">
             {% if message %}
-            <h4>
+            <div class="alert alert-info" role="alert">
                 {{message}}
-            </h4>
+            </div>
             {% endif %}
 	      {% for key, values in requests.items %}
 	      	<div>

@@ -250,6 +250,10 @@ def upload(request):
         # is actually a different object than what's return from a DB read.)
         time = form.cleaned_data['video_date']
         loc = form.cleaned_data['location']
+        if loc == 'Please select location':
+            context['message'] = 'Please input a location'
+            context['form'] = form
+            return render(request, 'videomanagement/upload.html', context)
 
         if Video.objects.filter(video_date=time, location=loc):
             context['message'] = 'video with same time and location is existed'

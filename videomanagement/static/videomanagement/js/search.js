@@ -22,9 +22,9 @@ $( document ).ready(function() {
 	        	for (var i = 0; i < data.videos.length; i++) {
 	        		var video = data.videos[i];
 		        	$('#videos').append("<div class=\"col-md-2 text-center\">" +
-		        			"<div class=\"row\"><a href=\"view_video\\" + video.id + "\">" +
+		        			"<div class=\"row\" style=\"height:80px\"><a href=\"view_video\\" + video.id + "\">" +
 		        			"<img class= \"img-thumbnail\" width=\"100\" height=\"100\" alt=\"PoliceVideo\" src=\"gif\\" + video.id + "\">" +
-		        			"</a></div><div class=\"row\">" +
+		        			"</a></div><div class=\"row\" style=\"height:70px\">" +
 		        			"<a href=\"view_video\\" + video.id + "\">" + video.id + ". " + video.video_date + ". " + video.location + "</a>" +
 		        			"</div></div>");
 	        	}

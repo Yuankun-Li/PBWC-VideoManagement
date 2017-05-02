@@ -34,17 +34,18 @@
 
 {% block container %}
 <div class="text-right">
-	<a  href="{% url 'create_request' video_id %}">Create Request</a>
 </div>
 	<div class="container col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
 	  <div class="block">
 	    <div class="block_content">
+	    	<h3>{{video.video_id}}. {{video.video_date|date:"M d, Y"}}. {{video.location}}</h3>
 	      <video class="mejs-player" controls preload="true" width="600" height="400">
   			<source src="{{video.video.url}}" type="video/mp4" />
 		  </video>
 		  
 		  {% if user_type == 'student' or user_type == 'officer' %}
-		  <a href="{% url 'create_request' video_id %}">create request</a>
+		  <br>
+		  <a class="btn btn-default" href="{% url 'create_request' video_id %}">Create Request</a>
 		  {% endif %}
 	    </div>
 	  </div>

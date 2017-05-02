@@ -28,9 +28,9 @@
         <div class = "panel-heading"><h2 class = "text-center">Extend Retention</h2></div>
 	<div class = "panel-body">
             {% if message %}
-            <h4>
+            <div class="alert alert-info" role="alert">
                 {{message}}
-            </h4>
+            </div>
             {% endif %}
 	 <form method = "post" action = "{% url 'accept_request' request_id %}" >
 		{{ form.non_field_errors }}

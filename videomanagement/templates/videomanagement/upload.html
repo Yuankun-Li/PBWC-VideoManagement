@@ -16,21 +16,23 @@
         <div class="block_content">
             <h3>Upload BWC Footage:</h3>
             {% if message %}
-            <h4>
+            <div class="alert alert-info" role="alert">
                 {{message}}
-            </h4>
+            </div>
             {% endif %}
-            <form enctype="multipart/form-data" method="post" action="{% url 'upload' %}">
             {% for field in form.visible_fields %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{error}}
+                </div>
+            {% endfor %}
+            <form enctype="multipart/form-data" method="post" action="{% url 'upload' %}">
             <div class="form-group">
                 <label>{{field.label_tag}}</label>
                 <div>
                     {{field}}
                 </div>
             </div>
-            {% for error in field.errors %}
-                <h4>{{error}}</h4>
-            {% endfor %}
             {% endfor %}
             <div>
                 <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
